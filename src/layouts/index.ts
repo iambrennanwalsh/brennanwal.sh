@@ -1,0 +1,6 @@
+export {Container} from './Container'
+export {Main} from './Main'
+export {Content} from './Content'
+export {Sidebar} from './Sidebar'
+export {Header} from './Header'
+export {Footer} from './Footer'

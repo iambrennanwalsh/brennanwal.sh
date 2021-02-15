@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "eg2.vscode-npm-script",
+    "christian-kohler.npm-intellisense",
+    "visualstudioexptteam.vscodeintellicode",
+    "jpoissonnier.vscode-styled-components",
+    "paulmolluzzo.convert-css-in-js",
+    "svipas.prettier-plus",
+    "orta.vscode-jest",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
