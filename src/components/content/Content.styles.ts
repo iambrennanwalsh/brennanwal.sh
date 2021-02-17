@@ -9,7 +9,7 @@ export const ContentCss = css`
 		padding-bottom: 1.25rem;
 	}
 
-	&:last-of-type pre {
+	&:last-of-type .codeblock {
 		margin-bottom: -1.25rem;
 	}
 
@@ -27,7 +27,7 @@ export const ContentCss = css`
 		}
 	}
 	&.nosep hr,
-	& div + hr {
+	& .codeblock + hr {
 		display: none;
 	}
 

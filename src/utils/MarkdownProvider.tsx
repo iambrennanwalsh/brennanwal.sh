@@ -22,7 +22,7 @@ export const MarkdownProvider = {
 			h3: Components.Content.Heading,
 			p: Components.Content.Paragraph,
 			a: Components.Anchor,
-			pre: (props): JSX.Element => <div {...props} />,
+			pre: (props): JSX.Element => <div className="codeblock" {...props} />,
 			code: Components.Content.Code
 		}
 	}
