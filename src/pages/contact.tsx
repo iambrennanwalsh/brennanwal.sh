@@ -30,7 +30,7 @@ const Contact: App.Component = ({
 		<Main>
 			<Seo {...meta} />
 			<PageTitle {...meta} />
-			<ComponentsContext.Provider value={{key: process.env.NEXT_PUBLIC_MAPBOX_KEY}}>
+			<ComponentsContext.Provider value={{key: process.env.NEXT_PUBLIC_MAPBOX_API_KEY}}>
 				<Map />
 			</ComponentsContext.Provider>
 			<Box>
