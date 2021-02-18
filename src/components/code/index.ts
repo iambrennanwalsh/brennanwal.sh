@@ -1,2 +1,8 @@
 export {Code} from './Code.component'
-export {StyledPre, StyledLine, StyledLineContent, StyledLineNo} from './Code.styles'
+export {
+	StyledPre,
+	StyledLine,
+	StyledLineContent,
+	StyledLineNo,
+	StyledLanguageTag
+} from './Code.styles'

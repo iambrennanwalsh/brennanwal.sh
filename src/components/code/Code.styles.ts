@@ -1,4 +1,6 @@
 import styled from '@emotion/styled'
+import {Button} from '@/components/button'
+import {Theme} from '@/styles/abstract'
 
 export const StyledPre = styled.pre`
 	text-align: left;
@@ -8,6 +10,7 @@ export const StyledPre = styled.pre`
 	margin-left: -1.5rem;
 	box-shadow: 0px 0px 7px 7px rgba(0, 0, 0, 0.3) inset;
 	max-width: unset;
+	position: relative;
 `
 
 export const StyledLine = styled.div`
@@ -24,4 +27,21 @@ export const StyledLineNo = styled.span`
 
 export const StyledLineContent = styled.span`
 	display: table-cell;
+`
+
+export const StyledLanguageTag = styled.span`
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 50px;
+	height: 25px;
+	border-radius: 0px 0px 0px 3px;
+	border-bottom: 0px;
+	font-size: 14px;
+	box-shadow: unset;
+	background: ${Theme.pallete.primary};
+	font-weight: bolder;
+	text-align: center;
+	line-height: 24px;
+	font-family: 'Maven Pro';
 `

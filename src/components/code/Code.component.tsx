@@ -1,9 +1,11 @@
-import {StyledPre, StyledLine, StyledLineContent, StyledLineNo} from '.'
+import {StyledPre, StyledLine, StyledLineContent, StyledLineNo, StyledLanguageTag} from '.'
 import Highlight, {Language, defaultProps} from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/nightOwl'
+import {useState} from 'react'
 
 export const Code: App.CodeComponent = ({children, className}) => {
 	const language = className.replace(/language-/, '')
+	const [isCopied, setIsCopied] = useState(false)
 
 	return (
 		<Highlight
@@ -13,6 +15,7 @@ export const Code: App.CodeComponent = ({children, className}) => {
 			language={language as Language}>
 			{({className, style, tokens, getLineProps, getTokenProps}) => (
 				<StyledPre className={className} style={style}>
+					<StyledLanguageTag>{language}</StyledLanguageTag>
 					{tokens.map((line, i) => (
 						<StyledLine key={i} {...getLineProps({line, key: i})}>
 							<StyledLineNo>{i + 1}</StyledLineNo>
