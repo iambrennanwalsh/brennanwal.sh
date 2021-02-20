@@ -73,6 +73,13 @@ declare namespace App {
 	type ContentParagraphComponent = Component<TextProps>
 	type ContentPropsComponent = Props
 
+	type DropdownComponent = Component<DropdownProps>
+	interface DropdownProps extends Props {
+		data: string[]
+		label: string
+		baseUrl: string
+	}
+
 	// Form Component (/src/components/form)
 	type FormContainer = Component<FormContainerProps>
 	type FormComponent = Component<FormComponentProps>

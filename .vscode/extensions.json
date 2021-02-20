@@ -7,7 +7,6 @@
     "jpoissonnier.vscode-styled-components",
     "paulmolluzzo.convert-css-in-js",
     "svipas.prettier-plus",
-    "orta.vscode-jest",
-    "bradlc.vscode-tailwindcss"
+    "orta.vscode-jest"
   ]
 }

@@ -1,7 +1,7 @@
 import {getAll} from '@/utils/Api'
 import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import {useContext, useEffect, useState} from 'react'
-import {Card, Grid, PageTitle, Pill, Seo} from '@/components'
+import {Card, Dropdown, Grid, Group, PageTitle, Pill, Seo} from '@/components'
 import {Main} from '@/layouts'
 import {useRouter} from 'next/router'
 import {Slugify} from '@/utils/Slugify'
@@ -66,6 +66,7 @@ const Blog = ({
 		<Main>
 			<Seo {...meta} />
 			<PageTitle title={meta.title} description={pageTitleSummary} />
+			<Dropdown baseUrl="/category/" data={categories} label="Categories.." />
 			<Grid data={articles} baseUrl="/blog" template={template} />
 		</Main>
 	)
