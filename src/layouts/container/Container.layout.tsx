@@ -1,4 +1,4 @@
-import {Header, Footer} from '.'
+import {Header, Footer} from '@/layouts'
 import {Modal, Toast} from '@/components'
 
 export const Container: App.Component = ({children}) => {

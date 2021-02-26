@@ -1,13 +1,14 @@
-import React, {useContext} from 'react'
+import {useContext} from 'react'
 import {Anchor, Cloud, Icon, Instagram} from '@/components'
 import {ApiContext} from '@/contexts'
 import {Slugify} from '@/utils/Slugify'
+import {StyledFooter} from '.'
 
 export const Footer: App.Component = () => {
 	const {state} = useContext(ApiContext)
 
 	return (
-		<footer className="footer" id="footer">
+		<StyledFooter className="footer">
 			<Anchor href="https://www.instagram.com/iambrennanwalsh/">
 				<h4 className="footer__ig-header">
 					<Icon className="footer__ig-header-icon footer__icon icon--instagram" type="instagram" />
@@ -67,6 +68,6 @@ export const Footer: App.Component = () => {
 			<div className="footer__bottom">
 				<p>Brennan Walsh. © 2019</p>
 			</div>
-		</footer>
+		</StyledFooter>
 	)
 }

@@ -1,4 +1,4 @@
-import {Theme} from '@/styles/abstract'
+import {Theme, Mq} from '@/styles/abstract'
 import styled from '@emotion/styled'
 import {css} from '@emotion/react'
 import {Anchor} from '@/components'
@@ -34,7 +34,13 @@ export const StyledDropdownLabel = styled.div`
 `
 
 export const StyledDropdown = styled.div`
-	width: 49%;
+	width: 100%;
+	${Mq.from('phablet')} {
+		width: 49%;
+	}
+	${Mq.from('desktop')} {
+		width: 32%;
+	}
 	margin-bottom: 1.25rem;
 	position: relative;
 
@@ -51,7 +57,7 @@ export const StyledDropdown = styled.div`
 	.dropdown-items {
 		position: absolute;
 		top: 100%;
-		z-index: 1;
+		z-index: 2;
 		transition: 0.2s;
 		transform: scaleY(0);
 		opacity: 0;

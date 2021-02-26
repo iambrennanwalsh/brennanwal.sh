@@ -1,11 +1,12 @@
 import {Nav, LoadBar} from '@/components'
 import {NavMenu} from '@/Params'
+import {StyledHeader} from '.'
 
 export const Header: App.Component = function () {
 	return (
 		<>
 			<LoadBar />
-			<header id="header">
+			<StyledHeader>
 				<Nav>
 					<Nav.Logo src="/images/interface/logo.png" />
 					<Nav.Menu>
@@ -16,7 +17,7 @@ export const Header: App.Component = function () {
 						))}
 					</Nav.Menu>
 				</Nav>
-			</header>
+			</StyledHeader>
 		</>
 	)
 }

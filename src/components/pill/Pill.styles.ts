@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import {Theme, Gradient} from '@/styles/abstract'
-import {darken} from 'polished'
+import {Theme} from '@/styles/abstract'
+import {StyledIcon} from '@/components/icon'
 
 export const StyledPill = styled.div`
 	display: inline-flex;
@@ -8,25 +8,44 @@ export const StyledPill = styled.div`
 	justify-content: space-between;
 	border-radius: 4px;
 	border: 0;
-	box-shadow: box-shadow;
-	color: ${Theme.pallete.whiter};
 	cursor: pointer;
-	font-size: 13px;
-	height: 25px;
+	text-transform: uppercase;
 	overflow: hidden;
-	background: ${Theme.pallete.grayer};
+	background: ${Theme.pallete.dark};
 	color: ${Theme.pallete.whiter};
-	border-bottom: 3px solid ${darken(0.1, Theme.pallete.secondary)};
+	font-size: 12px;
+	text-transform: uppercase;
+	overflow: hidden;
+	background: hsl(180, 4.9%, 20.2%);
+	color: hsl(0, 0%, 100%);
 
-	& > * {
-		padding: 6px 8px;
+	${StyledIcon} {
+		padding: 7px 0px 5px;
 		line-height: 1;
 	}
 
+	.links {
+		display: flex;
+		justify-content: space-between;
+		padding: 3px 10px 0px;
+
+		a {
+			color: #fff;
+			margin-right: 5px;
+
+			&:hover {
+				color: ${Theme.pallete.secondary};
+			}
+
+			&:last-child {
+				margin-right: 0px;
+			}
+		}
+	}
+
 	& > i {
-		${Gradient(Theme.pallete.secondary)};
-		color: ${Theme.pallete.whiter};
-		box-shadow: 2px 0px 3px rgba(0, 0, 0, 0.3), -2px 0px 3px rgba(0, 0, 0, 0.3);
-		font-size: 12px;
+		background: ${Theme.pallete.dark};
+		color: ${Theme.pallete.secondary};
+		font-size: 14px;
 	}
 `

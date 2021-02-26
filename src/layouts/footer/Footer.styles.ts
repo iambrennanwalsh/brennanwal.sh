@@ -1,15 +1,12 @@
-import {css} from '@emotion/react'
+import styled from '@emotion/styled'
 import {Mq, Theme, Gradient} from '@/styles/abstract'
 import {StyledCloud} from '@/components/cloud'
 
-export const Footer = css`
-	#footer {
-		width: 100%;
-	}
+export const StyledFooter = styled.footer`
+	width: 100%;
+	background: ${Theme.pallete.white};
 
 	.footer {
-		background: ${Theme.pallete.white};
-
 		&__bottom,
 		&__ig-header {
 			padding: 10px;

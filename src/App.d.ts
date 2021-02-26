@@ -200,8 +200,10 @@ declare namespace App {
 	// Pill Component (/src/components/pill)
 	type PillComponent = Component<PillProps>
 	interface PillProps extends Props {
-		label: string
-		href?: AnchorProps
+		data: {
+			label: string
+			href?: AnchorProps
+		}[]
 		icon?: IconProps
 	}
 

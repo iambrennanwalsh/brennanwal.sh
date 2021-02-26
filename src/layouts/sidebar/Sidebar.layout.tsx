@@ -3,12 +3,13 @@ import {SocialIcons} from '@/Params'
 import {Theme} from '@/styles/abstract'
 import {useContext} from 'react'
 import {ApiContext} from '@/contexts'
+import {StyledSidebar} from '.'
 
 export const Sidebar: App.Component = function () {
 	const {state} = useContext(ApiContext)
 
 	return (
-		<aside id="sidebar">
+		<StyledSidebar>
 			<Card className="me">
 				<Card.Image src="/images/me/me.jpg" lightbox />
 				<Card.Heading level={3}>Brennan Walsh</Card.Heading>
@@ -57,6 +58,6 @@ export const Sidebar: App.Component = function () {
 						<Card.Heading>{article.title}</Card.Heading>
 					</Card>
 				))}
-		</aside>
+		</StyledSidebar>
 	)
 }

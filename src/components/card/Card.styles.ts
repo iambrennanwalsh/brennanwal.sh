@@ -5,22 +5,25 @@ import {StyledContent} from '@/components/content'
 import {StyledGroup} from '@/components/group'
 import {StyledH3} from '@/components/heading'
 import {css} from '@emotion/react'
+import {StyledSeperator} from '../seperator'
 
 export const CardCss = css`
 	border-bottom: 2px solid ${Theme.pallete['secondary']};
-	border-radius: 4px;
-	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
+	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
 	margin-bottom: 1.25rem;
 	overflow: hidden;
 
 	& ${StyledImage} {
 		display: block;
 		line-height: 0;
+		box-shadow: 0px 2px 3px rgb(0 0 0 / 30%);
+		z-index: 1;
+		position: relative;
 	}
 
 	& ${StyledH3} {
-		padding: 12.5px 20px;
-		box-shadow: 0px -3px 3px rgba(0, 0, 0, 0.3);
+		padding: 15px 20px 12.5px 20px;
 		background-color: ${Theme.pallete.dark};
 		position: relative;
 		font-size: 1.125rem;
@@ -32,17 +35,19 @@ export const CardCss = css`
 	}
 
 	& ${StyledContent} {
-		padding: 16px 20px;
-		color: ${Theme.pallete.grayer};
-		background: ${Theme.pallete['whiter']};
+		padding: 0 20px;
+		color: #999;
+		background: ${Theme.pallete['dark']};
 	}
 
 	& > ${StyledGroup} {
 		justify-content: space-around;
-		padding-bottom: 16px;
-		padding-left: 1.25rem;
-		padding-right: 1.25rem;
-		background: ${Theme.pallete['whiter']};
+		padding: 1rem 1.25rem;
+		background: ${Theme.pallete['dark']};
+	}
+
+	&.blog ${StyledSeperator} {
+		display: none;
 	}
 
 	&.alternate {
@@ -59,6 +64,7 @@ export const CardCss = css`
 			font-size: 14px;
 			color: ${Theme.pallete.whiter};
 			border-bottom: 0px;
+			z-index: 2;
 		}
 
 		&:hover {
@@ -94,6 +100,9 @@ export const CardCss = css`
 		& > ${StyledGroup} {
 			margin-left: auto;
 			margin-right: auto;
+		}
+		${StyledSeperator} {
+			background-color: ${Theme.pallete.grayer};
 		}
 	}
 `

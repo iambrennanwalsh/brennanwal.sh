@@ -1,7 +1,7 @@
 import {getAll} from '@/utils/Api'
 import {GetStaticProps, InferGetStaticPropsType} from 'next'
 import {useContext, useEffect, useState} from 'react'
-import {Card, Dropdown, Grid, Group, PageTitle, Pill, Seo} from '@/components'
+import {Card, Dropdown, Grid, PageTitle, Pill, Seo} from '@/components'
 import {Main} from '@/layouts'
 import {useRouter} from 'next/router'
 import {Slugify} from '@/utils/Slugify'
@@ -43,20 +43,17 @@ const Blog = ({
 	}, [router.query.page])
 
 	const template = (data: App.ArticleResource) => (
-		<Card href={{href: '/article/' + data.slug}}>
+		<Card className="blog" href={{href: '/article/' + data.slug}}>
 			{data.image && <Card.Image src={data.image} />}
 			<Card.Heading level={3}>{data.title}</Card.Heading>
 			<Card.Content>{data.summary}</Card.Content>
 			{data.tags && (
 				<Card.Meta styles={{justifyContent: 'flex-start !important'}}>
-					{data.tags.map(tag => (
-						<Pill
-							key={tag}
-							label={tag}
-							icon={{type: 'success'}}
-							href={{href: '/tag/' + Slugify(tag)}}
-						/>
-					))}
+					<Pill
+						key={data.slug}
+						data={data.tags.map(tag => ({label: tag, href: {href: '/tag/' + Slugify(tag)}}))}
+						icon={{type: 'tags'}}
+					/>
 				</Card.Meta>
 			)}
 		</Card>

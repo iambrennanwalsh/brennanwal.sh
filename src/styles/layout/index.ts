@@ -1,5 +1,0 @@
-export {Content} from './Content'
-export {Main} from './Main'
-export {Header} from './Header'
-export {Sidebar} from './Sidebar'
-export {Footer} from './Footer'

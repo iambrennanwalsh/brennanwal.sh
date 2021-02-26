@@ -1,10 +1,11 @@
-import {Content, Sidebar} from '.'
+import {Content, Sidebar} from '@/layouts'
+import {StyledMain} from '.'
 
 export const Main: App.Component = ({children}) => {
 	return (
-		<main id="main">
+		<StyledMain>
 			<Content>{children}</Content>
 			<Sidebar />
-		</main>
+		</StyledMain>
 	)
 }
