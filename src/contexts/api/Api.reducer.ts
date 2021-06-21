@@ -1,7 +1,7 @@
 export const ApiReducer: App.ApiContextReducer = (
 	prevState,
 	{name, payload}
-): App.ApiContextState => {
+): App.ApiResource => {
 	switch (name) {
 		case 'ADD_RESOURCE':
 			return {...prevState, ...payload}

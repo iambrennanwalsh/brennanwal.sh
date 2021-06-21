@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import {Button} from '@/components/button'
 import {Theme} from '@/styles/abstract'
 
 export const StyledPre = styled.pre`

@@ -8,7 +8,11 @@ import {Main} from '@/layouts'
 import {AddResourceAction, ApiContext} from '@/contexts'
 import {getAll, getSlugs} from '@/utils/Api'
 import {LayoutState} from '@/utils/LayoutState'
-import {ComponentsProvider, ScopeProvider, MarkdownProvider} from '@/utils/MarkdownProvider'
+import {
+	ComponentsProvider,
+	ScopeProvider,
+	MarkdownProvider
+} from '@/utils/MarkdownProvider'
 
 const Article = ({
 	renderedOutput,
@@ -79,7 +83,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
 	const articles = getAll('articles')
-	const layoutState = LayoutState(articles as App.ArticleResource[])
+	const layoutState = LayoutState(articles as App.Article[])
 	const data = articles.find(article => article.slug == params.slug)
 	const {content} = data
 	delete data.content

@@ -1,9 +1,16 @@
 import {StyledPill} from './Pill.styles'
 import {Anchor, Icon, Text} from '@/components'
 
-export const Pill: App.PillComponent = function ({data, icon, className, styles}) {
+export const Pill: App.PillComponent = function ({
+	data,
+	icon,
+	className,
+	styles
+}) {
 	return (
-		<StyledPill {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledPill
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			{icon && <Icon {...icon} />}
 			<div className="links">
 				{data.map((i, x) => (

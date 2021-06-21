@@ -2,11 +2,17 @@ import {StyledContent} from '.'
 import {Code, Seperator, Image, Heading, Text} from '@/components'
 import {useChildren} from '@/hooks'
 
-export const Content: App.ContentComponent = ({className, styles, children}) => {
+export const Content: App.ContentComponent = ({
+	className,
+	styles,
+	children
+}) => {
 	const Children = useChildren(children)
 	const CodeComponent = Children.withType(Code)
 	return (
-		<StyledContent {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledContent
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			{Children.withoutTypes([Code])}
 			{CodeComponent ? CodeComponent : <Seperator />}
 		</StyledContent>

@@ -24,7 +24,9 @@ export const Mq: App.MediaQuery = {
 		const x = Mq.from(from)
 		const y = Mq.until(to, true)
 		if (Theme.breakpoints[to] <= Theme.breakpoints[from]) {
-			throw new Error('Invalid max-width provided. It must be greater than min-width.')
+			throw new Error(
+				'Invalid max-width provided. It must be greater than min-width.'
+			)
 		}
 		return `${x} ${y}`
 	}

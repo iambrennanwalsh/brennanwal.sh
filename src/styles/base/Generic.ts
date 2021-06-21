@@ -56,13 +56,13 @@ export const Generic = css`
 	}
 
 	a {
-		color: ${Theme.pallete.primary};
+		color: ${Theme.pallete.secondary};
 		transition: 0.2s;
 		cursor: pointer;
 		text-decoration: none;
 
 		&:hover {
-			color: ${Theme.pallete.secondary};
+			color: ${Theme.pallete.primary};
 		}
 	}
 	hr {
@@ -78,7 +78,8 @@ export const Generic = css`
 
 	label {
 		width: 100%;
-		color: ${Theme.pallete.secondary};
+		font-size: ${Theme.sizes.small};
+		color: ${Theme.pallete.gray};
 		margin-bottom: 5px;
 
 		${Mq.from('tablet')} {
@@ -97,7 +98,7 @@ export const Generic = css`
 		color: ${Theme.pallete.grayer};
 		border: 0;
 		border-bottom: 2px solid ${Theme.pallete.lighter};
-		border-radius: $border-radius;
+		border-radius: ${Theme.styles.borderRadius};
 		background-color: ${Theme.pallete.whiter};
 		font-family: ${Theme.styles.fontFamily};
 

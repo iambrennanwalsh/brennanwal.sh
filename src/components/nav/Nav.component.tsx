@@ -1,7 +1,13 @@
 import {useContext, useEffect, useState} from 'react'
 import {Icon, Image} from '@/components'
 import {ComponentsContext} from '@/contexts'
-import {StyledNav, StyledNavLogo, StyledNavBurger, StyledNavMenu, StyledNavLink} from './Nav.styles'
+import {
+	StyledNav,
+	StyledNavLogo,
+	StyledNavBurger,
+	StyledNavMenu,
+	StyledNavLink
+} from './Nav.styles'
 import {useRouter} from 'next/router'
 
 export const Nav: App.NavComponent = function ({className, styles, children}) {
@@ -15,7 +21,9 @@ export const Nav: App.NavComponent = function ({className, styles, children}) {
 
 	return (
 		<ComponentsContext.Provider value={{active: menuState}}>
-			<StyledNav {...(styles && {css: styles})} {...(className && {className: className})}>
+			<StyledNav
+				{...(styles && {css: styles})}
+				{...(className && {className: className})}>
 				<div>
 					{children}
 					<StyledNavBurger onClick={() => setMenuState(!menuState)}>

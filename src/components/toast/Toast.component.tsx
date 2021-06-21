@@ -23,7 +23,12 @@ const Toast: App.ToastComponent = function ({message, type}) {
 	}, [])
 
 	return (
-		<CSSTransition in={inProp} appear timeout={350} unmountOnExit classNames="toast">
+		<CSSTransition
+			in={inProp}
+			appear
+			timeout={350}
+			unmountOnExit
+			classNames="toast">
 			<StyledToast className={type} onClick={() => setInProp(false)}>
 				<StyledToastIcon type={type} size="md" />
 				<StyledToastMessage>{message}</StyledToastMessage>

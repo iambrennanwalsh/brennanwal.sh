@@ -13,7 +13,9 @@ export const Tabs: App.TabsComponent = ({className, styles, children}) => {
 
 	return (
 		<TabsContext.Provider value={{active: active, setActive: setActive}}>
-			<StyledTabs {...(styles && {css: styles})} {...(className && {className: className})}>
+			<StyledTabs
+				{...(styles && {css: styles})}
+				{...(className && {className: className})}>
 				{children}
 			</StyledTabs>
 			<div className="tab">{active?.children && active.children}</div>
@@ -39,7 +41,9 @@ export const Tab: App.TabsTabComponent = function ({
 	return (
 		<StyledTabsTab
 			{...(styles && {css: styles})}
-			className={`${title == active.title ? 'active' : ''} ${className && {className: className}}`}
+			className={`${title == active.title ? 'active' : ''} ${
+				className && {className: className}
+			}`}
 			onClick={() => setActive({title: title, children: children})}>
 			{title}
 		</StyledTabsTab>

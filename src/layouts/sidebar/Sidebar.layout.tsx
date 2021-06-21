@@ -1,4 +1,13 @@
-import {Anchor, Content, Cloud, Text, Button, Card, Image, Icon} from '@/components'
+import {
+	Anchor,
+	Content,
+	Cloud,
+	Text,
+	Button,
+	Card,
+	Image,
+	Icon
+} from '@/components'
 import {SocialIcons} from '@/Params'
 import {Theme} from '@/styles/abstract'
 import {useContext} from 'react'
@@ -15,19 +24,24 @@ export const Sidebar: App.Component = function () {
 				<Card.Heading level={3}>Brennan Walsh</Card.Heading>
 				<Card.Content>
 					<Text>
-						I'm a full stack applications developer, and entrepreneur. Welcome to my peronsal{' '}
-						<Anchor href="/portfolio">portfolio</Anchor>, and <Anchor href="/blog">blog</Anchor>.
+						I'm a full stack applications developer, and entrepreneur. Welcome
+						to my peronsal <Anchor href="/portfolio">portfolio</Anchor>, and{' '}
+						<Anchor href="/blog">blog</Anchor>.
 					</Text>
 				</Card.Content>
 				<Card.Meta>
 					{SocialIcons.map(meta => (
 						<Anchor key={meta.href} href={meta.href}>
-							<Icon type={meta.type} size={meta.size} styles={{color: Theme.pallete.tertiary}} />
+							<Icon
+								type={meta.type}
+								size={meta.size}
+								styles={{color: Theme.pallete.light}}
+							/>
 						</Anchor>
 					))}
 				</Card.Meta>
 			</Card>
-			<Button className="freelance" color="info">
+			<Button className="freelance" color="primary">
 				<Image src="/images/interface/freelance.svg" />
 				Hire me on freelancer.
 			</Button>
@@ -38,7 +52,8 @@ export const Sidebar: App.Component = function () {
 					marginBottom: '1.25rem',
 					borderRadius: '4px',
 					padding: '0',
-					background: '#272d2d'
+					backgroundColor: `hsl(180, 4.9%, 20.2%)`,
+					borderBottom: `2px solid hsl(88.3, 41.3%, 50.6%)`
 				}}>
 				<Content.Heading
 					styles={{
@@ -53,7 +68,10 @@ export const Sidebar: App.Component = function () {
 			</Content>
 			{state.featured &&
 				state.featured.map(article => (
-					<Card key={article.slug} className="alternate" href={{href: `/article/${article.slug}`}}>
+					<Card
+						key={article.slug}
+						className="alternate"
+						href={{href: `/article/${article.slug}`}}>
 						{article.image && <Card.Image src={article.image} />}
 						<Card.Heading>{article.title}</Card.Heading>
 					</Card>

@@ -20,7 +20,11 @@ export const StyledHero = styled.div`
 
 	& p {
 		font-style: italic;
-		background: linear-gradient(to right, ${Theme.pallete.primary}, ${Theme.pallete.secondary});
+		background: linear-gradient(
+			to right,
+			${Theme.pallete.primary},
+			${Theme.pallete.secondary}
+		);
 		color: ${Theme.pallete.whiter};
 		margin-bottom: 0;
 	}
@@ -44,7 +48,12 @@ export const StyledHero = styled.div`
 	}
 
 	&.home {
-		background: linear-gradient(to top, rgb(10, 10, 10), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0)),
+		background: linear-gradient(
+				to top,
+				rgb(10, 10, 10),
+				rgba(10, 10, 10, 0.4),
+				rgba(10, 10, 10, 0)
+			),
 			url('/images/slides/slider.jpg') no-repeat center right;
 
 		${Mq.from('tablet')} {

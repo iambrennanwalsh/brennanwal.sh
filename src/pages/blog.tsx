@@ -17,7 +17,8 @@ const Blog = ({
 	const [pageTitleSummary, setPageTitleSummary] = useState('Loading articles..')
 	const [meta, setMeta] = useState({
 		title: 'Blog',
-		description: 'The personal blog of applications developer and entrepreneur Brennan Walsh.'
+		description:
+			'The personal blog of applications developer and entrepreneur Brennan Walsh.'
 	})
 	const {featured, categories, cloud} = layoutState
 	const {state, dispatch} = useContext(ApiContext)
@@ -42,7 +43,7 @@ const Blog = ({
 		setMeta({title: title, description: meta.description})
 	}, [router.query.page])
 
-	const template = (data: App.ArticleResource) => (
+	const template = (data: App.Article) => (
 		<Card className="blog" href={{href: '/article/' + data.slug}}>
 			{data.image && <Card.Image src={data.image} />}
 			<Card.Heading level={3}>{data.title}</Card.Heading>
@@ -51,7 +52,10 @@ const Blog = ({
 				<Card.Meta styles={{justifyContent: 'flex-start !important'}}>
 					<Pill
 						key={data.slug}
-						data={data.tags.map(tag => ({label: tag, href: {href: '/tag/' + Slugify(tag)}}))}
+						data={data.tags.map(tag => ({
+							label: tag,
+							href: {href: '/tag/' + Slugify(tag)}
+						}))}
 						icon={{type: 'tags'}}
 					/>
 				</Card.Meta>
@@ -72,7 +76,7 @@ export default Blog
 
 export const getStaticProps: GetStaticProps = async () => {
 	const articles = getAll('articles')
-	const layoutState = LayoutState(articles as App.ArticleResource[])
+	const layoutState = LayoutState(articles as App.Article[])
 	return {
 		props: {
 			articles,

@@ -33,10 +33,8 @@ export const PageTitleCss = css`
 
 	& ${StyledH1} {
 		color: ${Theme.pallete.whiter};
-		letter-spacing: 2px;
 		padding-bottom: 0.5rem;
 		padding-top: 0.5rem;
-		text-transform: uppercase;
 		${Mq.until('tablet')} {
 			font-size: 1rem;
 		}

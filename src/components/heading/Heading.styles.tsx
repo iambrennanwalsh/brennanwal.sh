@@ -16,6 +16,8 @@ const Headings = {
 	6: StyledH6
 }
 
-export const getStyledHeading = (level: 1 | 2 | 3 | 4 | 5 | 6) => {
+export function getStyledHeading(
+	level: 1 | 2 | 3 | 4 | 5 | 6
+): App.SpecificHeadingComponent {
 	return Headings[level]
 }

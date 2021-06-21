@@ -1,6 +1,10 @@
 import {useState, useEffect} from 'react'
 import {CSSTransition} from 'react-transition-group'
-import {StyledModal, StyledModalBackground, StyledModalContent} from './Modal.styles'
+import {
+	StyledModal,
+	StyledModalBackground,
+	StyledModalContent
+} from './Modal.styles'
 
 export const Modal: App.ModalComponent = function ({className, styles}) {
 	const [state, setState] = useState<boolean>(false)
@@ -19,7 +23,9 @@ export const Modal: App.ModalComponent = function ({className, styles}) {
 
 	return (
 		<CSSTransition in={state} timeout={500} unmountOnExit classNames="modal">
-			<StyledModal {...(styles && {css: styles})} {...(className && {className: className})}>
+			<StyledModal
+				{...(styles && {css: styles})}
+				{...(className && {className: className})}>
 				<StyledModalBackground onClick={() => setState(false)} />
 				<StyledModalContent>{body && body}</StyledModalContent>
 			</StyledModal>

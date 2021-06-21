@@ -1,11 +1,15 @@
-import {StyledPre, StyledLine, StyledLineContent, StyledLineNo, StyledLanguageTag} from '.'
+import {
+	StyledPre,
+	StyledLine,
+	StyledLineContent,
+	StyledLineNo,
+	StyledLanguageTag
+} from '.'
 import Highlight, {Language, defaultProps} from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/nightOwl'
-import {useState} from 'react'
 
 export const Code: App.CodeComponent = ({children, className}) => {
 	const language = className.replace(/language-/, '')
-	const [isCopied, setIsCopied] = useState(false)
 
 	return (
 		<Highlight

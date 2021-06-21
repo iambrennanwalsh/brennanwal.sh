@@ -3,7 +3,13 @@ import {Icon} from '@/components'
 import {useState} from 'react'
 import {Slugify} from '@/utils/Slugify'
 
-export const Dropdown: App.DropdownComponent = ({data, baseUrl, label, className, styles}) => {
+export const Dropdown: App.DropdownComponent = ({
+	data,
+	baseUrl,
+	label,
+	className,
+	styles
+}) => {
 	const [active, setActive] = useState(false)
 	return (
 		<StyledDropdown

@@ -1,6 +1,6 @@
 export const QueueAction = (
 	message: string,
-	type: App.ContextualClassEnum
+	type: App.ContextualClass
 ): App.NotificationsContextAction => {
 	return {
 		name: 'QUEUE',

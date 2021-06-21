@@ -7,7 +7,11 @@ import {Main} from '@/layouts'
 import {LayoutState} from '@/utils/LayoutState'
 import {ApiContext, AddResourceAction} from '@/contexts'
 import {useContext, useEffect} from 'react'
-import {ComponentsProvider, ScopeProvider, MarkdownProvider} from '@/utils/MarkdownProvider'
+import {
+	ComponentsProvider,
+	ScopeProvider,
+	MarkdownProvider
+} from '@/utils/MarkdownProvider'
 
 const Project: App.SinglePage = ({
 	renderedOutput,
@@ -54,7 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
 	const articles = getAll('articles')
-	const layoutState = LayoutState(articles as App.ArticleResource[])
+	const layoutState = LayoutState(articles as App.Article[])
 	const data = get(`${params.slug}.mdx`, 'projects')
 	const {content} = data
 	delete data.content

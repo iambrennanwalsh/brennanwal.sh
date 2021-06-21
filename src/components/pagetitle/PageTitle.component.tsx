@@ -9,7 +9,9 @@ export const PageTitle: App.PageTitleComponent = function ({
 	styles
 }) {
 	return (
-		<StyledPageTitle {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledPageTitle
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			{image && <Image lightbox src={image} />}
 			<div>
 				<Heading>{title}</Heading>

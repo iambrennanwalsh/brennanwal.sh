@@ -2,7 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-const contentDirectory = (resource: string): string => path.resolve(`./data/${resource}`)
+const contentDirectory = (resource: string): string =>
+	path.resolve(`./data/${resource}`)
 
 export const getSlugs: App.GetSlugs = resource => {
 	const dir = contentDirectory(resource)
@@ -23,6 +24,8 @@ export const getAll: App.GetAll = resource => {
 	const filenames = getSlugs(resource)
 	const posts = filenames
 		.map(file => get(file, resource))
-		.sort((a, b) => (new Date(a.timestamp as string) < new Date(b.timestamp as string) ? 1 : -1))
+		.sort((a, b) =>
+			new Date(a.timestamp as string) < new Date(b.timestamp as string) ? 1 : -1
+		)
 	return posts
 }

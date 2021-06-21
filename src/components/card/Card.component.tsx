@@ -2,11 +2,18 @@ import {Content, Group, Heading, Image, Anchor} from '@/components'
 import {useChildren} from '@/hooks'
 import {StyledCard} from '.'
 
-export const Card: App.CardComponent = function ({href, className, styles, children}) {
+export const Card: App.CardComponent = function ({
+	href,
+	className,
+	styles,
+	children
+}) {
 	const Children = useChildren(children)
 
 	return (
-		<StyledCard {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledCard
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			<Anchor {...href}>
 				{Children.withType(CardImage)}
 				{Children.withType(CardHeading)}

@@ -19,7 +19,8 @@ const Blog = ({
 	const [pageTitleSummary, setPageTitleSummary] = useState('Loading articles..')
 	const [meta, setMeta] = useState({
 		title: `Category: ${category}`,
-		description: 'The personal blog of applications developer and entrepreneur Brennan Walsh.'
+		description:
+			'The personal blog of applications developer and entrepreneur Brennan Walsh.'
 	})
 	const {featured, categories, cloud} = layoutState
 	const {state, dispatch} = useContext(ApiContext)
@@ -32,7 +33,10 @@ const Blog = ({
 		const page = Number((router.query.page as string) ?? 1)
 		const showingFrom = page == 1 ? 0 : (page - 1) * 9
 		const showingTo = page * 9 > totalPosts ? totalPosts : page * 9
-		const title = page > 1 ? `Category: ${category} • Page ${page}` : `Category: ${category}`
+		const title =
+			page > 1
+				? `Category: ${category} • Page ${page}`
+				: `Category: ${category}`
 		const summary =
 			totalPosts == 0
 				? 'Nothing in here.'
@@ -43,7 +47,7 @@ const Blog = ({
 		setMeta({title: title, description: meta.description})
 	}, [category, router.query.page])
 
-	const template = (data: App.ArticleResource) => (
+	const template = (data: App.Article) => (
 		<Card className="blog" href={{href: '/article/' + data.slug}}>
 			{data.image && <Card.Image src={data.image} />}
 			<Card.Heading level={3}>{data.title}</Card.Heading>
@@ -52,7 +56,10 @@ const Blog = ({
 				<Card.Meta styles={{justifyContent: 'flex-start !important'}}>
 					<Pill
 						key={data.slug}
-						data={data.tags.map(tag => ({label: tag, href: {href: '/tag/' + Slugify(tag)}}))}
+						data={data.tags.map(tag => ({
+							label: tag,
+							href: {href: '/tag/' + Slugify(tag)}
+						}))}
 						icon={{type: 'tags'}}
 					/>
 				</Card.Meta>
@@ -65,7 +72,11 @@ const Blog = ({
 			<Seo {...meta} />
 			<PageTitle title={meta.title} description={pageTitleSummary} />
 			<Dropdown baseUrl="/category/" data={categories} label={category} />
-			<Grid data={articles} baseUrl={`/category/${Slugify(category)}`} template={template} />
+			<Grid
+				data={articles}
+				baseUrl={`/category/${Slugify(category)}`}
+				template={template}
+			/>
 		</Main>
 	)
 }
@@ -91,7 +102,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 	const categoryArticles = articles.filter(
 		article => Slugify(article.category as string) == params.slug
 	)
-	const layoutState = LayoutState(articles as App.ArticleResource[])
+	const layoutState = LayoutState(articles as App.Article[])
 	return {
 		props: {
 			articles: categoryArticles,

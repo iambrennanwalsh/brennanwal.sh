@@ -25,7 +25,8 @@ export const Anchor: App.AnchorComponent = ({
 	)
 
 	useEffect(() => {
-		if (typeof router.asPath !== undefined && md !== router.asPath) setMd(router.asPath)
+		if (typeof router.asPath !== undefined && md !== router.asPath)
+			setMd(router.asPath)
 	})
 
 	useEffect(() => {
@@ -38,7 +39,8 @@ export const Anchor: App.AnchorComponent = ({
 		href: href,
 		...(styles && {css: styles}),
 		...(className && {className: className}),
-		...(activeClassName && isActive && {className: `${className} ${activeClassName}`})
+		...(activeClassName &&
+			isActive && {className: `${className} ${activeClassName}`})
 	}
 
 	return type == 'internal' ? (

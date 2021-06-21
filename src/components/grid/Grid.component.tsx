@@ -4,7 +4,7 @@ import {StyledGrid} from '.'
 import FlipMove from 'react-flip-move'
 import {useRouter} from 'next/router'
 
-export function Grid<T extends App.MarkdownResource>({
+export function Grid<T extends App.LinkableResource>({
 	data,
 	template,
 	baseUrl,
@@ -38,7 +38,9 @@ export function Grid<T extends App.MarkdownResource>({
 
 	return (
 		<>
-			<StyledGrid {...(styles && {css: styles})} {...(className && {className: className})}>
+			<StyledGrid
+				{...(styles && {css: styles})}
+				{...(className && {className: className})}>
 				<FlipMove maintainContainerHeight>
 					{slice.length > 0 &&
 						slice.map(post => (
@@ -49,7 +51,11 @@ export function Grid<T extends App.MarkdownResource>({
 				</FlipMove>
 			</StyledGrid>
 			{pageCount !== undefined && pageCount > 1 && (
-				<Pagination currentPage={Number(page ?? 1)} pageCount={pageCount} baseUrl={baseUrl} />
+				<Pagination
+					currentPage={Number(page ?? 1)}
+					pageCount={pageCount}
+					baseUrl={baseUrl}
+				/>
 			)}
 		</>
 	)

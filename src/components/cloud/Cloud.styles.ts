@@ -11,7 +11,7 @@ export const StyledCloud = styled.div`
 
 const Size = ({size}: {size: number}) => css`
 	font-size: ${size}rem;
-	color: ${size > 1.5 ? Theme.pallete.secondary : Theme.pallete.light};
+	color: ${size > 1.25 ? Theme.pallete.secondary : Theme.pallete.lighter};
 `
 
 export const StyledCloudNode = styled.span`

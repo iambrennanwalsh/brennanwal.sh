@@ -16,9 +16,12 @@ const Contact: App.Component = ({
 		description:
 			"Get in touch with me using the form below. Alternatively you may email me directly at <a href='mailto:mail@brennanwal.sh'>mail@brennanwal.sh</a>."
 	}
-	const Map = dynamic(() => import('@/components/map').then(component => component.Map), {
-		ssr: false
-	})
+	const Map = dynamic(
+		() => import('@/components/map').then(component => component.Map),
+		{
+			ssr: false
+		}
+	)
 	const {featured, categories, cloud} = layoutState
 	const {state, dispatch} = useContext(ApiContext)
 	useEffect(() => {
@@ -30,7 +33,8 @@ const Contact: App.Component = ({
 		<Main>
 			<Seo {...meta} />
 			<PageTitle {...meta} />
-			<ComponentsContext.Provider value={{key: process.env.NEXT_PUBLIC_MAPBOX_API_KEY}}>
+			<ComponentsContext.Provider
+				value={{key: process.env.NEXT_PUBLIC_MAPBOX_API_KEY}}>
 				<Map />
 			</ComponentsContext.Provider>
 			<Box>
@@ -46,7 +50,7 @@ const Contact: App.Component = ({
 export default Contact
 
 export const getStaticProps: GetStaticProps = async () => {
-	const layoutState = LayoutState(getAll('articles') as App.ArticleResource[])
+	const layoutState = LayoutState(getAll('articles') as App.Article[])
 	return {
 		props: {
 			layoutState

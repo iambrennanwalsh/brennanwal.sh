@@ -10,10 +10,11 @@ export const Map: App.MapComponent = ({className, styles}) => {
 	useEffect(() => {
 		if (typeof window != 'undefined' && defined == false) {
 			const position: L.LatLngExpression = [33.8358, -118.3406]
-			const Map = map('map', {scrollWheelZoom: false, dragging: false, zoomControl: false}).setView(
-				position,
-				9
-			)
+			const Map = map('map', {
+				scrollWheelZoom: false,
+				dragging: false,
+				zoomControl: false
+			}).setView(position, 9)
 			setDefined(true)
 			const Icon = icon({...icon, iconUrl: '/images/interface/map-marker.svg'})
 			tileLayer(

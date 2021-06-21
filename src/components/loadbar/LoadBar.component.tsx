@@ -12,7 +12,9 @@ export const LoadBar: App.LoadBarComponent = function ({className, styles}) {
 	}, [router.asPath])
 
 	return (
-		<StyledLoadBar {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledLoadBar
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			<StyledProgress {...(loading && {className: 'animation loadbar'})} />
 		</StyledLoadBar>
 	)

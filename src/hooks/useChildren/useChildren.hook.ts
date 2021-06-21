@@ -1,7 +1,15 @@
-import {Children as Child, cloneElement, isValidElement, useEffect, useState} from 'react'
+import {
+	Children as Child,
+	cloneElement,
+	isValidElement,
+	useEffect,
+	useState
+} from 'react'
 
 export const useChildren = (children: React.ReactNode) => {
-	const [Children, setChildren] = useState<React.ReactNode[]>(Child.toArray(children))
+	const [Children, setChildren] = useState<React.ReactNode[]>(
+		Child.toArray(children)
+	)
 
 	useEffect(() => {
 		if (!Children) return
@@ -28,7 +36,9 @@ export const useChildren = (children: React.ReactNode) => {
 
 	function withType(component: React.ReactNode, multiple = false) {
 		const typeCheck = hasType(component)
-		const result = multiple ? Children.filter(typeCheck) : Children.find(typeCheck)
+		const result = multiple
+			? Children.filter(typeCheck)
+			: Children.find(typeCheck)
 		return result
 	}
 
@@ -39,7 +49,10 @@ export const useChildren = (children: React.ReactNode) => {
 			: Children.find(child => !typeCheck(child))
 	}
 
-	function withProps(component: React.ReactElement, props: {[index: string]: unknown}) {
+	function withProps(
+		component: React.ReactElement,
+		props: {[index: string]: unknown}
+	) {
 		return Array.isArray(component)
 			? component.map(el => cloneElement(el, props))
 			: cloneElement(component, props)

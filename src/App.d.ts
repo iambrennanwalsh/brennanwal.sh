@@ -1,14 +1,93 @@
 declare namespace App {
-	// Component Types
+	// Base Types
 	// ---------------------------------------------------------------------------
 
-	// Base Types
-	type Component<P extends Props = Props> = (props: P) => JSX.Element
 	interface Props {
 		children?: React.ReactNode
 		className?: string
 		styles?: {[index: string]: string}
 	}
+
+	type Component<P extends Props = Props> = (props: P) => JSX.Element
+
+	interface Resource {
+		id?: number
+		[index: string]: unknown
+	}
+
+	interface LinkableResource extends Resource {
+		content: string
+		slug: string
+	}
+
+	type Context<T> = React.Context<T | undefined>
+
+	type Reducer<S, A extends Action> = React.Reducer<S, A>
+
+	type Dispatch<A extends Action> = React.Dispatch<A>
+
+	interface Action<P extends Resource = Resource> {
+		name: string
+		payload: P
+	}
+
+	interface Provider<S, A extends Action> {
+		state: S
+		dispatch: Dispatch<A>
+	}
+
+	// Resource Types
+	// ---------------------------------------------------------------------------
+
+	interface Article extends LinkableResource {
+		title: string
+		summary: string
+		image?: string
+		featured: boolean
+		category: string
+		tags: string[]
+		content: string
+		slug: string
+	}
+
+	interface Project extends LinkableResource {
+		title: string
+		summary: string
+		image?: string
+		category: string
+		attributes: {
+			label: string
+			href?: string
+			icon?: string
+		}
+	}
+
+	interface Notification extends Resource {
+		message: string
+		type: ContextualClass
+	}
+
+	// Miscillaneus Types
+	// ---------------------------------------------------------------------------
+
+	interface FormInput {
+		type: FormInputType
+		name: string
+		label?: string
+		placeholder?: string
+		validator?: (val: string) => boolean
+	}
+
+	// Miscellsneous Types
+	interface Menu {
+		name: string
+		href: string
+		exact?: boolean
+		activeClassName?: string
+	}
+
+	// Component Types
+	// ---------------------------------------------------------------------------
 
 	// Anchor Component (/src/components/anchor)
 	type AnchorComponent = Component<AnchorProps>
@@ -30,7 +109,7 @@ declare namespace App {
 	type ButtonComponent = Component<ButtonProps>
 	interface ButtonProps extends Props {
 		color?: string
-		size?: SizeEnum
+		size?: Size
 		handle?: () => void
 		disabled?: boolean
 	}
@@ -71,7 +150,7 @@ declare namespace App {
 	type ContentImageComponent = Component<ImageProps>
 	type ContentHeadingComponent = Component<HeadingProps>
 	type ContentParagraphComponent = Component<TextProps>
-	type ContentPropsComponent = Props
+	type ContentProps = Props
 
 	type DropdownComponent = Component<DropdownProps>
 	interface DropdownProps extends Props {
@@ -85,18 +164,18 @@ declare namespace App {
 	type FormComponent = Component<FormComponentProps>
 	interface FormContainerProps extends Props {
 		action: string
-		method?: FormMethodEnum
+		method?: FormMethod
 		name?: string
-		schema: InputSchema<unkown>[]
-		successNotification?: NotificationsSchema<'success'>
-		errorNotification?: NotificationsSchema<'danger'>
+		schema: FormInput[]
+		successNotification?: Notification
+		errorNotification?: Notification
 		button?: ButtonProps & {label: string}
 	}
 	interface FormComponentProps extends Props {
 		state: boolean
 		attempted: boolean
 		handle: (name: string, status: boolean) => void
-		schema: InputSchema<unknown>
+		schema: FormInput
 	}
 
 	// Group Component (/src/components/group)
@@ -104,8 +183,8 @@ declare namespace App {
 	type GroupProps = Props
 
 	// Grid Component (/src/components/grid)
-	type GridComponent = Component<GridProps>
-	interface GridProps<T extends Schema> extends Props {
+	type GridComponent<T extends Resource> = Component<GridProps<T>>
+	interface GridProps<T extends Resource> extends Props {
 		data: T[]
 		template: (data: T) => React.ReactNode
 		baseUrl: string
@@ -120,7 +199,7 @@ declare namespace App {
 		H5: SpecificHeadingComponent
 		H6: SpecificHeadingComponent
 	}
-	type SpecificHeadingComponent = Component
+	type SpecificHeadingComponent = Component<HeadingProps>
 	interface HeadingProps extends Props {
 		level?: 1 | 2 | 3 | 4 | 5 | 6
 	}
@@ -179,7 +258,7 @@ declare namespace App {
 	type NavLogoComponent = Component<ImageProps>
 	type NavMenuComponent = Component<GroupProps>
 	type NavLinkComponent = Component<AnchorProps>
-	type NavPropsComponent = Props
+	type NavProps = Props
 
 	// PageTitle Component (/src/components/pagetitle)
 	type PageTitleComponent = Component<PageTitleProps>
@@ -246,86 +325,20 @@ declare namespace App {
 
 	// Toast Component (/src/components/toast)
 	type Toast = ToastContainer
-	type ToastContainer = C<Record<string, never>>
-	type ToastComponent = C<NotificationsSchema<ContextualClassEnum>>
-
-	// Resource Types
-	// ---------------------------------------------------------------------------
-
-	interface MarkdownResource {
-		content: string
-		slug: string
-		[index: string]: string | string[]
-	}
-
-	interface ArticleResource extends MarkdownResource {
-		title: string
-		summary: string
-		image?: string
-		featured: boolean
-		category: string
-		tags: string[]
-	}
-
-	interface ProjectResource extends MarkdownResource {
-		title: string
-		summary: string
-		image?: string
-		category: string
-		attributes: {
-			label: string
-			href?: string
-			icon?: string
-		}
-	}
-
-	// Schema Types
-	// ---------------------------------------------------------------------------
-
-	interface NotificationsSchema<C> {
-		id?: number
-		message: string
-		type: C
-	}
-
-	interface InputSchema {
-		type: InputTypeEnum
-		name: string
-		label?: string
-		placeholder?: string
-		validator?: (val: string) => boolean
-	}
-
-	interface MenuSchema {
-		name: string
-		href: string
-		exact?: boolean
-		activeClassName?: string
-	}
+	type ToastContainer = Component
+	type ToastComponent = Component<Notification & Props>
 
 	// Context Types
 	// ---------------------------------------------------------------------------
 
-	// Base Types
-	type Context<T> = React.Context<T | undefined>
-	type Reducer<S, A extends Action> = React.Reducer<S, A>
-	type Dispatch<A extends Action> = React.Dispatch<A>
-	interface Action<P> {
-		name: string
-		payload: P
-	}
-	interface Provider<S, A extends Action> {
-		state: S
-		dispatch: Dispatch<A>
-	}
-
 	// Api Context
-	type ApiContext = Context<AppContextProvider>
-	type ApiResource = {[index: string]: MarkdownResource}
-	type ApiContextState = ApiResource[]
+	type ApiContext = Context<ApiContextProvider>
+	type ApiResource = {
+		[index: string]: Resource[]
+	}
 	type ApiContextAction = Action<ApiResource>
-	type ApiContextReducer = Reducer<ApiContextState, ApiContextAction>
-	type ApiContextProvider = Provider<ApiContextState, ApiContextAction>
+	type ApiContextReducer = Reducer<ApiResource, ApiContextAction>
+	type ApiContextProvider = Provider<ApiResource, ApiContextAction>
 
 	// Components Context
 	type ComponentsContext = Context<ComponentsContextState>
@@ -335,10 +348,13 @@ declare namespace App {
 
 	// Notifications Context
 	type NotificationsContext = Context<NotificationsContextProvider>
-	type NotificationsResource = NotificationsSchema<ContextualClassEnum>
+	type NotificationsResource = Notification
 	type NotificationsContextState = NotificationsResource[]
 	type NotificationsContextAction = Action<NotificationsResource>
-	type NotificationsContextReducer = Reducer<NotificationsContextState, NotificationsContextAction>
+	type NotificationsContextReducer = Reducer<
+		NotificationsContextState,
+		NotificationsContextAction
+	>
 	type NotificationsContextProvider = Provider<
 		NotificationsContextState,
 		NotificationsContextAction
@@ -347,17 +363,13 @@ declare namespace App {
 	// Enumeration Types
 	// ---------------------------------------------------------------------------
 
-	type ContextualClassEnum = 'info' | 'success' | 'warning' | 'danger'
+	type ContextualClass = 'info' | 'success' | 'warning' | 'danger'
 
-	type SizeEnum = 'sm' | 'md' | 'lg'
+	type Size = 'sm' | 'md' | 'lg'
 
-	type DirectionEnum = 'column' | 'row'
+	type FormMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 
-	type HorizontalAlignmentEnum = 'left' | 'right'
-
-	type FormMethodEnum = 'GET' | 'POST' | 'PUT' | 'DELETE'
-
-	type InputTypeEnum =
+	type FormInputType =
 		| 'button'
 		| 'checkbox'
 		| 'color'
@@ -419,27 +431,33 @@ declare namespace App {
 	// ---------------------------------------------------------------------------
 
 	type GetSlugs = (resource: string) => string[]
-	type Get = (file: string, resource: string) => MarkdownResource
-	type GetAll = (resource: string) => MarkdownResource[]
+
+	type Get = (file: string, resource: string) => LinkableResource
+
+	type GetAll = (resource: string) => LinkableResource[]
 
 	// Page Types
 	// -------------------------------------------------------------------------------
 
-	type BlogPage = ({articles}: {articles: App.ArticleResource[]}) => JSX.Element
+	type BlogPage = ({articles}: {articles: App.Article[]}) => JSX.Element
 
 	type SinglePage = ({
 		source,
 		frontMatter
 	}: {
-		source: MdxRemote.Source
-		frontMatter: MarkdownResource
+		source: {
+			compiledSource: string
+			renderedOutput: string
+			scope?: Record<string, unknown>
+		}
+		frontMatter: LinkableResource
 	}) => JSX.Element
 
 	type PortfolioPage = ({
 		projects,
 		categories
 	}: {
-		projects: ProjectResource[]
+		projects: Project[]
 		categories: string[]
 	}) => JSX.Element
 }

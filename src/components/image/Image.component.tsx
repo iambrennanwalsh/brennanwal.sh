@@ -26,8 +26,14 @@ export const Image: App.ImageComponent = function ({
 	)
 
 	const captionedImage = (
-		<StyledFigure {...(styles && {css: styles})} {...(className && {className: className})}>
-			<StyledImage src={src} {...(alt && {alt: alt})} {...(lightbox && {onClick: () => emit()})} />
+		<StyledFigure
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
+			<StyledImage
+				src={src}
+				{...(alt && {alt: alt})}
+				{...(lightbox && {onClick: () => emit()})}
+			/>
 			<StyledFigCaption>{caption}</StyledFigCaption>
 		</StyledFigure>
 	)

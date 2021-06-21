@@ -33,7 +33,7 @@ const Portfolio = ({
 			"My portfolio of projects i've worked on over the years. Click on a project to learn more about it."
 	}
 
-	const template = (data: App.ProjectResource): JSX.Element => (
+	const template = (data: App.Project): JSX.Element => (
 		<Card className="alternate" href={{href: '/project/' + data.slug}}>
 			{data.image && <Card.Image src={data.image} />}
 			<Card.Heading level={3}>{data.title}</Card.Heading>
@@ -45,7 +45,9 @@ const Portfolio = ({
 			<Seo {...meta} />
 			<PageTitle {...meta} />
 			<Group>
-				<Button handle={() => setCategory('All')} color={category == 'All' ? 'primary' : 'dark'}>
+				<Button
+					handle={() => setCategory('All')}
+					color={category == 'All' ? 'primary' : 'dark'}>
 					All
 				</Button>
 				{projectCategories.map(cat => (
@@ -58,7 +60,11 @@ const Portfolio = ({
 				))}
 			</Group>
 			<Grid
-				data={category == 'All' ? projects : projects.filter(proj => proj.category == category)}
+				data={
+					category == 'All'
+						? projects
+						: projects.filter(proj => proj.category == category)
+				}
 				template={template}
 				baseUrl="/portfolio"
 				className="portfolio"
@@ -74,7 +80,7 @@ export const getStaticProps: GetStaticProps = async () => {
 	const projectCategories = projects.map(proj => proj.category)
 
 	const articles = getAll('articles')
-	const layoutState = LayoutState(articles as App.ArticleResource[])
+	const layoutState = LayoutState(articles as App.Article[])
 
 	return {
 		props: {

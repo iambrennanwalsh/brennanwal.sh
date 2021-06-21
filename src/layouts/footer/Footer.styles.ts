@@ -88,6 +88,7 @@ export const StyledFooter = styled.footer`
 			&-list {
 				width: 200px;
 				&.cloud ${StyledCloud} {
+					color: #555;
 					padding: unset;
 					justify-content: left;
 				}

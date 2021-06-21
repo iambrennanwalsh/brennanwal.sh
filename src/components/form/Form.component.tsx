@@ -1,17 +1,26 @@
-// Form (client/src/components/form/Form.jsx)
+import {ChangeEvent} from 'react'
 
-import React from 'react'
-
-export const FormComponent: App.FormComponent = function ({handle, state, attempted, schema}) {
-	const preHandle = (event: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
-		const result = schema.validator ? schema.validator(event.target.value) : false
+export const FormComponent: App.FormComponent = function ({
+	handle,
+	state,
+	attempted,
+	schema
+}) {
+	const preHandle = (
+		event: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>
+	) => {
+		const result = schema.validator
+			? schema.validator(event.target.value)
+			: false
 		handle(schema.name, result)
 	}
 
 	return (
 		<div className="field">
 			{schema.label && (
-				<label htmlFor={`input__${schema.type}__${schema.name}`}>{schema.label}</label>
+				<label htmlFor={`input__${schema.type}__${schema.name}`}>
+					{schema.label}
+				</label>
 			)}
 			{schema.type == 'text' && (
 				<input

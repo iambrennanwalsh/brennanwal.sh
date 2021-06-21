@@ -1,4 +1,4 @@
-export const NavMenu: App.MenuSchema[] = [
+export const NavMenu: App.Menu[] = [
 	{name: 'Home', href: '/', exact: true},
 	{name: 'About', href: '/about'},
 	{name: 'Portfolio', href: '/portfolio'},

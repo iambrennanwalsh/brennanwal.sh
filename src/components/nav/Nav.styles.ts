@@ -32,7 +32,8 @@ export const StyledNavMenu = styled.div`
 	transition: 0.35s;
 	${Mq.until('tablet')} {
 		flex-direction: column;
-		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3) inset, 0px 3px 3px rgba(0, 0, 0, 0.3);
+		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3) inset,
+			0px 3px 3px rgba(0, 0, 0, 0.3);
 		background: ${Theme.pallete['dark']};
 		position: absolute;
 		top: 3.28rem;

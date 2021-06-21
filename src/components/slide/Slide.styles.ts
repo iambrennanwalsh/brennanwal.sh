@@ -41,7 +41,11 @@ export const SlideCss = css`
 	}
 
 	& .source {
-		background: linear-gradient(to right, ${Theme.pallete.primary}, ${Theme.pallete.secondary});
+		background: linear-gradient(
+			to right,
+			${Theme.pallete.primary},
+			${Theme.pallete.secondary}
+		);
 		color: ${Theme.pallete.blacker};
 		display: inline;
 		padding: 2px 5px;

@@ -10,11 +10,11 @@ export const FormContainer: App.FormContainer = function ({
 	name = 'form',
 	schema,
 	successNotification = {
-		message: 'Thank you. The form submitted successfuly.',
+		message: 'Thank you. Your submission was recieved.',
 		type: 'success'
 	},
 	errorNotification = {
-		message: 'Sorry. An error occured. Try again later.',
+		message: 'Oops. Something went wrong. Try again later.',
 		type: 'danger'
 	},
 	button = {
@@ -29,7 +29,7 @@ export const FormContainer: App.FormContainer = function ({
 	const [attempted, setAttempted] = useState<boolean>(false)
 	const [loading, setLoading] = useState<boolean>(false)
 	const [success, setSuccess] = useState<boolean>(false)
-	const [state, setState] = useState(() => {
+	const [validation, setValidation] = useState(() => {
 		const obj = {}
 
 		schema.forEach(input => {
@@ -38,12 +38,12 @@ export const FormContainer: App.FormContainer = function ({
 		return obj
 	})
 
-	const notify = (notification: App.NotificationsSchema<App.ContextualClassEnum>) =>
+	const notify = (notification: App.Notification) =>
 		dispatch(QueueAction(notification.message, notification.type))
 
 	const handle = (name: string, status: boolean) => {
-		setState({
-			...state,
+		setValidation({
+			...validation,
 			[name]: status
 		})
 	}
@@ -56,7 +56,7 @@ export const FormContainer: App.FormContainer = function ({
 		schema.forEach(input => {
 			obj[input.name] = true
 		})
-		setState(obj)
+		setValidation(obj)
 	}
 
 	const submit = () => {
@@ -74,11 +74,14 @@ export const FormContainer: App.FormContainer = function ({
 		})
 	}
 
-	const validate = (event: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+	const validate = (
+		event: React.FormEvent<HTMLFormElement | HTMLButtonElement>
+	) => {
 		event.preventDefault()
 		setAttempted(true)
 		setLoading(true)
-		if (Object.values(state).includes(true)) setTimeout(() => setLoading(false), 1000)
+		if (Object.values(validation).includes(true))
+			setTimeout(() => setLoading(false), 1000)
 		else submit()
 	}
 
@@ -93,14 +96,17 @@ export const FormContainer: App.FormContainer = function ({
 			{schema.map(input => (
 				<Input
 					key={input.name}
-					state={state[input.name]}
+					state={validation[input.name]}
 					attempted={attempted}
 					handle={handle}
 					schema={input}
 				/>
 			))}
 			<Button className="submission" handle={() => validate} {...button}>
-				<Icon type={success ? 'success' : loading ? 'spinner' : 'envelope'} size={button.size} />
+				<Icon
+					type={success ? 'success' : loading ? 'spinner' : 'envelope'}
+					size={button.size}
+				/>
 				{button.label}
 			</Button>
 		</StyledForm>

@@ -1,12 +1,12 @@
 import React from 'react'
 import {Form} from '@/components/form'
 
-const successNotification: App.NotificationsSchema<'success'> = {
+const successNotification: App.Notification = {
 	message: 'Your submission was recieved successfuly.',
 	type: 'success'
 }
 
-const schema: App.InputSchema[] = [
+const schema: App.FormInput[] = [
 	{
 		type: 'text',
 		label: 'Your Name',

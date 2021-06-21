@@ -31,7 +31,9 @@ export const Instagram: App.InstagramComponent = ({styles, className}) => {
 	}, [])
 
 	return (
-		<StyledInstagram {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledInstagram
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			{igFeed.feed.map(img => (
 				<div key={img} style={{backgroundImage: `url(${img})`}}></div>
 			))}

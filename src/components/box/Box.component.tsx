@@ -3,7 +3,9 @@ import {Heading} from '@/components'
 
 export const Box: App.BoxComponent = ({className, styles, children}) => {
 	return (
-		<StyledBox {...(styles && {css: styles})} {...(className && {className: className})}>
+		<StyledBox
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
 			{children}
 		</StyledBox>
 	)

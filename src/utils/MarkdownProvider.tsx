@@ -4,7 +4,9 @@ import {Icons} from '@/Params'
 
 export const ComponentsProvider = Components
 
-export const ScopeProvider = (merger: Record<string, unknown> = {}): Record<string, unknown> => {
+export const ScopeProvider = (
+	merger: Record<string, unknown> = {}
+): Record<string, unknown> => {
 	const scope = {
 		icons: Icons,
 		...merger

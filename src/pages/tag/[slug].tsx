@@ -26,7 +26,8 @@ const Blog = ({
 	const [pageTitleSummary, setPageTitleSummary] = useState('Loading articles..')
 	const [meta, setMeta] = useState({
 		title: `Tag: ${tag}`,
-		description: 'The personal blog of applications developer and entrepreneur Brennan Walsh.'
+		description:
+			'The personal blog of applications developer and entrepreneur Brennan Walsh.'
 	})
 	useEffect(() => {
 		const page = Number((router.query.page as string) ?? 1)
@@ -43,7 +44,7 @@ const Blog = ({
 		setMeta({title: title, description: meta.description})
 	}, [tag, router.query.page])
 
-	const template = (data: App.ArticleResource) => (
+	const template = (data: App.Article) => (
 		<Card className="blog" href={{href: '/article/' + data.slug}}>
 			{data.image && <Card.Image src={data.image} />}
 			<Card.Heading level={3}>{data.title}</Card.Heading>
@@ -52,7 +53,10 @@ const Blog = ({
 				<Card.Meta styles={{justifyContent: 'flex-start !important'}}>
 					<Pill
 						key={data.slug}
-						data={data.tags.map(tag => ({label: tag, href: {href: '/tag/' + Slugify(tag)}}))}
+						data={data.tags.map(tag => ({
+							label: tag,
+							href: {href: '/tag/' + Slugify(tag)}
+						}))}
 						icon={{type: 'tags'}}
 					/>
 				</Card.Meta>
@@ -65,7 +69,11 @@ const Blog = ({
 			<Seo {...meta} />
 			<PageTitle title={meta.title} description={pageTitleSummary} />
 			<Dropdown baseUrl="/category/" data={categories} label="Categories.." />
-			<Grid data={articles} baseUrl={`/tag/${Slugify(tag)}`} template={template} />
+			<Grid
+				data={articles}
+				baseUrl={`/tag/${Slugify(tag)}`}
+				template={template}
+			/>
 		</Main>
 	)
 }
@@ -88,7 +96,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params}) => {
-	const articles = getAll('articles')
+	const articles = getAll('articles') as App.Article[]
 	const tags = []
 	articles.forEach(i => tags.push(...(i.tags as string[])))
 	const currentTag = [...new Set(tags)].find(tag => Slugify(tag) == params.slug)
@@ -97,7 +105,7 @@ export const getStaticProps: GetStaticProps = async ({params}) => {
 		const slugs = arr.map(i => Slugify(i))
 		return slugs.includes(params.slug as string)
 	})
-	const layoutState = LayoutState(articles as App.ArticleResource[])
+	const layoutState = LayoutState(articles as App.Article[])
 	return {
 		props: {
 			articles: taggedArticles,

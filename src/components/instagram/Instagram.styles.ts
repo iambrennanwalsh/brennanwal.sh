@@ -11,7 +11,8 @@ export const StyledInstagram = styled.div`
 	--gutter: 0px;
 	--columns: 5;
 	--row-size: calc(
-		(var(--content-width) - (var(--gutter) * (var(--columns) - 1))) / var(--columns)
+		(var(--content-width) - (var(--gutter) * (var(--columns) - 1))) /
+			var(--columns)
 	);
 
 	${Mq.from('tablet')} {
