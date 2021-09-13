@@ -15,18 +15,19 @@ export const Footer: App.Component = () => {
 						className="footer__ig-header-icon footer__icon icon--instagram"
 						type="instagram"
 					/>
-					Follow @iambrennanwalsh
-					<span className="is-hidden-mobile"> On Instagram</span>
+					<span className="footer__ig-spacer">Follow @iambrennanwalsh </span>
+					<span className="is-hidden-mobile">
+						On Instagram`
+						<Icon
+							className="footer__ig-header-arrow footer__icon"
+							type="right"
+						/>
+					</span>
 				</h4>
 			</Anchor>
 			<Instagram />
 			<div className="footer__widgets">
 				<div className="footer__summary">
-					<img
-						src="/images/me/me.jpg"
-						alt="Brennan Walsh"
-						className="footer__portrait lightbox"
-					/>
 					<img
 						src="/images/interface/logo.png"
 						alt="BrennanWalsh"

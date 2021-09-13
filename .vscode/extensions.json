@@ -6,7 +6,6 @@
     "visualstudioexptteam.vscodeintellicode",
     "jpoissonnier.vscode-styled-components",
     "paulmolluzzo.convert-css-in-js",
-    "esbenp.prettier-vscode",
-    "orta.vscode-jest"
+    "esbenp.prettier-vscode"
   ]
 }

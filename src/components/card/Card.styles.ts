@@ -8,30 +8,31 @@ import {css} from '@emotion/react'
 import {StyledSeperator} from '../seperator'
 
 export const CardCss = css`
-	border-bottom: 2px solid ${Theme.pallete['secondary']};
-	border-radius: 5px;
+	border-radius: 6px;
 	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
 	margin-bottom: 1.25rem;
 	overflow: hidden;
+	border-bottom: 0;
 
 	& ${StyledImage} {
 		display: block;
 		line-height: 0;
-		box-shadow: 0px 2px 3px rgb(0 0 0 / 30%);
-		z-index: 1;
-		position: relative;
+		box-shadow: 0px 0 3px 2px rgb(0 0 0 / 30%);
+		transform: translateZ(0);
 	}
 
 	& ${StyledH3} {
 		padding: 15px 20px 12.5px 20px;
 		background-color: ${Theme.pallete.dark};
 		position: relative;
-		font-size: 1.125rem;
+		font-size: 1rem;
 		color: ${Theme.pallete.whiter};
 		overflow: hidden;
 		text-align: left;
 		line-height: 1.5rem;
 		transition: 0.3s;
+		z-index: -1;
+		transform: translateZ(0);
 	}
 
 	& ${StyledContent} {
@@ -42,7 +43,7 @@ export const CardCss = css`
 
 	& > ${StyledGroup} {
 		justify-content: space-around;
-		padding: 1rem 1.25rem;
+		padding: 1rem 1.25rem 0.7rem;
 		background: ${Theme.pallete['dark']};
 	}
 
@@ -54,23 +55,14 @@ export const CardCss = css`
 		position: relative;
 
 		& ${StyledH3} {
-			bottom: 0;
-			left: 0;
-			right: 0;
-			position: absolute;
-			line-height: 1.35em;
-			background-color: rgba(49, 54, 54, 0.8);
 			transition: 0.5s;
 			font-size: 14px;
-			color: ${Theme.pallete.whiter};
 			border-bottom: 0px;
-			z-index: 2;
+			z-index: -1;
 		}
 
-		&:hover {
-			& ${StyledH3} {
-				background-color: rgba(49, 54, 54, 0.95);
-			}
+		&:hover ${StyledH3} {
+			background: ${Theme.pallete['darker']};
 		}
 	}
 
@@ -79,6 +71,8 @@ export const CardCss = css`
 		margin-top: 65px;
 		overflow: initial;
 		border-radius: 6px;
+		padding-bottom: 1px;
+		background: ${Theme.pallete.dark};
 
 		& ${StyledImage} {
 			border-radius: 100%;
@@ -87,14 +81,15 @@ export const CardCss = css`
 			width: 115px;
 			left: 50%;
 			transform: translateX(-50%);
-			z-index: 1;
-			border: 5px solid ${Theme.pallete.dark};
+			z-index: 2;
+			border: 5px solid ${Theme.pallete.darker};
 		}
 
 		& ${StyledH3} {
 			padding-top: 65px;
 			border-radius: 4px 4px 0px 0px;
 			text-transform: uppercase;
+			z-index: 1;
 		}
 
 		& > ${StyledGroup} {

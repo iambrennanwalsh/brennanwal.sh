@@ -6,7 +6,7 @@ export const ContentCss = css`
 	padding: 1.25rem 1.25rem 0;
 
 	&:last-of-type {
-		padding-bottom: 1.25rem;
+		//padding-bottom: 1.25rem;
 	}
 
 	&:last-of-type .codeblock {

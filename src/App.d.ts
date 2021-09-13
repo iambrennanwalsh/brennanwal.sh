@@ -12,7 +12,7 @@ declare namespace App {
 
 	interface Resource {
 		id?: number
-		[index: string]: unknown
+		[index: string]: any
 	}
 
 	interface LinkableResource extends Resource {
@@ -132,7 +132,7 @@ declare namespace App {
 	// Cloud Component (/src/components/cloud)
 	type CloudComponent = Component<CloudProps>
 	interface CloudProps extends Props {
-		cloud: [string, number][]
+		cloud: Resource[]
 	}
 
 	// Code Component (/src/components/code)

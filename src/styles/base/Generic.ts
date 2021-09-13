@@ -18,6 +18,7 @@ export const Generic = css`
 			background: url('/images/interface/background.png');
 		}
 	}
+
 	#app {
 		position: relative;
 	}
@@ -30,6 +31,7 @@ export const Generic = css`
 		padding: 0;
 		font-weight: normal;
 	}
+
 	*:focus {
 		outline: none;
 	}
@@ -56,13 +58,13 @@ export const Generic = css`
 	}
 
 	a {
-		color: ${Theme.pallete.secondary};
+		color: ${Theme.pallete.primary};
 		transition: 0.2s;
 		cursor: pointer;
 		text-decoration: none;
 
 		&:hover {
-			color: ${Theme.pallete.primary};
+			color: ${Theme.pallete.secondary};
 		}
 	}
 	hr {

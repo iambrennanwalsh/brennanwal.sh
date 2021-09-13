@@ -13,6 +13,7 @@ const itemStyles = css`
 	background: ${Theme.pallete.darker};
 	color: ${Theme.pallete.light};
 	font-size: 14px;
+	box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.3);
 `
 
 export const StyledDropdownItem = styled(Anchor)`
@@ -24,9 +25,11 @@ export const StyledDropdownLabel = styled.div`
 	border-bottom: 0;
 	padding: 0.5rem 1.25rem;
 	border-radius: 4px;
-	border-bottom: 2px solid #555;
 	background: ${Theme.pallete.dark};
-	color: ${Theme.pallete.lighter};
+	color: ${Theme.pallete.whiter};
+	z-index: 3;
+	position: relative;
+
 	${StyledIcon} {
 		color: ${Theme.pallete.secondary};
 		transition: 0.2s;

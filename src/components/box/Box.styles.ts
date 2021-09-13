@@ -20,7 +20,7 @@ export const BoxCss = css`
 
 	& > h2 {
 		${Gradient('primary')}
-		padding: 10px 0px 10px 1.5rem;
+		padding: 10px 0px 10px 1.25rem;
 		color: ${Theme.pallete.whiter};
 		overflow: hidden;
 

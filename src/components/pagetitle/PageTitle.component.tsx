@@ -1,7 +1,7 @@
 import {Image, Heading, Content} from '@/components'
-import {StyledPageTitle} from '.'
+import {StyledPageTitle, StyledAltPageTitle} from '.'
 
-export const PageTitle: App.PageTitleComponent = function ({
+export const AltPageTitle: App.PageTitleComponent = function ({
 	title,
 	description,
 	image,
@@ -22,5 +22,25 @@ export const PageTitle: App.PageTitleComponent = function ({
 				)}
 			</div>
 		</StyledPageTitle>
+	)
+}
+
+export const PageTitle: App.PageTitleComponent = function ({
+	title,
+	description,
+	image,
+	className,
+	styles
+}) {
+	return (
+		<StyledAltPageTitle
+			{...(styles && {css: styles})}
+			{...(className && {className: className})}>
+			{image && <Image lightbox src={image} />}
+			<div>
+				<Heading>{title}</Heading>
+				{description && <div dangerouslySetInnerHTML={{__html: description}} />}
+			</div>
+		</StyledAltPageTitle>
 	)
 }

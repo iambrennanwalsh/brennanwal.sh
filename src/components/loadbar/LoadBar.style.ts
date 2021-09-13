@@ -7,7 +7,7 @@ export const StyledLoadBar = styled.div`
 	background: ${Theme.pallete.dark};
 	position: sticky;
 	top: 0px;
-	z-index: 100;
+	z-index: 500;
 `
 
 export const StyledProgress = styled.div`

@@ -5,5 +5,5 @@ export const StyledHeader = styled.header`
 	left: 0;
 	right: 0;
 	top: 2px;
-	z-index: 100;
+	z-index: 500;
 `

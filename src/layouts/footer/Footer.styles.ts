@@ -24,15 +24,26 @@ export const StyledFooter = styled.footer`
 			font-size: 20px;
 		}
 
+		&__ig-header-arrow {
+			margin-left: 20px;
+			vertical-align: -3px;
+			font-size: 20px;
+		}
+
+		&__ig-spacer {
+			margin-right: 3px;
+		}
+
 		&__widgets {
-			padding: 1rem 2rem;
+			padding: 2rem;
 			max-width: 1240px;
 			margin: 0 auto 1rem;
 
 			${Mq.from('tablet')} {
 				display: flex;
 				justify-content: space-evenly;
-				padding: 2rem 0;
+				align-items: center;
+				padding: 2.5rem 0;
 				margin-bottom: 0;
 			}
 		}
@@ -97,8 +108,8 @@ export const StyledFooter = styled.footer`
 
 		&__links {
 			list-style-position: inside;
-			list-style-type: circle;
-			margin-left: 1rem;
+			list-style-type: none;
+			margin-left: 0;
 		}
 	}
 `

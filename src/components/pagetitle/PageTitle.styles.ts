@@ -35,9 +35,7 @@ export const PageTitleCss = css`
 		color: ${Theme.pallete.whiter};
 		padding-bottom: 0.5rem;
 		padding-top: 0.5rem;
-		${Mq.until('tablet')} {
-			font-size: 1rem;
-		}
+		font-weight: 100;
 		${Gradient('primary')}
 	}
 
@@ -53,4 +51,38 @@ export const PageTitleCss = css`
 
 export const StyledPageTitle = styled.div`
 	${PageTitleCss}
+`
+
+export const StyledAltPageTitle = styled.div`
+	& > div {
+		margin: 1.5rem 0 1.25rem;
+		padding: 0 1.25rem 1.25rem;
+		border-bottom: 1px solid #ddd;
+
+		${Mq.from('tablet')} {
+			border-bottom: unset;
+		}
+
+		& div {
+			line-height: 1.75;
+			padding-left: 1rem;
+			color: #777;
+
+			${Mq.from('tablet')} {
+				padding-left: unset;
+				color: #aaa;
+			}
+		}
+	}
+	& ${StyledH1} {
+		font-weight: 100;
+		margin-bottom: 0.5rem;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+		color: #5aa61c;
+
+		${Mq.from('tablet')} {
+			color: #fff;
+		}
+	}
 `

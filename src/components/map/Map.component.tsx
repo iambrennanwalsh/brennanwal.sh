@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css'
 export const Map: App.MapComponent = ({className, styles}) => {
 	const {key} = useContext(ComponentsContext)
 	const [defined, setDefined] = useState(false)
+
 	useEffect(() => {
 		if (typeof window != 'undefined' && defined == false) {
 			const position: L.LatLngExpression = [33.8358, -118.3406]
@@ -16,7 +17,6 @@ export const Map: App.MapComponent = ({className, styles}) => {
 				zoomControl: false
 			}).setView(position, 9)
 			setDefined(true)
-			const Icon = icon({...icon, iconUrl: '/images/interface/map-marker.svg'})
 			tileLayer(
 				'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
 				{
@@ -28,8 +28,15 @@ export const Map: App.MapComponent = ({className, styles}) => {
 					accessToken: key
 				}
 			).addTo(Map)
+			const Icon = icon({
+				iconUrl: '/images/interface/marker-icon.png',
+				iconRetinaUrl: '/images/interface/marker-icon-2x.png',
+				shadowUrl: '/images/interface/marker-shadow.png',
+				iconSize: [25, 41],
+				iconAnchor: [13, 41]
+			})
 			const Marker = marker(position, {icon: Icon}).addTo(Map)
-			Marker.bindPopup('<b>Torrance, CA</b><br />Born and raised.').openPopup()
+			Marker.bindPopup('<b>Torrance, CA</b><br />Born and raised.')
 		}
 	}, [])
 

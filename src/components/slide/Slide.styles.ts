@@ -23,18 +23,6 @@ export const SlideCss = css`
 		${Stretch}
 	}
 
-	&.steve-jobs {
-		background: url('/images/slides/hiking.jpg');
-		background-position-x: 10%;
-		background-position-y: 100%;
-	}
-
-	&.los-angeles {
-		background: url('/images/slides/la.jpg');
-		background-position-x: 50%;
-		background-position-y: 50%;
-	}
-
 	& .quote {
 		color: ${Theme.pallete.whiter};
 		max-width: 600px;
@@ -54,6 +42,22 @@ export const SlideCss = css`
 
 	& ${StyledSeperator} {
 		display: none;
+	}
+
+	&.steve-jobs {
+		background: url('/images/slides/hiking.jpg');
+		background-position-x: 10%;
+		background-position-y: 100%;
+	}
+
+	&.los-angeles {
+		background: url('/images/slides/la.jpg');
+		background-position-x: 50%;
+		background-position-y: 50%;
+
+		& .source {
+			color: ${Theme.pallete.whiter};
+		}
 	}
 `
 

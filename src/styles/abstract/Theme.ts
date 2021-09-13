@@ -13,10 +13,10 @@ export const Theme: App.Theme = {
 		light: 'hsl(0, 0%, 60%)',
 		gray: 'hsl(0, 0%, 46.7%)',
 		grayer: 'hsl(0, 0%, 33.3%)',
-		dark: 'hsl(180, 4.9%, 20.2%)',
-		darker: 'hsl(180, 7.1%, 16.5%)',
-		black: 'hsl(0, 0%, 15.3%)',
-		blacker: 'hsl(0, 0%, 13.3%)'
+		dark: 'hsl(180, 8%, 20%)',
+		darker: 'hsl(180, 7%, 16%)',
+		black: 'hsl(180, 8%, 12%)',
+		blacker: 'hsl(180, 7%, 8%)'
 	},
 	space: {
 		'0': '0',

@@ -11,13 +11,10 @@ export const StyledPill = styled.div`
 	cursor: pointer;
 	text-transform: uppercase;
 	overflow: hidden;
-	background: ${Theme.pallete.dark};
 	color: ${Theme.pallete.whiter};
 	font-size: 12px;
 	text-transform: uppercase;
 	overflow: hidden;
-	background: hsl(180, 4.9%, 20.2%);
-	color: hsl(0, 0%, 100%);
 
 	${StyledIcon} {
 		padding: 7px 0px 5px;
@@ -44,7 +41,6 @@ export const StyledPill = styled.div`
 	}
 
 	& > i {
-		background: ${Theme.pallete.dark};
 		color: ${Theme.pallete.secondary};
 		font-size: 14px;
 	}
