@@ -7,6 +7,7 @@ export const StyledContent = styled.section`
 	margin-right: auto;
 	padding: 0 1.25rem;
 	height: 100%;
+	overflow-x: hidden;
 
 	${Mq.from('tablet')} {
 		width: 65%;

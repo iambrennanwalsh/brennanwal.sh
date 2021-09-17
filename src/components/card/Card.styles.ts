@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import {Theme} from '@/styles/abstract'
 import {StyledImage} from '@/components/image'
 import {StyledContent} from '@/components/content'
+import {StyledGrid} from '@/components/grid'
 import {StyledGroup} from '@/components/group'
 import {StyledH3} from '@/components/heading'
 import {css} from '@emotion/react'
@@ -18,7 +19,6 @@ export const CardCss = css`
 		display: block;
 		line-height: 0;
 		box-shadow: 0px 0 3px 2px rgb(0 0 0 / 30%);
-		transform: translateZ(0);
 	}
 
 	& ${StyledH3} {
@@ -32,11 +32,10 @@ export const CardCss = css`
 		line-height: 1.5rem;
 		transition: 0.3s;
 		z-index: -1;
-		transform: translateZ(0);
 	}
 
 	& ${StyledContent} {
-		padding: 0 20px;
+		padding: 0 1.25rem;
 		color: #999;
 		background: ${Theme.pallete['dark']};
 	}

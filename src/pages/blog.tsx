@@ -68,7 +68,12 @@ const Blog = ({
 			<Seo {...meta} />
 			<PageTitle title={meta.title} description={pageTitleSummary} />
 			<Dropdown baseUrl="/category/" data={categories} label="Categories.." />
-			<Grid data={articles} baseUrl="/blog" template={template} />
+			<Grid
+				data={articles}
+				baseUrl="/blog"
+				template={template}
+				className="blog"
+			/>
 		</Main>
 	)
 }
