@@ -10,7 +10,7 @@ export const ContentCss = css`
 	}
 
 	&:last-of-type .codeblock {
-		margin-bottom: -1.25rem;
+		//margin-bottom: -1.25rem;
 	}
 
 	& img {
@@ -27,7 +27,7 @@ export const ContentCss = css`
 		}
 	}
 	&.nosep hr,
-	& .codeblock + hr {
+	& .codeblock ~ hr {
 		display: none;
 	}
 

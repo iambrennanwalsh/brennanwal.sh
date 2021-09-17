@@ -17,7 +17,7 @@ export const Footer: App.Component = () => {
 					/>
 					<span className="footer__ig-spacer">Follow @iambrennanwalsh </span>
 					<span className="is-hidden-mobile">
-						On Instagram`
+						On Instagram
 						<Icon
 							className="footer__ig-header-arrow footer__icon"
 							type="right"

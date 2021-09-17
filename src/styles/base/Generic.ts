@@ -134,6 +134,10 @@ export const Generic = css`
 
 	code:not([class*='language']) {
 		color: ${Theme.pallete.secondary};
-		border-bottom: 1px dashed color ${Theme.pallete.secondary};
+		border-bottom: 1px dashed ${Theme.pallete.secondary};
+	}
+
+	.codeblock {
+		position: relative;
 	}
 `

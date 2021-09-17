@@ -1,8 +1,8 @@
 <p align="center">
   <a href="https://brennanwal.sh">
-    <img width="150px" src="https://raw.githubusercontent.com/iambrennanwalsh/brennanwal.sh/master/client/public/images/interface/tree.png">
+    <img width="150px" src="https://brennanwal.sh/images/interface/tree.png">
     <br>
-    <img width="400px" src="https://raw.githubusercontent.com/iambrennanwalsh/brennanwal.sh/master/client/public/images/interface/logo.png">
+    <img width="400px" src="https://brennanwal.sh/images/interface/logo.png">
   </a>
   <h3 align="center">brennanwal.sh</h3>
   <p align="center">

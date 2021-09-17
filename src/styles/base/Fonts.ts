@@ -1,8 +1,8 @@
 import {css} from '@emotion/react'
 
 export const Fonts = css`
-	// Maven Pro (Google Font)
-	@import url('https://fonts.googleapis.com/css?family=Maven+Pro');
+	// Maven Pro 400/700 (Google Font)
+	@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap');
 
 	// Icons
 	@font-face {

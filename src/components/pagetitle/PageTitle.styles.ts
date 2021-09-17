@@ -54,6 +54,17 @@ export const StyledPageTitle = styled.div`
 `
 
 export const StyledAltPageTitle = styled.div`
+	& > ${StyledImage} {
+		margin-bottom: 1rem;
+		display: block;
+		box-shadow: ${Theme.styles.boxShadow};
+		${Stretch}
+
+		${Mq.from('tablet')} {
+			border-radius: ${Theme.styles.borderRadius};
+		}
+	}
+
 	& > div {
 		margin: 1.5rem 0 1.25rem;
 		padding: 0 1.25rem 1.25rem;

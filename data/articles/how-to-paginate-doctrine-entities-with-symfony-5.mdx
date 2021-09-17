@@ -1,0 +1,116 @@
+---
+title: How To Paginate Doctrine Entities in Symfony 5
+summary: Using the Doctrine Paginator to easily paginate entities in Symfony 5.
+image: /images/articles/how-to-paginate-doctrine-entities-with-symfony-4.jpg
+featured: true
+category: Php
+tags:
+  - Symfony
+  - Doctrine
+timestamp: "2021-09-12"
+---
+
+<box>
+
+## The Doctrine Paginator
+
+<content>
+
+The Doctrine ORM makes paginating entities effortless with the Doctrine Paginator.
+
+Below I've provided a simple Repository class for some generic Article entity. It contains a few examples for you to analyze, and I'll go over the 1st with you.
+
+</content>
+
+<content>
+
+### The Doctrine Query Builder
+
+The following assumes knoledge of the Doctrine Query Builder. If you're unfamiliar with the Doctrine Query Builder, it's a topic for another post, but you can read all about it in the [Doctrine docs](https://www.doctrine-project.org/projects/doctrine-orm/en/2.9/reference/query-builder.html). 
+</content>
+
+</box>
+
+<box>
+
+## Get Paginated Posts
+
+<content>
+  
+Take a look at the `getPaginatedPosts()` method below. It takes two arguments, a page number `$page`, and the number of posts per page `$postsPerPage`.
+
+First we'll create a query using the Doctrine Query Builder. The line `$this->createQueryBuilder('a')->orderBy('a.timestamp', 'DESC')->getQuery()` creates a query of Article objects, sorted in descending order by a timestamp property.
+
+Next we create an instance of the Doctrine Paginator, and pass it the query we just created. 
+
+Finnaly the line `$paginator->getQuery()->setFirstResult($postsPerPage * ($page - 1))->setMaxResults($postsPerPage)` is what actually does the pagination. 
+
+We get the query from the paginator object, and then set the 1st result to the product of `$postsPerPage * ($page - 1)`. This tells Doctrine Paginator to offset the results starting at a particular number. Finnaly we tell Doctrine the max amount of posts we want per page.
+
+The result is the function returns the number of posts specified by $postsPerPage beginning from the result of `setFirstResult()`. Pretty simple huh?
+
+```php
+// src/Repository/ArticleRepository.php
+
+namespace App\Repository;
+
+use App\Entity\Article;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+
+class ArticleRepository extends ServiceEntityRepository {
+	
+  public function __construct(RegistryInterface $registry) {
+    parent::__construct($registry, Article::class); }
+  
+  public function getPaginatedPosts($page = 1, $postsPerPage = 9) {
+    $query = $this->createQueryBuilder('a')
+      ->orderBy('a.publishedAt', 'DESC')
+      ->getQuery();
+    $paginator = new Paginator($query);
+    $paginator->getQuery()
+      ->setFirstResult($postsPerPage * ($page - 1))
+      ->setMaxResults($postsPerPage);
+    return $paginator; 
+  }
+  
+  /**
+  * Assuming the associated Article entity has a many to one relationship to some Category entity.
+  */
+  public function getPaginatedPostsFromCategory($page = 1,  $postsPerPage = 9, $category) {
+    $query = $this->createQueryBuilder('a')
+      ->leftJoin('a.category', 'c')
+      ->andWhere('c.slug = :val')
+      ->setParameter('val', $category)
+      ->orderBy('a.timestamp', 'DESC')
+      ->getQuery();
+    $paginator = new Paginator($query);
+    $paginator->getQuery()
+      ->setFirstResult($postsPerPage * ($page - 1))
+      ->setMaxResults($postsPerPage);
+    return $paginator; 
+  }
+  
+  /**
+  * Assuming the associated Article entity has a many to many relationship to some Tags entity.
+  */
+  public function getPaginatedPostsFromTag($page = 1, $postsPerPage = 9, $tag) {
+    $query = $this->createQueryBuilder('a')
+      ->leftJoin('a.tags', 'c')
+      ->andWhere('c.slug = :val')
+      ->setParameter('val', $tag)
+      ->orderBy('a.publishedAt', 'DESC')
+      ->getQuery();
+    $paginator = new Paginator($query);
+    $paginator->getQuery()
+      ->setFirstResult($limit * ($page - 1))
+      ->setMaxResults($limit);
+    return $paginator; 
+  }
+}
+```
+
+</content>
+
+</box>
