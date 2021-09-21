@@ -25,16 +25,15 @@ const Portfolio = ({
 		}
 	}, [])
 
-	const [category, setCategory] = useState('All')
+	const [category, setCategory] = useState('Freelance')
 
 	const meta = {
 		title: 'Portfolio',
-		description:
-			"My portfolio of projects i've worked on over the years. Click on a project to learn more about it."
+		description: "A subset of the projects i've worked on over the years."
 	}
 
 	const template = (data: App.Project): JSX.Element => (
-		<Card className="alternate" href={{href: '/project/' + data.slug}}>
+		<Card className="alternate" href={{href: data.external}}>
 			{data.image && <Card.Image src={data.image} />}
 			<Card.Heading level={3}>{data.title}</Card.Heading>
 		</Card>
@@ -45,11 +44,6 @@ const Portfolio = ({
 			<Seo {...meta} />
 			<PageTitle {...meta} />
 			<Group>
-				<Button
-					handle={() => setCategory('All')}
-					color={category == 'All' ? 'primary' : 'dark'}>
-					All
-				</Button>
 				{projectCategories.map(cat => (
 					<Button
 						handle={() => setCategory(cat)}
@@ -60,11 +54,7 @@ const Portfolio = ({
 				))}
 			</Group>
 			<Grid
-				data={
-					category == 'All'
-						? projects
-						: projects.filter(proj => proj.category == category)
-				}
+				data={projects.filter(proj => proj.category == category)}
 				template={template}
 				baseUrl="/portfolio"
 				className="portfolio"
