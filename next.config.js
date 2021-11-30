@@ -6,7 +6,8 @@ const moduleExports = {
 	},
 	eslint: {
 		ignoreDuringBuilds: true
-	}
+	},
+	webpack5: false
 }
 
 const SentryWebpackPluginOptions = {
