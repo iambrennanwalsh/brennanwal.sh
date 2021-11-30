@@ -1,4 +1,5 @@
 import {NextApiRequest, NextApiResponse} from 'next'
+import {withSentry} from '@sentry/nextjs'
 
 const mailjet = require('node-mailjet').connect(
 	process.env.MAILJET_API_KEY,
@@ -186,4 +187,4 @@ const template = (name, email, subject, message, timestamp) => `
 </html>
 `
 
-export default mail
+export default withSentry(mail)

@@ -63,6 +63,13 @@ const Home = ({
 				</div>
 			</Hero>
 			<Main>
+				<button
+					type="button"
+					onClick={() => {
+						throw new Error('Sentry Frontend Error')
+					}}>
+					Throw error
+				</button>
 				<Box>
 					<Box.Heading>
 						A Little About Me
