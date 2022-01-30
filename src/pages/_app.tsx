@@ -1,22 +1,29 @@
+import {ApiContextProvider, NotificationsContextProvider} from '@/contexts'
+import {Container} from '@/partials'
+import '@/styles/index.css'
+import type {NextPage} from 'next'
 import type {AppProps} from 'next/app'
-import {Container} from '@/layouts'
-import {ApiProvider, NotificationsProvider} from '@/contexts'
-import {Styles} from '@/styles'
-import {Global, css} from '@emotion/react'
+import type {ReactElement, ReactNode} from 'react'
 
-export default function App({Component, pageProps}: AppProps): JSX.Element {
-	return (
-		<ApiProvider>
-			<NotificationsProvider>
-				<Global
-					styles={css`
-						${Styles}
-					`}
-				/>
-				<Container>
-					<Component {...pageProps} />
-				</Container>
-			</NotificationsProvider>
-		</ApiProvider>
-	)
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({
+  Component,
+  pageProps
+}: AppPropsWithLayout): JSX.Element {
+  const getLayout = Component.getLayout || (page => page)
+
+  return (
+    <ApiContextProvider>
+      <NotificationsContextProvider>
+        <Container>{getLayout(<Component {...pageProps} />)}</Container>
+      </NotificationsContextProvider>
+    </ApiContextProvider>
+  )
 }

@@ -1,45 +1,41 @@
-import styled from '@emotion/styled'
-import {Theme, Gradient, Mq, Stretch} from '@/styles/abstract'
-import {css} from '@emotion/react'
+import {StyledAnchor} from '@/components'
+import {styled} from '@/styles'
 
-export const BoxCss = css`
-	position: relative;
+export const StyledBox = styled('div', {
+  position: 'relative',
+  stretch: true,
 
-	${Mq.from('tablet')} {
-		margin-bottom: 1rem;
-		overflow: hidden;
-		border-radius: ${Theme.styles.borderRadius};
-		border-bottom: 2px solid ${Theme.pallete.secondary};
-		box-shadow: ${Theme.styles.boxShadow};
-		background: ${Theme.pallete.whiter};
-	}
+  '@tablet': {
+    marginBottom: '$6',
+    overflow: 'hidden',
+    borderRadius: '$round',
+    borderBottomWidth: '$md',
+    borderBottomStyle: '$solid',
+    borderBottomColor: '$secondary',
+    boxShadow: '$md',
+    background: '$bg',
+  },
 
-	${Mq.until('tablet')} {
-		${Stretch}
-	}
+  '& h2': {
+    backgroundImage: 'linear-gradient(to right, $primary, $secondary)',
+    pl: '$6',
+    color: '$whiteText',
+    overflow: 'hidden',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    fontWeight: '$body',
+    boxShadow: '0px -1px 3px rgb(0 0 0 / 10%) inset',
+    height: '50px',
 
-	& > h2 {
-		${Gradient('primary')}
-		padding: 10px 0px 10px 1.25rem;
-		color: ${Theme.pallete.whiter};
-		overflow: hidden;
-
-		& > a {
-			color: ${Theme.pallete.primary};
-			position: absolute;
-			right: 0;
-			top: 0;
-			background: ${Theme.pallete.white};
-			padding: 17px 24px 17px 27px;
-			display: flex;
-			box-shadow: -1px -3px 3px rgba(0, 0, 0, 0.14);
-			${Mq.from('tablet')} {
-				background: ${Theme.pallete.whiter};
-			}
-		}
-	}
-`
-
-export const StyledBox = styled.div`
-	${BoxCss}
-`
+    [`& > ${StyledAnchor}`]: {
+      background: '$responsiveBg',
+      padding: '$5 $7',
+      display: 'flex',
+      boxShadow: '-1px 0px 3px rgb(0 0 0 / 15%)',
+      '@tablet': {
+        background: '$bg',
+      },
+    },
+  },
+})

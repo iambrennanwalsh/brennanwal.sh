@@ -1,2 +1,2 @@
-export {ApiContext, ApiProvider} from './Api.context'
-export {AddResourceAction} from './Api.actions'
+export {ApiContext, ApiContextProvider} from './Api.context'
+export type {ApiResources, ApiContextType} from './Api.context'

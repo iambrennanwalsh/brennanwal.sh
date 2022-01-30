@@ -1,16 +1,15 @@
-import styled from '@emotion/styled'
+import {styled} from '@/styles'
 
-export const StyledGroup = styled.div`
-	display: flex;
-	justify-content: space-between;
-	& > * {
-		margin-left: 0.5rem;
-		margin-right: 0.5rem;
-	}
-	& > *:first-of-type {
-		margin-left: 0;
-	}
-	& > *:last-of-type {
-		margin-right: 0;
-	}
-`
+export const StyledGroup = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  [`& > *`]: {
+    mx: '$3',
+  },
+  [`& > *:first-of-type`]: {
+    ml: 0,
+  },
+  [`& > *:last-of-type`]: {
+    mr: 0,
+  },
+})

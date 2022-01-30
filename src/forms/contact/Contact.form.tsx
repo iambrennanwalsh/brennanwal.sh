@@ -1,12 +1,13 @@
-import React from 'react'
 import {Form} from '@/components/form'
+import type {Component, Notification} from '@/'
+import type {FormInput} from '@/components/form'
 
-const successNotification: App.Notification = {
+const successNotification: Notification = {
 	message: 'Your submission was recieved successfuly.',
 	type: 'success'
 }
 
-const schema: App.FormInput[] = [
+const schema: FormInput[] = [
 	{
 		type: 'text',
 		label: 'Your Name',
@@ -45,7 +46,7 @@ const schema: App.FormInput[] = [
 	}
 ]
 
-export const ContactForm: App.Component = () => {
+export const ContactForm: Component<{}> = () => {
 	return (
 		<Form
 			schema={schema}

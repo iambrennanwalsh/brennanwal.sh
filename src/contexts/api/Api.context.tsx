@@ -1,13 +1,31 @@
-import {createContext, useReducer} from 'react'
-import {ApiReducer} from './Api.reducer'
+import type {Component, Props, Resource} from '@/'
+import type {Dispatch, SetStateAction} from 'react'
+import {createContext, useState} from 'react'
 
-export const ApiContext: App.ApiContext = createContext(undefined)
+export type ApiResources = Record<string, Resource[]>
 
-export const ApiProvider: App.Component = function ({children}) {
-	const [state, dispatch] = useReducer(ApiReducer, {})
-	return (
-		<ApiContext.Provider value={{state, dispatch}}>
-			{children}
-		</ApiContext.Provider>
-	)
+export interface ApiContextType {
+  resources?: ApiResources
+  setResources: Dispatch<SetStateAction<ApiResources>>
+}
+
+export const ApiContext = createContext<ApiContextType | undefined>(undefined)
+
+type ApiContextProviderProps = Props<'div'>
+
+export const ApiContextProvider: Component<ApiContextProviderProps> = ({
+  children,
+}) => {
+  const [resources, setResources] = useState({})
+
+  return (
+    <ApiContext.Provider
+      value={{
+        resources,
+        setResources,
+      }}
+    >
+      {children}
+    </ApiContext.Provider>
+  )
 }

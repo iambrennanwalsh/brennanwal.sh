@@ -1,44 +1,36 @@
-import {Theme} from '@/styles/abstract'
-import {css} from '@emotion/react'
-import styled from '@emotion/styled'
 import {Anchor, Group} from '@/components'
+import {styled} from '@/styles'
 
-const LinkStyles = css`
-	color: ${Theme.pallete.whiter};
-	min-width: 2.25em;
-	font-size: 1em;
-	align-items: center;
-	justify-content: center;
-	margin: 0.25rem;
-	font-weight: bold;
-	border-radius: 4px;
-	display: inline-flex;
-	height: 2.25em;
-	transition: 0.3s;
-`
+export const StyledPaginationLink = styled(Anchor, {
+  color: '$whiter',
+  minWidth: '2.25em',
+  alignItems: 'center',
+  justifyContent: 'center',
+  margin: '0.25rem',
+  fontWeight: 'bold',
+  borderRadius: '$round',
+  display: 'inline-flex',
+  height: '2.25em',
+  transition: '$fast',
+  borderWidth: '$md',
+  borderStyle: '$solid',
+  borderColor: '$primary',
+  background: '$primary',
 
-export const StyledPaginationArrow = styled(Anchor)`
-	background: ${Theme.pallete.secondary};
-	${LinkStyles}
+  '&:hover': {
+    background: '$darker',
+  },
 
-	&:hover {
-		color: ${Theme.pallete.dark};
-	}
-`
+  variants: {
+    active: {
+      true: {
+        background: '$darker',
+      },
+    },
+  },
+})
 
-export const StyledPaginationLink = styled(Anchor)`
-	border: 2px solid ${Theme.pallete.primary};
-	background: ${Theme.pallete.primary};
-	${LinkStyles};
-
-	&.active,
-	&:hover {
-		background: ${Theme.pallete.darker};
-		color: ${Theme.pallete.whiter};
-	}
-`
-
-export const StyledPagination = styled(Group)`
-	justify-content: center;
-	margin-bottom: 1.25rem;
-`
+export const StyledPagination = styled(Group, {
+  justifyContent: 'center',
+  mb: '$6',
+})

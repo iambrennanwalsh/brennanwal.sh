@@ -1,59 +1,64 @@
-import {Box, Content, PageTitle, Seo} from '@/components'
+import {Box, Content} from '@/components'
 import {ContactForm} from '@/forms'
-import {Main} from '@/layouts'
+import {useApiContext} from '@/hooks'
+import {Standard} from '@/layouts'
+import {GetAllResources} from '@/utils/getAllResources'
+import {LayoutState} from '@/utils/layoutState'
+import {InferGetStaticPropsType} from 'next'
 import dynamic from 'next/dynamic'
-import {useContext, useEffect} from 'react'
-import {ComponentsContext, AddResourceAction, ApiContext} from '@/contexts'
-import {GetStaticProps, InferGetStaticPropsType} from 'next'
-import {LayoutState} from '@/utils/LayoutState'
-import {getAll} from '@/utils/Api'
+import {ReactElement, useEffect} from 'react'
 
-const Contact: App.Component = ({
-	layoutState
+const contactSeo = {
+  title: 'Contact Me',
+  description:
+    "Get in touch with me using the form below. Alternatively you may email me directly at <a href='mailto:mail@brennanwal.sh'>mail@brennanwal.sh</a>.",
+}
+
+const Contact = ({
+  layoutState,
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-	const meta = {
-		title: 'Contact Me',
-		description:
-			"Get in touch with me using the form below. Alternatively you may email me directly at <a href='mailto:mail@brennanwal.sh'>mail@brennanwal.sh</a>."
-	}
-	const Map = dynamic(
-		() => import('@/components/map').then(component => component.Map),
-		{
-			ssr: false
-		}
-	)
-	const {featured, categories, cloud} = layoutState
-	const {state, dispatch} = useContext(ApiContext)
-	useEffect(() => {
-		if (!state.featured) dispatch(AddResourceAction({featured: featured}))
-		if (!state.categories) dispatch(AddResourceAction({categories: categories}))
-		if (!state.cloud) dispatch(AddResourceAction({cloud: cloud}))
-	}, [])
-	return (
-		<Main>
-			<Seo {...meta} />
-			<PageTitle {...meta} />
-			<ComponentsContext.Provider
-				value={{key: process.env.NEXT_PUBLIC_MAPBOX_API_KEY}}>
-				<Map />
-			</ComponentsContext.Provider>
-			<Box>
-				<Box.Heading>Lets Get In Touch</Box.Heading>
-				<Content className="withForm">
-					<ContactForm />
-				</Content>
-			</Box>
-		</Main>
-	)
+  const {featured, categories} = layoutState
+  const {resources, setResources} = useApiContext()
+
+  useEffect(() => {
+    const newResources = {}
+    if (!('featured' in resources)) newResources['featured'] = featured
+    if (!('categories' in resources)) newResources['categories'] = categories
+    if (Object.keys(newResources).length > 0)
+      setResources({...resources, ...newResources})
+  }, [featured, categories, resources, setResources])
+
+  const Map = dynamic<{}>(
+    () => import('../components/map/Map').then(component => component.Map),
+    {
+      ssr: false,
+    }
+  )
+
+  return (
+    <>
+      <Map />
+      <Box heading="Lets Get In Touch">
+        <Content>
+          <ContactForm />
+        </Content>
+      </Box>
+    </>
+  )
 }
 
 export default Contact
 
-export const getStaticProps: GetStaticProps = async () => {
-	const layoutState = LayoutState(getAll('articles') as App.Article[])
-	return {
-		props: {
-			layoutState
-		}
-	}
+export const getStaticProps = async () => {
+  const articles = await GetAllResources('articles')
+  const layoutState = LayoutState(articles)
+  return {
+    props: {
+      layoutState,
+    },
+  }
+}
+
+Contact.getLayout = function getLayout(page: ReactElement) {
+  return <Standard seo={contactSeo}>{page}</Standard>
 }

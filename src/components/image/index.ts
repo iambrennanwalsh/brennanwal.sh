@@ -1,2 +1,3 @@
-export {Image} from './Image.component'
-export {StyledImage, StyledFigure, StyledFigCaption} from './Image.styles'
+export {Image} from './Image'
+export {StyledImage} from './Image.styles'
+export type {ImageProps} from './Image'

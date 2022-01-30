@@ -1,17 +1,9 @@
-const {withSentryConfig} = require('@sentry/nextjs')
-
-const moduleExports = {
-	typescript: {
-		ignoreBuildErrors: true
-	},
-	eslint: {
-		ignoreDuringBuilds: true
-	},
-	webpack5: false
+/**
+ * @type {import('next').NextConfig}
+ */
+module.exports = {
+  eslint: {
+    dirs: ['src']
+  },
+  reactStrictMode: true
 }
-
-const SentryWebpackPluginOptions = {
-	silent: true
-}
-
-module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions)

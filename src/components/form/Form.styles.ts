@@ -1,30 +1,26 @@
-import styled from '@emotion/styled'
-import {StyledSeperator} from '@/components/seperator'
+import {Button} from '@/components'
+import {styled} from '@/styles'
 
-export const StyledForm = styled.form`
-	.field {
-		display: flex;
-		flex-wrap: wrap;
-		margin-bottom: 1.25rem;
-	}
+export const StyledForm = styled('div', {})
 
-	.input {
-		&.invalid {
-			background: #f7c4b0;
-		}
-	}
+export const StyledFormField = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+  mb: '$6',
+})
 
-	button {
-		float: right;
-		margin-bottom: 1.25rem;
+export const StyledFormInput = styled('input', {
+  variants: {
+    invalid: {
+      true: {
+        background: '#f7c4b0',
+      },
+    },
+  },
+})
 
-		&.submission {
-			width: 120px;
-		}
-	}
-
-	${StyledSeperator} {
-		display: none;
-		margin-bottom: 1.25rem;
-	}
-`
+export const StyledFormButton = styled(Button, {
+  float: 'right',
+  mb: '$6',
+  width: '120px',
+})

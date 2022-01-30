@@ -1,1 +1,2 @@
-export {Seo} from './Seo.component'
+export {Seo} from './Seo'
+export type {SeoProps} from './Seo'

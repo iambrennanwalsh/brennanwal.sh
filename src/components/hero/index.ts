@@ -1,2 +1,3 @@
-export {Hero} from './Hero.component'
-export {StyledHero} from './Hero.styles'
+export {Hero} from './Hero'
+export type {HeroProps} from './Hero'
+export {StyledHero, StyledHeroContent, StyledHeroEffect} from './Hero.styles'

@@ -1,27 +1,20 @@
-import {css} from '@emotion/react'
-import styled from '@emotion/styled'
-import {Theme} from '@/styles/abstract'
+import {styled} from '@/styles'
+import {ThemeVariants} from '@/utils/themeVariants'
 
-export const StyledCloud = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	padding: 1rem 1.25rem;
-`
+export const StyledCloud = styled('div', {
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  padding: '$5 $6',
+})
 
-const Size = ({size}: {size: number}) => css`
-	font-size: ${size}rem;
-	color: ${size > 1.25 ? Theme.pallete.secondary : Theme.pallete.lighter};
-
-	.footer & {
-		color: ${size > 1.25 ? Theme.pallete.secondary : Theme.pallete.grayer};
-	}
-`
-
-export const StyledCloudNode = styled.span`
-	${Size};
-	padding: 0.15rem;
-	&:hover {
-		color: ${Theme.pallete.primary};
-	}
-`
+export const StyledCloudNode = styled('span', {
+  padding: '$1',
+  '&:hover': {
+    color: '$primary',
+  },
+  variants: {
+    size: ThemeVariants('fontSizes', 'fontSize'),
+    color: ThemeVariants('colors', 'color'),
+  },
+})

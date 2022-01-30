@@ -1,2 +1,3 @@
-export {Grid} from './Grid.component'
-export {StyledGrid, GridCss} from './Grid.styles'
+export {Grid} from './Grid'
+export type {GridProps} from './Grid'
+export {StyledGrid} from './Grid.styles'

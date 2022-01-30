@@ -1,51 +1,75 @@
-import styled from '@emotion/styled'
-import {Mq, Theme} from '@/styles/abstract'
+import {styled, theme} from '@/styles'
 import {darken} from 'polished'
 
-export const StyledTabsTab = styled.div`
-	flex: 1;
-	font-size: 10px;
-	text-transform: uppercase;
-	color: ${Theme.pallete.primary};
-	padding: 15px 0;
-	text-align: center;
-	line-height: 1;
-	transition: 0.2s;
-	background: ${Theme.pallete.lighter};
-	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1) inset;
-	cursor: pointer;
+export const StyledTabs = styled('div', {
+  '& img': {
+    maxWidth: '50px',
+    height: 'auto',
+    ml: '$7',
+    mr: '$1',
+    boxShadow: 'unset',
+    float: 'right',
 
-	${Mq.from('tablet')} {
-		background: ${Theme.pallete.white};
-	}
+    '@tablet': {
+      maxWidth: '75px',
+    },
+  },
 
-	&:hover {
-		background: ${darken(0.05, Theme.pallete.lighter)};
+  '& h3': {
+    width: '70%',
 
-		${Mq.from('tablet')} {
-			background: ${darken(0.05, Theme.pallete.white)};
-		}
-	}
+    '@tablet': {
+      maxWidth: 'unset',
+    },
+  },
+})
 
-	&.active {
-		background: ${Theme.pallete.white};
-		box-shadow: unset;
+export const StyledTabsContainer = styled('div', {
+  display: 'flex',
+})
 
-		${Mq.from('tablet')} {
-			background: ${Theme.pallete.whiter};
-		}
+export const StyledTab = styled('div', {
+  flex: '1',
+  fontSize: '$xs',
+  textTransform: 'uppercase',
+  color: '$primary',
+  padding: '$1 0',
+  textAlign: 'center',
+  transition: '$fast',
+  background: '$lighter',
+  boxShadow: '0px 0px 3px rgba(0, 0, 0, 0.1) inset',
+  cursor: 'pointer',
 
-		&:hover {
-			background: ${Theme.pallete.white};
+  '@tablet': {
+    background: '$white',
+  },
 
-			${Mq.from('tablet')} {
-				background: ${Theme.pallete.whiter};
-			}
-		}
-	}
-`
+  '&:hover': {
+    background: darken(0.05, theme.colors.lighter.value),
 
-export const StyledTabs = styled.div`
-	display: flex;
-	margin: 0;
-`
+    '@tablet': {
+      background: darken(0.05, theme.colors.white.value),
+    },
+  },
+
+  variants: {
+    active: {
+      true: {
+        background: '$white',
+        boxShadow: 'unset',
+
+        '@tablet': {
+          background: '$whiter',
+        },
+
+        '&:hover': {
+          background: '$white',
+
+          '@tablet': {
+            background: '$whiter',
+          },
+        },
+      },
+    },
+  },
+})

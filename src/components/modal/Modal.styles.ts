@@ -1,57 +1,76 @@
-import styled from '@emotion/styled'
-import {StyledImage} from '@/components/image'
+import {Image} from '@/components/image'
+import {styled} from '@/styles'
 
-export const StyledModal = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-	position: fixed;
-	z-index: 200;
-	overflow: hidden;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	top: 0;
+export const StyledModal = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  position: 'fixed',
+  zIndex: '200',
+  overflow: 'hidden',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  top: 0,
 
-	&.modal-enter {
-		opacity: 0;
-		&-active {
-			opacity: 1;
-			transition: 500ms;
-		}
-	}
-	&.modal-exit {
-		opacity: 1;
-		&-active {
-			opacity: 0;
-			transition: 500ms;
-		}
-	}
-`
+  variants: {
+    enter: {
+      true: {
+        opacity: 0,
+      },
+    },
+    exit: {
+      true: {
+        opacity: 1,
+      },
+    },
+    active: {
+      true: {},
+    },
+  },
+  compoundVariants: [
+    {
+      enter: true,
+      active: true,
+      css: {
+        opacity: 1,
+        transition: '$med',
+      },
+    },
+    {
+      exit: true,
+      active: true,
+      css: {
+        opacity: 0,
+        transition: '$med',
+      },
+    },
+  ],
+})
 
-export const StyledModalBackground = styled.div`
-	background-color: rgba(0, 0, 0, 0.86);
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-`
+export const StyledModalBackground = styled('div', {
+  backgroundColor: 'rgba(0, 0, 0, 0.86)',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  right: 0,
+  top: 0,
+})
 
-export const StyledModalContent = styled.div`
-	background: hsl(180, 7.1%, 16.5%);
-	padding: 10px;
-	margin: 1rem;
-	width: auto;
-	max-width: 1000px;
-	height: auto;
-	position: relative;
+export const StyledModalContent = styled('div', {
+  background: '$darker',
+  padding: '$3',
+  margin: '$5',
+  width: 'auto',
+  maxWidth: '1000px',
+  height: 'auto',
+  position: 'relative',
 
-	& ${StyledImage} {
-		display: block;
-		margin: auto;
-		max-height: 600px;
-		text-align: center;
-	}
-`
+  [`& ${Image}`]: {
+    display: 'block',
+    margin: 'auto',
+    maxHeight: '600px',
+    textAlign: 'center',
+  },
+})

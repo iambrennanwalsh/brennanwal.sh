@@ -1,45 +1,44 @@
 import {NextApiRequest, NextApiResponse} from 'next'
-import {withSentry} from '@sentry/nextjs'
 
 const mailjet = require('node-mailjet').connect(
-	process.env.MAILJET_API_KEY,
-	process.env.MAILJET_SECRET_KEY
+  process.env.MAILJET_API_KEY,
+  process.env.MAILJET_SECRET_KEY
 )
 
 const mail = (req: NextApiRequest, res: NextApiResponse): void => {
-	let status = 200
-	let body = ''
-	if (req.method === 'POST') {
-		const {name, email, subject, message, timestamp} = JSON.parse(req.body)
-		const request = mailjet.post('send', {version: 'v3.1'}).request({
-			Messages: [
-				{
-					From: {
-						Email: 'mail@brennanwal.sh',
-						Name: 'Brennan Walsh'
-					},
-					To: [
-						{
-							Email: 'mail@brennanwal.sh',
-							Name: 'Brennan Walsh'
-						}
-					],
-					Subject: `New message from ${name} (${email}) via brennanwal.sh contact form.`,
-					HTMLPart: template(name, email, subject, message, timestamp)
-				}
-			]
-		})
-		request
-			.then(result => {
-				status = 200
-				body = result.body
-			})
-			.catch(err => {
-				return {status: err.statusCode, body: err.body}
-			})
+  let status = 200
+  let body = ''
+  if (req.method === 'POST') {
+    const {name, email, subject, message, timestamp} = JSON.parse(req.body)
+    const request = mailjet.post('send', {version: 'v3.1'}).request({
+      Messages: [
+        {
+          From: {
+            Email: 'mail@brennanwal.sh',
+            Name: 'Brennan Walsh',
+          },
+          To: [
+            {
+              Email: 'mail@brennanwal.sh',
+              Name: 'Brennan Walsh',
+            },
+          ],
+          Subject: `New message from ${name} (${email}) via brennanwal.sh contact form.`,
+          HTMLPart: template(name, email, subject, message, timestamp),
+        },
+      ],
+    })
+    request
+      .then(result => {
+        status = 200
+        body = result.body
+      })
+      .catch(err => {
+        return {status: err.statusCode, body: err.body}
+      })
 
-		return res.status(status).json(body)
-	}
+    return res.status(status).json(body)
+  }
 }
 
 const template = (name, email, subject, message, timestamp) => `
@@ -187,4 +186,4 @@ const template = (name, email, subject, message, timestamp) => `
 </html>
 `
 
-export default withSentry(mail)
+export default mail

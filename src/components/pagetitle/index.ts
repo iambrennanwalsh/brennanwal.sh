@@ -1,8 +1,3 @@
-// Index of PageTitle Component (/client/src/components/pagetitle/index)
+export * from './PageTitle'
+export * from './PageTitle.styles'
 
-export {PageTitle, AltPageTitle} from './PageTitle.component'
-export {
-	StyledPageTitle,
-	StyledAltPageTitle,
-	PageTitleCss
-} from './PageTitle.styles'

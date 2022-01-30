@@ -1,17 +1,40 @@
-import {Theme, Gradient} from '@/styles/abstract'
-import styled from '@emotion/styled'
+import {keyframes, styled} from '@/styles'
 
-export const StyledLoadBar = styled.div`
-	width: 100%;
-	height: 2px;
-	background: ${Theme.pallete.dark};
-	position: sticky;
-	top: 0px;
-	z-index: 500;
-`
+const loadbarAnimation = keyframes({
+  '0%': {
+    transform: 'scaleX(0)',
+  },
+  '100%': {
+    transform: 'scaleX(1)',
+  },
+})
 
-export const StyledProgress = styled.div`
-	height: 2px;
-	width: '100%';
-	${Gradient('primary')};
-`
+export const StyledLoadBar = styled('div', {
+  width: '100%',
+  height: '2px',
+  background: '$darkBg',
+  position: 'sticky',
+  top: 0,
+  zIndex: '$highest',
+
+  '& > div': {
+    height: '2px',
+    width: '100%',
+    backgroundImage: 'linear-gradient(-45deg, $primary, $secondary)',
+  },
+
+  variants: {
+    load: {
+      true: {
+        '& > div': {
+          animation: `${loadbarAnimation}`,
+
+          animationTimingFunction: 'ease-out',
+          transformOrigin: 'left',
+          animationDuration: '.5s',
+          animationFillMode: 'both',
+        },
+      },
+    },
+  },
+})

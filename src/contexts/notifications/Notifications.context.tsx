@@ -1,15 +1,23 @@
-import {createContext, useReducer} from 'react'
-import {NotificationsReducer} from './Notifications.reducer'
+import {Component, Props} from '@/'
+import {createContext, useState} from 'react'
+import {Notifications, NotificationsContextType} from '.'
 
-export const NotificationsContext: App.NotificationsContext =
-	createContext(undefined)
+export const NotificationsContext = createContext<
+  NotificationsContextType | undefined
+>(undefined)
 
-export const NotificationsProvider: App.Component = ({children}) => {
-	const [state, dispatch] = useReducer(NotificationsReducer, [])
+type NotificationsContextProviderProps = Props<'div'>
 
-	return (
-		<NotificationsContext.Provider value={{state, dispatch}}>
-			{children}
-		</NotificationsContext.Provider>
-	)
+export const NotificationsContextProvider: Component<
+  NotificationsContextProviderProps
+> = ({children}) => {
+  const [notifications, setNotifications] = useState<Notifications | undefined>(
+    []
+  )
+
+  return (
+    <NotificationsContext.Provider value={{notifications, setNotifications}}>
+      {children}
+    </NotificationsContext.Provider>
+  )
 }

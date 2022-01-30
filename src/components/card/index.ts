@@ -1,2 +1,3 @@
-export {Card} from './Card.component'
-export {StyledCard, CardCss} from './Card.styles'
+export {Card} from './Card'
+export {StyledCard} from './Card.styles'
+export type {CardProps} from './Card'

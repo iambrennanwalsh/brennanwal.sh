@@ -1,80 +1,64 @@
-import styled from '@emotion/styled'
-import {Mq, Theme} from '@/styles/abstract'
-import {css} from '@emotion/react'
+import {StyledBox} from '@/components'
+import {styled} from '@/styles'
 
-export const ContentCss = css`
-	padding: 1.25rem 1.25rem 0;
+export const StyledContent = styled('div', {
+  padding: '$6 $6 $2',
 
-	&:last-of-type {
-		//padding-bottom: 1.25rem;
-	}
+  [`${StyledBox} > &:last-child`]: {
+    paddingBottom: '$6',
+  },
 
-	&:last-of-type .codeblock {
-		//margin-bottom: -1.25rem;
-	}
+  '& > img': {
+    width: '100%',
+    marginBottom: '$6',
+    borderRadius: '$round',
+    boxShadow: '$sm',
 
-	& img {
-		width: 100%;
-		margin-bottom: 1rem;
-		border-radius: ${Theme.styles.borderRadius};
-		box-shadow: ${Theme.styles.boxShadow};
+    '@tablet': {
+      marginLeft: '$6',
+      float: 'right',
+      width: '30%',
+      maxWidth: '300px',
+    },
+  },
 
-		${Mq.from('tablet')} {
-			margin-left: 1rem;
-			float: right;
-			width: 30%;
-			max-width: 300px;
-		}
-	}
-	&.nosep hr,
-	& .codeblock ~ hr {
-		display: none;
-	}
+  '& > h3': {
+    fontWeight: '400',
+    color: '$primary',
+    marginBottom: '$4',
+    '@untilTablet': {
+      paddingBottom: '$3',
+      borderBottomWidth: '$sm',
+      borderBottomStyle: '$solid',
+      borderBottomColor: '$responsiveDivider',
+    },
+  },
 
-	& h3 {
-		color: ${Theme.pallete.primary};
-		margin-bottom: 1rem;
-		border-bottom: 1px solid ${Theme.pallete.lighter};
-		padding-bottom: 10px;
-		line-height: 1;
+  '& > p': {
+    marginBottom: '$6',
+  },
 
-		${Mq.from('tablet')} {
-			border: 0;
-			padding: 0;
-		}
+  '@untilTablet': {
+    '& > hr': {
+      display: 'none',
+    },
+  },
 
-		& ~ p {
-			${Mq.from('desktop')} {
-				padding-left: 1rem;
-			}
-		}
-	}
-
-	.tab & {
-		& img {
-			max-width: 50px;
-			height: auto;
-			margin-left: 2rem;
-			margin-right: 1rem;
-			box-shadow: unset;
-			float: right;
-
-			${Mq.from('tablet')} {
-				max-width: 75px;
-			}
-
-			& ~ h3 {
-				${Mq.until('tablet')} {
-					width: 70%;
-				}
-			}
-		}
-	}
-	&.withForm hr {
-		clear: both;
-	}
-`
-
-export const StyledContent = styled.div`
-	${ContentCss}
-`
+  variants: {
+    tab: {
+      true: {
+        '& > img': {
+          maxWidth: '50px',
+          height: 'auto',
+          marginLeft: '$8',
+          marginRight: '$5',
+          boxShadow: 0,
+          float: 'right',
+          '@tablet': {
+            maxWidth: '75px',
+          },
+        },
+      },
+    },
+  },
+})

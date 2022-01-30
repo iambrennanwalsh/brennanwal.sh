@@ -1,11 +1,8 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "eg2.vscode-npm-script",
-    "christian-kohler.npm-intellisense",
-    "visualstudioexptteam.vscodeintellicode",
-    "jpoissonnier.vscode-styled-components",
-    "paulmolluzzo.convert-css-in-js",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "stylelint.vscode-stylelint"
   ]
 }

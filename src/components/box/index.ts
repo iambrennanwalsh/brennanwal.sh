@@ -1,2 +1,3 @@
-export {Box} from './Box.component'
-export {StyledBox, BoxCss} from './Box.styles'
+export {Box} from './Box'
+export {StyledBox} from './Box.styles'
+export type {BoxProps} from './Box'

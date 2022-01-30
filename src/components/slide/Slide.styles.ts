@@ -1,66 +1,57 @@
-import styled from '@emotion/styled'
-import {Theme, Stretch, Mq} from '@/styles/abstract'
-import {css} from '@emotion/react'
-import {StyledSeperator} from '@/components/seperator'
+import {styled} from '@/styles'
 
-export const SlideCss = css`
-	align-items: center;
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
-	display: flex;
-	font-size: 20px;
-	height: 400px;
-	justify-content: center;
-	padding: 1.5rem;
-	text-align: center;
-	text-transform: uppercase;
+export const StyledSlideQuote = styled('p', {
+  color: '$whiteText',
+  maxWidth: '600px',
+  marginBottom: '$6',
+})
 
-	${Mq.from('tablet')} {
-		border-radius: 4px;
-		margin-bottom: 1.25rem;
-	}
+export const StyledSlideSource = styled('p', {
+  backgroundImage: 'linear-gradient(-45deg, $primary, $secondary)',
+  color: '$blackText',
+  display: 'inline',
+  padding: '$1 $3',
+  boxShadow: '$sm',
+})
 
-	${Mq.until('tablet')} {
-		${Stretch}
-	}
+export const StyledSlide = styled('div', {
+  alignItems: 'center',
+  boxShadow: '$md',
+  display: 'flex',
+  fontSize: '$xl',
+  height: '400px',
+  justifyContent: 'center',
+  padding: '$7',
+  textAlign: 'center',
+  textTransform: 'uppercase',
 
-	& .quote {
-		color: ${Theme.pallete.whiter};
-		max-width: 600px;
-	}
+  '@tablet': {
+    borderRadius: '4px',
+    marginBottom: '1.25rem',
+  },
 
-	& .source {
-		background: linear-gradient(
-			to right,
-			${Theme.pallete.primary},
-			${Theme.pallete.secondary}
-		);
-		color: ${Theme.pallete.blacker};
-		display: inline;
-		padding: 2px 5px;
-		box-shadow: 0px 0px 3px rgb(0, 0, 0);
-	}
+  '@untilTablet': {
+    stretch: true,
+  },
 
-	& ${StyledSeperator} {
-		display: none;
-	}
-
-	&.steve-jobs {
-		background: url('/images/slides/hiking.jpg');
-		background-position-x: 10%;
-		background-position-y: 100%;
-	}
-
-	&.los-angeles {
-		background: url('/images/slides/la.jpg');
-		background-position-x: 50%;
-		background-position-y: 50%;
-
-		& .source {
-			color: ${Theme.pallete.whiter};
-		}
-	}
-`
-
-export const StyledSlide = styled.div`
-	${SlideCss}
-`
+  variants: {
+    type: {
+      steveJobs: {
+        background: 'url("/images/slides/hiking.jpg")',
+        backgroundPositionX: '10%',
+        backgroundPositionY: '100%',
+      },
+      losAngeles: {
+        background: 'url("/images/slides/la.jpg")',
+        backgroundPositionX: '50%',
+        backgroundPositionY: '50%',
+        [`& ${StyledSlideSource}`]: {
+          color: '$whiteText',
+        },
+      },
+    },
+  },
+  defaultVariants: {
+    type: 'steveJobs',
+  },
+})

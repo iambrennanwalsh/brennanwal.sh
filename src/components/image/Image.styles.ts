@@ -1,7 +1,3 @@
-import styled from '@emotion/styled'
+import {styled} from '@/styles'
 
-export const StyledImage = styled.img``
-
-export const StyledFigure = styled.figure``
-
-export const StyledFigCaption = styled.figcaption``
+export const StyledImage = styled('img', {})
