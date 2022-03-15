@@ -1,20 +1,22 @@
-import {Anchor, Box, Content, Slide, Tabs} from '@/components'
-import {useApiContext} from '@/hooks'
-import {Standard} from '@/layouts'
-import {GetAllResources} from '@/utils/getAllResources'
-import {LayoutState} from '@/utils/layoutState'
-import {InferGetStaticPropsType} from 'next'
-import {ReactElement, useEffect} from 'react'
+import { Article } from '@/'
+import { Anchor, Box, Content, Slide, Tabs } from '@/components'
+import { useApiContext } from '@/hooks'
+import { Standard } from '@/layouts'
+import { GetAllResources } from '@/utils/getAllResources'
+import { InferGetStaticPropsType } from 'next'
+import { ReactElement, useEffect } from 'react'
 
 const aboutSeo = {
   title: 'About Me',
   description:
-    'I am a full stack applications developer and entrepreneur living in Los Angeles.',
+    'I am a full stack applications developer and entrepreneur living in Los Angeles.'
 }
 
 const languagesTab = (
   <>
-    <Content heading="PHP" image={{src: '/images/skills/php.png', alt: 'PHP'}}>
+    <Content
+      heading="PHP"
+      image={{ src: '/images/skills/php.png', alt: 'PHP' }}>
       <p>
         PHP: Hypertext Preprocessor is a general-purpose programming language.
         PHP is primarily used for web development because it pairs well with
@@ -26,9 +28,8 @@ const languagesTab = (
       heading="JavaScript"
       image={{
         src: '/images/skills/js.png',
-        alt: 'JavaScript',
-      }}
-    >
+        alt: 'JavaScript'
+      }}>
       <p>
         JavaScript is a high-level, interpreted programming language. It&apos;s
         typically used client side to provide dynamic web browser interactivity,
@@ -38,8 +39,7 @@ const languagesTab = (
 
     <Content
       heading="Swift"
-      image={{src: '/images/skills/swift.png', alt: 'Swift'}}
-    >
+      image={{ src: '/images/skills/swift.png', alt: 'Swift' }}>
       <p>
         Swift is a modern general-purpose, and compiled programming language
         developed by Apple. Swift is designed to work with Apple&apos;s Cocoa
@@ -52,9 +52,8 @@ const languagesTab = (
       heading="GoLang"
       image={{
         src: '/images/skills/golang.png',
-        alt: 'GoLang',
-      }}
-    >
+        alt: 'GoLang'
+      }}>
       <p>
         GoLang is a modern statically-typed compiled language that is being
         developed by Google. The langauges defining features are its small size
@@ -69,10 +68,9 @@ const frameworksTab = (
     <Content
       image={{
         src: '/images/skills/symfony.png',
-        alt: 'Symfony',
+        alt: 'Symfony'
       }}
-      heading="Symfony"
-    >
+      heading="Symfony">
       <p>
         Symfony is a PHP web application framework and a set of reusable PHP
         components / libraries. Many of the more well known PHP frameworks such
@@ -82,28 +80,25 @@ const frameworksTab = (
     <Content
       image={{
         src: '/images/skills/laravel.png',
-        alt: 'Laravel',
+        alt: 'Laravel'
       }}
-      heading="Laravel"
-    >
+      heading="Laravel">
       <p>
         Laravel is the most popular PHP web application framework. It is
         described as a web application framework with expressive, elegant syntax
       </p>
     </Content>
     <Content
-      image={{src: '/images/skills/vue.png', alt: 'Vue'}}
-      heading="Vue.js"
-    >
+      image={{ src: '/images/skills/vue.png', alt: 'Vue' }}
+      heading="Vue.js">
       <p>
         Vue.js is an open-source JavaScript framework for building user
         interfaces and single-page applications.
       </p>
     </Content>
     <Content
-      image={{src: '/images/skills/react.png', alt: 'React'}}
-      heading="React"
-    >
+      image={{ src: '/images/skills/react.png', alt: 'React' }}
+      heading="React">
       <p>
         React is a JavaScript library for building user interfaces. It is
         maintained by Facebook and a community of individual developers and
@@ -116,18 +111,16 @@ const frameworksTab = (
 const toolsTab = (
   <>
     <Content
-      image={{src: '/images/skills/docker.png', alt: 'Docker'}}
-      heading="Docker"
-    >
+      image={{ src: '/images/skills/docker.png', alt: 'Docker' }}
+      heading="Docker">
       <p>
         Docker is a set of platform as a service products that use OS-level
         virtualization to deliver software in packages called containers.
       </p>
     </Content>
     <Content
-      image={{src: '/images/skills/heroku.png', alt: 'Heroku'}}
-      heading="Heroku"
-    >
+      image={{ src: '/images/skills/heroku.png', alt: 'Heroku' }}
+      heading="Heroku">
       <p>
         Heroku is a cloud platform as a service supporting several programming
         languages. Connect a github repository, and each push becomes a deploy.
@@ -136,10 +129,9 @@ const toolsTab = (
     <Content
       image={{
         src: '/images/skills/postcss.png',
-        alt: 'PostCSS',
+        alt: 'PostCSS'
       }}
-      heading="PostCSS"
-    >
+      heading="PostCSS">
       <p>
         PostCSS transforms CSS via JavaScript. Hundreds of plugins offer
         features such as auto-prefixing, future CSS syntax, modules, linting and
@@ -150,24 +142,20 @@ const toolsTab = (
 )
 
 const tabs = [
-  {title: 'Languages', children: languagesTab},
-  {title: 'Frameworks', children: frameworksTab},
-  {title: 'Tools', children: toolsTab},
+  { title: 'Languages', children: languagesTab },
+  { title: 'Frameworks', children: frameworksTab },
+  { title: 'Tools', children: toolsTab }
 ]
 
 const About = ({
-  layoutState,
+  articles
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-  const {featured, categories} = layoutState
-  const {resources, setResources} = useApiContext()
+  const { resources, setResources } = useApiContext()
 
   useEffect(() => {
-    const newResources = {}
-    if (!('featured' in resources)) newResources['featured'] = featured
-    if (!('categories' in resources)) newResources['categories'] = categories
-    if (Object.keys(newResources).length > 0)
-      setResources({...resources, ...newResources})
-  }, [featured, categories, resources, setResources])
+    if (!('articles' in resources))
+      setResources({ ...resources, articles: articles })
+  }, [articles, resources, setResources])
 
   return (
     <>
@@ -176,9 +164,8 @@ const About = ({
           image={{
             src: '/images/me/me3.jpg',
             alt: 'Brennan Walsh',
-            lightbox: true,
-          }}
-        >
+            lightbox: true
+          }}>
           <p>
             <s>Nobody really.</s> I am 24 years young, and living in Los Angeles
             where I was born and raised. I am a web, mobile, and desktop
@@ -270,15 +257,18 @@ const About = ({
 export default About
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources('articles')
-  const layoutState = LayoutState(articles)
+  const articles = await GetAllResources<Article>('articles')
   return {
     props: {
-      layoutState,
-    },
+      articles
+    }
   }
 }
 
 About.getLayout = function getLayout(page: ReactElement) {
-  return <Standard seo={aboutSeo}>{page}</Standard>
+  return (
+    <Standard pageTitle={aboutSeo} seo={aboutSeo}>
+      {page}
+    </Standard>
+  )
 }

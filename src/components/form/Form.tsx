@@ -1,8 +1,13 @@
-import type {Component, Notification, Props} from '@/'
-import {Icon} from '@/components'
-import {useNotificationsContext} from '@/hooks'
-import {ChangeEvent, useRef, useState} from 'react'
-import {StyledForm, StyledFormButton, StyledFormField, StyledFormInput} from '.'
+import type { Component, Notification, Props } from '@/'
+import { Icon } from '@/components'
+import { useNotificationsContext } from '@/hooks'
+import { ChangeEvent, useRef, useState } from 'react'
+import {
+  StyledForm,
+  StyledFormButton,
+  StyledFormField,
+  StyledFormInput
+} from '.'
 
 interface InputOwnProps {
   state: boolean
@@ -17,7 +22,7 @@ export const Input: Component<InputProps> = ({
   handle,
   state,
   attempted,
-  schema,
+  schema
 }) => {
   const preHandle = (
     event: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>
@@ -29,7 +34,7 @@ export const Input: Component<InputProps> = ({
   }
 
   return (
-    <StyledFormField>
+    <StyledFormField data-component="input">
       {schema.label && (
         <label htmlFor={`input__${schema.type}__${schema.name}`}>
           {schema.label}
@@ -52,8 +57,7 @@ export const Input: Component<InputProps> = ({
           onChange={preHandle}
           id={`input__textarea__${schema.name}`}
           name={schema.name}
-          placeholder={schema.placeholder}
-        ></StyledFormInput>
+          placeholder={schema.placeholder}></StyledFormInput>
       )}
     </StyledFormField>
   )
@@ -113,13 +117,13 @@ export const Form: Component<FormProps> = ({
   schema,
   successNotification = {
     message: 'Thank you. Your submission was recieved.',
-    type: 'success',
+    type: 'success'
   },
   errorNotification = {
     message: 'Oops. Something went wrong. Try again later.',
-    type: 'danger',
+    type: 'danger'
   },
-  buttonLabel = 'submit',
+  buttonLabel = 'Submit'
 }) => {
   const form = useRef<HTMLFormElement | null>(null)
 
@@ -127,21 +131,21 @@ export const Form: Component<FormProps> = ({
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [validation, setValidation] = useState(() => {
-    const obj = {}
+    const obj: Record<string, boolean> = {}
     schema.forEach(input => {
       obj[input.name] = true
     })
     return obj
   })
 
-  const {notifications, setNotifications} = useNotificationsContext()
+  const { notifications, setNotifications } = useNotificationsContext()
   const notify = (notification: Notification): void =>
     setNotifications([...notifications, notification])
 
   const handle = (name: string, status: boolean): void => {
     setValidation({
       ...validation,
-      [name]: status,
+      [name]: status
     })
   }
 
@@ -149,7 +153,7 @@ export const Form: Component<FormProps> = ({
     setSuccess(false)
     setAttempted(false)
     form.current!.reset()
-    const obj = {}
+    const obj: Record<string, boolean> = {}
     schema.forEach(input => {
       obj[input.name] = true
     })
@@ -161,7 +165,7 @@ export const Form: Component<FormProps> = ({
     data.append('timestamp', `${Date.now()}`)
     fetch(action, {
       method: method,
-      body: JSON.stringify(Object.fromEntries(data)),
+      body: JSON.stringify(Object.fromEntries(data))
     }).then(response => {
       setLoading(false)
       setSuccess(true)
@@ -189,8 +193,9 @@ export const Form: Component<FormProps> = ({
       ref={form}
       onSubmit={validate}
       method={method}
+      autoComplete="off"
       noValidate
-    >
+      data-component="form">
       {schema.map(input => (
         <Input
           key={input.name}
@@ -204,14 +209,17 @@ export const Form: Component<FormProps> = ({
         handle={() => validate}
         bg="primary"
         color="whiteText"
-        size="sm"
-      >
+        size="sm">
+        {buttonLabel}
+
         <Icon
           icon={success ? 'success' : loading ? 'spinner' : 'envelope'}
           size="sm"
         />
-        {buttonLabel}
       </StyledFormButton>
     </StyledForm>
   )
 }
+
+Form.toString = () => '[data-component="form"]'
+Input.toString = () => '[data-component="input"]'

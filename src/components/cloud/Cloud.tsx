@@ -1,18 +1,20 @@
-import type {Component, Props} from '@/'
-import {Anchor} from '@/components'
-import {useApiContext} from '@/hooks'
-import {Slugify} from '@/utils/slugify/Slugify'
-import {useState} from 'react'
-import {StyledCloud, StyledCloudNode} from '.'
+import type { Component, Props } from '@/'
+import { Anchor } from '@/components'
+import { useApiContext } from '@/hooks'
+import { Slugify } from '@/utils/slugify/Slugify'
+import { useEffect, useState } from 'react'
+import { StyledCloud, StyledCloudNode } from '.'
 
 export type CloudProps = Props<typeof StyledCloud>
 
 export const Cloud: Component<CloudProps> = props => {
-  const {resources} = useApiContext()
-  const [cloud] = useState(() => {
-    const tagCount: {[index: string]: number} = {}
+  const { resources } = useApiContext()
+  const [cloud, setCloud] = useState<[string, number][]>([])
+
+  useEffect(() => {
+    const tagCount: Record<string, number> = {}
     if ('articles' in resources) {
-      resources.articles.forEach(article => {
+      resources.articles?.forEach(article => {
         if (typeof article.tags !== 'undefined') {
           article.tags.forEach(tag => {
             if (typeof tagCount[tag] == 'undefined') tagCount[tag] = 1
@@ -25,7 +27,7 @@ export const Cloud: Component<CloudProps> = props => {
     const maxRem = 1.5
     const minRem = 0.85
     const decrement = (maxRem - minRem) / (sortedTags.length - 1)
-    const initialCloud: {[index: string]: number} = {}
+    const initialCloud: Record<string, number> = {}
     sortedTags.forEach((sortedTag, i) => {
       const rem = maxRem - i * decrement
       const tag = sortedTag[0]
@@ -33,18 +35,17 @@ export const Cloud: Component<CloudProps> = props => {
         initialCloud[tag] = rem
       }
     })
-    return Object.entries(initialCloud).sort(() => 0.5 - Math.random())
-  })
+    setCloud(Object.entries(initialCloud).sort(() => 0.5 - Math.random()))
+  }, [resources])
 
   return (
     <StyledCloud {...props}>
-      {cloud.map(node => (
-        <Anchor key={node[0]} href={`/tag/${Slugify(node[0])}`}>
+      {cloud.map(([name, size]) => (
+        <Anchor key={name} href={`/tag/${Slugify(name)}`}>
           <StyledCloudNode
-            css={{fontSize: `${node[1]}rem`}}
-            color={node[1] > 1.25 ? 'secondary' : 'lighter'}
-          >
-            {node[0]}
+            css={{ fontSize: `${size}rem` }}
+            color={size > 1.25 ? 'secondary' : 'light'}>
+            {name}
           </StyledCloudNode>
         </Anchor>
       ))}

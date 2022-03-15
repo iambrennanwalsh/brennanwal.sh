@@ -7,10 +7,10 @@ export const StyledMain = styled('main', {
 
   '@tablet': {
     display: 'flex',
-    padding: '$6',
+    padding: '$6'
   },
 
   '@widescreen': {
-    maxWidth: '$widescreen',
-  },
+    maxWidth: '$widescreen'
+  }
 })

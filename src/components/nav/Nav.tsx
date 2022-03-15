@@ -1,22 +1,23 @@
-import type {Component, Props} from '@/'
-import type {AnchorProps, ImageProps} from '@/components'
-import {Icon, Image} from '@/components'
-import {useRouter} from 'next/router'
-import {memo, useEffect, useState} from 'react'
+import type { Component, Props } from '@/'
+import type { AnchorProps, ImageProps } from '@/components'
+import { Icon, Image } from '@/components'
+import { useRouter } from 'next/router'
+import type { MemoExoticComponent } from 'react'
+import { memo, useEffect, useState } from 'react'
 import {
   StyledNav,
   StyledNavAnchor,
   StyledNavBurger,
   StyledNavContainer,
-  StyledNavLogo,
-  StyledNavMenu,
+  StyledNavMenu
 } from './Nav.styles'
 
-const Logo: Component<ImageProps> = ({alt, ...props}) => {
-  return <Image alt={alt} {...props} />
-}
-
-const MemoizedLogo = memo(Logo)
+// eslint-disable-next-line react/display-name
+const Logo: MemoExoticComponent<Component<ImageProps>> = memo(
+  ({ alt, ...props }) => {
+    return <Image alt={alt} {...props} />
+  }
+)
 
 interface NavOwnProps {
   menu: AnchorProps[]
@@ -25,33 +26,33 @@ interface NavOwnProps {
 
 export type NavProps = Props<typeof StyledNav, NavOwnProps>
 
-export const Nav: Component<NavProps> = ({menu, logo, ...props}) => {
+export const Nav: Component<NavProps> = ({ menu, logo, ...props }) => {
   const router = useRouter()
 
-  const [menuState, setMenuState] = useState<boolean>(false)
+  const [isMenuActive, setIsMenuActive] = useState<boolean>(false)
 
   useEffect(() => {
-    setMenuState(false)
+    setIsMenuActive(false)
     window.scrollTo(0, 0)
   }, [router.asPath])
 
   return (
-    <StyledNav {...props}>
+    <StyledNav data-component="nav" {...props}>
       <StyledNavContainer>
-        <StyledNavLogo href="/">
-          <MemoizedLogo {...logo} />
-        </StyledNavLogo>
-        <StyledNavMenu active={menuState}>
-          {menu.map(link => (
-            <StyledNavAnchor {...link} key={link.href}>
-              {link.children}
-            </StyledNavAnchor>
+        <StyledNavAnchor href="/">
+          <Logo {...logo} />
+        </StyledNavAnchor>
+        <StyledNavMenu active={isMenuActive}>
+          {menu.map(anchor => (
+            <StyledNavAnchor {...anchor} key={anchor.href} />
           ))}
         </StyledNavMenu>
-        <StyledNavBurger onClick={() => setMenuState(!menuState)}>
+        <StyledNavBurger onClick={() => setIsMenuActive(!isMenuActive)}>
           <Icon icon="bars" />
         </StyledNavBurger>
       </StyledNavContainer>
     </StyledNav>
   )
 }
+
+Nav.toString = () => '[data-component="nav"]'

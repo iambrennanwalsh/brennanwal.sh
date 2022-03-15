@@ -1,6 +1,6 @@
-import type {Css} from '@/styles'
-import {theme} from '@/styles'
-import type {CSSProperties} from '@stitches/react'
+import type { Css } from '@/styles'
+import { theme } from '@/styles'
+import type { CSSProperties } from '@stitches/react'
 
 /**
  * ThemeVariants
@@ -37,7 +37,7 @@ export const ThemeVariants = <
   scale: T,
   property: C
 ): Record<keyof typeof theme[T], Css> => {
-  const variants = {}
+  const variants: Record<string, Record<string, string>> = {}
   if (!(scale in theme)) {
     throw new Error(
       'The value of the scale parameter must be a valid scale from your theme.'
@@ -47,7 +47,7 @@ export const ThemeVariants = <
   if (typeof themeScale == 'object') {
     Object.keys(themeScale).forEach(key => {
       variants[key] = {
-        [property]: `$${key}`,
+        [property]: `$${key}`
       }
     })
   }

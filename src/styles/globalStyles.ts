@@ -1,4 +1,4 @@
-import {globalCss} from '@/styles/stitches.config'
+import { globalCss } from '@/styles/stitches.config'
 
 export const globalStyles = globalCss({
   '@font-face': {
@@ -7,7 +7,7 @@ export const globalStyles = globalCss({
           url('/fonts/icons.woff2') format('woff2'),
           url('/fonts/icons.woff') format('woff'),
           url('/fonts/icons.ttf') format('truetype'),
-          url('/fonts/icons.svg') format('svg')`,
+          url('/fonts/icons.svg') format('svg')`
   },
   html: {
     boxSizing: 'border-box',
@@ -16,7 +16,7 @@ export const globalStyles = globalCss({
     fontFamily: '$body',
     fontSize: '$body',
     lineHeight: '$body',
-    fontWeight: 'normal',
+    fontWeight: '$body',
     textSizeAdjust: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
@@ -25,46 +25,42 @@ export const globalStyles = globalCss({
     '-moz-osx-font-smoothing': 'grayscale',
 
     '@tablet': {
-      background: `url('/images/interface/background.png')`,
-    },
+      background: `url('/images/interface/background.png')`
+    }
   },
 
   '*, *::before, *::after': {
     boxSizing: 'inherit',
     margin: 0,
-    padding: 0,
+    padding: 0
   },
 
   '*:focus': {
-    outline: 'none',
+    outline: '0'
   },
 
   'h1, h2, h3, h4, h5, h6': {
-    lineHeight: '$sm',
+    lineHeight: '$md',
+    fontWeight: '300'
   },
 
   h1: {
-    fontSize: '$h1',
+    fontSize: '$h1'
   },
-
   h2: {
-    fontSize: '$h2',
+    fontSize: '$h2'
   },
-
   h3: {
-    fontSize: '$h3',
+    fontSize: '$h3'
   },
-
   h4: {
-    fontSize: '$h4',
+    fontSize: '$h4'
   },
-
   h5: {
-    fontSize: '$h5',
+    fontSize: '$h5'
   },
-
   h6: {
-    fontSize: '$h6',
+    fontSize: '$h6'
   },
 
   a: {
@@ -74,8 +70,8 @@ export const globalStyles = globalCss({
     transition: '$fast',
 
     '&:hover': {
-      color: '$linkHover',
-    },
+      color: '$linkHover'
+    }
   },
 
   hr: {
@@ -84,11 +80,13 @@ export const globalStyles = globalCss({
   },
 
   label: {
-    color: '$grayText',
+    color: '$grayText'
   },
 
   'input, textarea, select': {
-    p: '$4',
+    width: '100%',
+    px: '$4',
+    py: '$3',
     fontSize: '$sm',
     color: '$text',
     border: 0,
@@ -100,8 +98,15 @@ export const globalStyles = globalCss({
     fontFamily: '$body',
 
     '@tablet': {
-      backgroundColor: '$white',
-    },
+      backgroundColor: 'unset',
+      width: '90%',
+      borderRadius: '0px',
+      borderBottomWidth: '1px',
+
+      '&:hover:placeholder, &:active:placeholder, &:focus:placeholder': {
+        color: '$text'
+      }
+    }
   },
 
   button: {
@@ -109,7 +114,7 @@ export const globalStyles = globalCss({
     outline: '0',
     cursor: 'pointer',
     transition: '$fast',
-    fontFamily: 'Maven Pro',
+    fontFamily: '$body',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -117,16 +122,19 @@ export const globalStyles = globalCss({
     width: '100%',
     '&:active': {
       transform: 'translateY(3px)',
-      transition: 0,
-    },
+      transition: 0
+    }
   },
 
   textarea: {
-    minHeight: '100px',
+    minHeight: '100px'
   },
 
   'input::placeholder, textarea::placeholder': {
     color: '$grayText',
+    '@tablet': {
+      color: '#777'
+    }
   },
 
   select: {
@@ -134,24 +142,28 @@ export const globalStyles = globalCss({
     background: `$whiter, url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2552557CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')`,
     backgroundRepeat: 'no-repeat, repeat',
     backgroundPosition: 'right 1rem top 50%, 0 0',
-    backgroundSize: '0.65em auto, 100%',
+    backgroundSize: '0.65em auto, 100%'
   },
 
   img: {
     height: 'auto',
-    maxWidth: '100%',
+    maxWidth: '100%'
   },
 
   'code:not([class*="language"])': {
     color: '$secondary',
     borderBottomWidth: '$sm',
     borderBottomStyle: '$dashed',
-    borderBottomColor: '$secondary',
+    borderBottomColor: '$secondary'
+  },
+
+  'pre, code': {
+    fontFamily: '$code'
   },
 
   ul: {
     listStylePosition: 'inside',
     listStyleType: 'none',
-    marginLeft: 0,
-  },
+    marginLeft: 0
+  }
 })

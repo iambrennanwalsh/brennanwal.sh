@@ -1,6 +1,7 @@
-import {Component, Props} from '@/'
+import { Component, Props } from '@/'
+import { useComponentContext } from '@/hooks'
 import Head from 'next/head'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 
 interface SeoOwnProps {
   title: string
@@ -8,18 +9,35 @@ interface SeoOwnProps {
   image?: string
 }
 
+interface SeoData {
+  data: {
+    seo: {
+      title: string
+      description: string
+      image: string
+    }
+  }
+  [index: string]: unknown
+}
+
 export type SeoProps = Props<typeof Head, SeoOwnProps>
 
 export const Seo: Component<SeoProps> = ({
   title = 'Web Developer and Entrepreneur',
   description = 'Im a web, mobile, and desktop applications developer, and entrepreneur. Welcome to my personal blog, portfolio, and home page.',
-  image = 'https://brennanwalsh.sh/images/slides/slider.jpg',
+  image = 'https://brennanwalsh.sh/images/slides/slider.jpg'
 }) => {
-  const {asPath} = useRouter()
+  const { data } = useComponentContext() as SeoData
+
+  const { asPath } = useRouter()
   return (
     <Head>
-      <title key="title">{title} • Brennan Walsh</title>
-      <meta name="description" content={description} key="description" />
+      <title key="title">{data.seo?.title ?? title} • Brennan Walsh</title>
+      <meta
+        name="description"
+        content={data.seo?.description ?? description}
+        key="description"
+      />
       <meta
         name="author"
         content="Brennan Walsh / mail@brennanwal.sh / @iambrennanwalsh"
@@ -31,13 +49,21 @@ export const Seo: Component<SeoProps> = ({
         content={`https://brennanwal.sh${asPath}`}
         key="og-url"
       />
-      <meta property="og:title" content={title} key="og-title" />
+      <meta
+        property="og:title"
+        content={data.seo?.title ?? title}
+        key="og-title"
+      />
       <meta
         property="og:description"
-        content={description}
+        content={data.seo?.description ?? description}
         key="og-description"
       />
-      <meta property="og:image" content={image} key="og-image" />
+      <meta
+        property="og:image"
+        content={data.seo?.image ?? image}
+        key="og-image"
+      />
       <meta
         property="twitter:card"
         content="summary_large_image"
@@ -48,13 +74,21 @@ export const Seo: Component<SeoProps> = ({
         content={`https://brennanwal.sh${asPath}`}
         key="twitter-url"
       />
-      <meta property="twitter:title" content={title} key="twitter-title" />
+      <meta
+        property="twitter:title"
+        content={data.seo?.title ?? title}
+        key="twitter-title"
+      />
       <meta
         property="twitter:description"
-        content={description}
+        content={data.seo?.description ?? description}
         key="twitter-description"
       />
-      <meta property="twitter:image" content={image} key="twitter-image" />
+      <meta
+        property="twitter:image"
+        content={data.seo?.image ?? image}
+        key="twitter-image"
+      />
     </Head>
   )
 }

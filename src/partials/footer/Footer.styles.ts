@@ -1,9 +1,9 @@
-import {Cloud, Icon, Image, Seperator} from '@/components'
-import {styled} from '@/styles'
+import { Cloud, Icon, Image, Seperator } from '@/components'
+import { styled } from '@/styles'
 
 export const StyledFooter = styled('footer', {
   width: '100%',
-  backgroundColor: '$responsiveBg',
+  backgroundColor: '$responsiveBg'
 })
 
 export const StyledGradientStrip = styled('div', {
@@ -13,11 +13,11 @@ export const StyledGradientStrip = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  backgroundImage: 'linear-gradient(to right, $primary, $secondary)',
+  backgroundImage: 'linear-gradient(to right, $primary, $secondary)'
 })
 
 export const StyledIgIcon = styled(Icon, {
-  mr: '$6',
+  mr: '$6'
 })
 
 export const StyledFooterWidgets = styled('div', {
@@ -29,8 +29,8 @@ export const StyledFooterWidgets = styled('div', {
     display: 'flex',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    py: '$9',
-  },
+    py: '$9'
+  }
 })
 
 export const StyledFooterSummary = styled('div', {
@@ -40,20 +40,21 @@ export const StyledFooterSummary = styled('div', {
   textAlign: 'center',
 
   '@tablet': {
+    textAlign: 'left',
     alignItems: 'start',
-    width: '33.3%',
-  },
+    width: '33.3%'
+  }
 })
 
 export const StyledFooterLogo = styled(Image, {
   width: '150px',
-  mb: '$6',
+  mb: '$6'
 })
 
 export const StyledFooterSeperator = styled(Seperator, {
   '@tablet': {
-    display: 'none',
-  },
+    display: 'none'
+  }
 })
 
 export const StyledFooterNav = styled('nav', {
@@ -61,20 +62,20 @@ export const StyledFooterNav = styled('nav', {
   justifyContent: 'space-evenly',
 
   '@tablet': {
-    width: '50%',
-  },
+    width: '50%'
+  }
 })
 
 export const StyledFooterListHeader = styled('h5', {
-  fontWeight: '$bold',
+  fontWeight: '$bold'
 })
 
 export const StyledFooterNavList = styled('div', {
-  width: '200px',
+  width: '200px'
 })
 
 export const StyledFooterCloud = styled(Cloud, {
   color: '$text',
   padding: 0,
-  justifyContent: 'left',
+  justifyContent: 'left'
 })

@@ -1,5 +1,5 @@
-import type {CSS} from '@stitches/react'
-import {createStitches, PropertyValue} from '@stitches/react'
+import type { CSS } from '@stitches/react'
+import { createStitches, PropertyValue } from '@stitches/react'
 
 export const {
   styled,
@@ -9,13 +9,12 @@ export const {
   getCssText,
   theme,
   createTheme,
-  config,
+  config
 } = createStitches({
   theme: {
     colors: {
       primary: 'hsl(138, 61.2%, 38.4%)',
       secondary: 'hsl(88.3, 41.3%, 50.6%)',
-      tertiary: 'hsl(256.6, 74.5%, 67.6%)',
       danger: 'hsl(355, 94.7%, 62.7%)',
       warning: 'hsl(47.1, 75.6%, 43.3%)',
       success: 'hsl(138, 61.2%, 38.4%)',
@@ -23,7 +22,7 @@ export const {
       whiter: 'hsl(0, 0%, 100%)',
       white: 'hsl(0, 0%, 93.3%)',
       lighter: 'hsl(0, 0%, 86.7%)',
-      light: 'hsl(0, 0%, 60%)',
+      light: 'hsl(180, 8%, 52%)',
       gray: 'hsl(0, 0%, 46.7%)',
       grayer: 'hsl(0, 0%, 40%)',
       dark: 'hsl(180, 8%, 20%)',
@@ -46,15 +45,18 @@ export const {
       grayText: '$light',
       whiteText: '$whiter',
       blackText: '$blacker',
+
+      shadow: '0,0,0'
     },
     fonts: {
       body: `'Nunito Sans', sans-serif`,
       code: `'Inconsolata', monospace`,
-      icon: 'Icons',
+      icon: 'Icons'
     },
     fontWeights: {
+      thin: '300',
       body: '400',
-      bold: '700',
+      bold: '700'
     },
     fontSizes: {
       xs: '10px',
@@ -64,31 +66,28 @@ export const {
       xl: '20px',
       '2xl': '24px',
       '3xl': '28px',
-
       body: '$md',
       h1: '$2xl',
       h2: '$lg',
       h3: '$lg',
       h4: '$body',
       h5: '$body',
-      h6: '$body',
+      h6: '$body'
     },
     lineHeights: {
       sm: '24px',
       md: '30px',
       lg: '50px',
-
       body: '$md',
-      display: '$lg',
+      display: '$lg'
     },
-    letterSpacings: {},
     sizes: {
       phablet: '520px',
       tablet: '768px',
       desktop: '992px',
       widescreen: '1216px',
       fullhd: '1408px',
-      ultrawide: '1920px',
+      ultrawide: '1920px'
     },
     space: {
       0: '0',
@@ -102,47 +101,38 @@ export const {
       8: '32px',
       9: '48px',
       10: '64px',
-
-      block: '$5',
+      block: '$5'
     },
     zIndices: {
       bottom: '-1',
       auto: 0,
-      high: 1,
-      higher: 10,
-      highest: 100,
+      above: 1,
+      high: 10,
+      higher: 100,
+      highest: 1000
     },
     shadows: {
-      box: '0px -1px 3px rgb(0 0 0 / 10%) inset',
-      color: '0deg 0% 50%',
-      sm: `1px 1px 3px hsl(0deg 0% 0% / 0.7)`,
-      md: `
-        1px 1px 3px hsl(0deg 0% 0% / 0.7),
-        2px 2px 6px hsl(0deg 0% 0% / 0.5)`,
-      lg: `
-        1px 2px 2px hsl(0deg 0% 0% / 0.2),
-        2px 4px 4px hsl(0deg 0% 0% / 0.2),
-        4px 8px 8px hsl(0deg 0% 0% / 0.2),
-        8px 16px 16px hsl(0deg 0% 0% / 0.2),
-        16px 32px 32px hsl(0deg 0% 0% / 0.2)`,
+      box: '0px -1px 3px rgb(var(--colors-shadow) / 0.1) inset',
+      sm: `0px 3px 3px rgb(0 0 0 / 15%)`,
+      md: '0px 3px 3px rgb(0 0 0 / 30%)'
     },
     radii: {
       round: '4px',
-      circle: '50%',
+      circle: '50%'
     },
     transitions: {
       fast: '.2s',
       med: '.5s',
-      slow: '1s',
+      slow: '1s'
     },
     borderWidths: {
       sm: '1px',
-      md: '2px',
+      md: '2px'
     },
     borderStyles: {
       solid: 'solid',
-      dashed: 'dashed',
-    },
+      dashed: 'dashed'
+    }
   },
   media: {
     phablet: '(min-width: 520px)',
@@ -156,63 +146,63 @@ export const {
     fullhd: '(min-width: 1408px)',
     untilFullhd: '(max-width: 1407px)',
     ultrawide: '(min-width: 1920px)',
-    untilUltrawide: '(max-width: 1919px)',
+    untilUltrawide: '(max-width: 1919px)'
   },
   utils: {
     p: (value: PropertyValue<'padding'>) => ({
-      padding: value,
+      padding: value
     }),
     pt: (value: PropertyValue<'padding'>) => ({
-      paddingTop: value,
+      paddingTop: value
     }),
     pr: (value: PropertyValue<'padding'>) => ({
-      paddingRight: value,
+      paddingRight: value
     }),
     pb: (value: PropertyValue<'padding'>) => ({
-      paddingBottom: value,
+      paddingBottom: value
     }),
     pl: (value: PropertyValue<'padding'>) => ({
-      paddingLeft: value,
+      paddingLeft: value
     }),
     px: (value: PropertyValue<'padding'>) => ({
       paddingLeft: value,
-      paddingRight: value,
+      paddingRight: value
     }),
     py: (value: PropertyValue<'padding'>) => ({
       paddingTop: value,
-      paddingBottom: value,
+      paddingBottom: value
     }),
     m: (value: PropertyValue<'margin'>) => ({
-      margin: value,
+      margin: value
     }),
     mt: (value: PropertyValue<'margin'>) => ({
-      marginTop: value,
+      marginTop: value
     }),
     mr: (value: PropertyValue<'margin'>) => ({
-      marginRight: value,
+      marginRight: value
     }),
     mb: (value: PropertyValue<'margin'>) => ({
-      marginBottom: value,
+      marginBottom: value
     }),
     ml: (value: PropertyValue<'margin'>) => ({
-      marginLeft: value,
+      marginLeft: value
     }),
     mx: (value: PropertyValue<'margin'>) => ({
       marginLeft: value,
-      marginRight: value,
+      marginRight: value
     }),
     my: (value: PropertyValue<'margin'>) => ({
       marginTop: value,
-      marginBottom: value,
+      marginBottom: value
     }),
     stretch: () => ({
       '@untilTablet': {
         width: 'calc(100% + $space$9)',
         marginLeft: '-$7',
-        maxWidth: 'unset',
-      },
-    }),
-  },
+        maxWidth: 'unset'
+      }
+    })
+  }
 })
 
 export type Css = CSS<typeof config>

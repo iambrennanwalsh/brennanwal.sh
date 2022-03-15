@@ -1,8 +1,11 @@
-import type {Component, Props, Resource} from '@/'
+import type {Article, Component, Project, Props} from '@/'
 import type {Dispatch, SetStateAction} from 'react'
 import {createContext, useState} from 'react'
 
-export type ApiResources = Record<string, Resource[]>
+export type ApiResources = {
+  projects?: Project[]
+  articles?: Article[]
+}
 
 export interface ApiContextType {
   resources?: ApiResources
@@ -11,20 +14,18 @@ export interface ApiContextType {
 
 export const ApiContext = createContext<ApiContextType | undefined>(undefined)
 
-type ApiContextProviderProps = Props<'div'>
+export type ApiContextProviderProps = Props<'div'>
+export type ApiContextProviderComponent = Component<ApiContextProviderProps>
 
-export const ApiContextProvider: Component<ApiContextProviderProps> = ({
-  children,
-}) => {
+export const ApiContextProvider: ApiContextProviderComponent = ({children}) => {
   const [resources, setResources] = useState({})
 
   return (
     <ApiContext.Provider
       value={{
         resources,
-        setResources,
-      }}
-    >
+        setResources
+      }}>
       {children}
     </ApiContext.Provider>
   )

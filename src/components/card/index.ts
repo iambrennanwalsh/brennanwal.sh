@@ -1,3 +1,3 @@
-export {Card} from './Card'
-export {StyledCard} from './Card.styles'
-export type {CardProps} from './Card'
+export * from './Card'
+export * from './Card.styles'
+

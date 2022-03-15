@@ -6,11 +6,11 @@ export const useApiContext = (): Required<ApiContextType> => {
   const apiState = useContext(ApiContext)
   if (!apiState?.resources || !apiState.setResources) {
     throw new Error(
-      'ApiContext not initiated. Try wrapping a parent component with <ApiContextProvider>.'
+      'The api context is not initiated. Try wrapping a parent component with the <ApiContextProvider> component.'
     )
   }
   return {
     resources: apiState.resources,
-    setResources: apiState.setResources,
+    setResources: apiState.setResources
   }
 }

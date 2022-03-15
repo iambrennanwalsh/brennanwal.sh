@@ -1,2 +1,3 @@
-export {useApiContext} from './useApiContext'
-export {useNotificationsContext} from './useNotificationsContext'
+export * from './useApiContext'
+export * from './useComponentContext'
+export * from './useNotificationsContext'

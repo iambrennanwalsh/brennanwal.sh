@@ -1,7 +1,11 @@
 import type {Component, Props} from '@/'
 import type {ImageProps} from '@/components'
-import {Image, Seperator} from '@/components'
-import {StyledContent} from '.'
+import {
+  StyledContent,
+  StyledContentHeading,
+  StyledContentImage,
+  StyledContentSeperator
+} from '.'
 
 interface ContentOwnProps {
   image?: ImageProps
@@ -14,16 +18,19 @@ export type ContentProps = Props<typeof StyledContent, ContentOwnProps>
 export const Content: Component<ContentProps> = ({
   heading,
   image,
+  tab = false,
   withSeperator = true,
   children,
   ...props
 }) => {
   return (
-    <StyledContent {...props}>
-      {image && <Image alt={image.alt} {...image} />}
-      {heading && <h3>{heading}</h3>}
+    <StyledContent tab={tab} data-component="content" {...props}>
+      {image && <StyledContentImage alt={image.alt} {...image} />}
+      {heading && <StyledContentHeading>{heading}</StyledContentHeading>}
       {children}
-      {withSeperator && <Seperator marginTop />}
+      {withSeperator && <StyledContentSeperator marginTop />}
     </StyledContent>
   )
 }
+
+Content.toString = () => '[data-component="content"]'

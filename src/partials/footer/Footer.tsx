@@ -1,7 +1,9 @@
 import type {Component, Props} from '@/'
 import {Anchor, Instagram} from '@/components'
 import {useApiContext} from '@/hooks'
+import {navLogo} from '@/partials/header'
 import {Slugify} from '@/utils/slugify'
+import {useEffect, useState} from 'react'
 import {
   StyledFooter,
   StyledFooterCloud,
@@ -17,9 +19,19 @@ import {
 } from '.'
 
 export type FooterProps = Props<typeof StyledFooter>
+export type FooterComponent = Component<FooterProps>
 
-export const Footer: Component<FooterProps> = props => {
+export const Footer: FooterComponent = props => {
   const {resources} = useApiContext()
+
+  const [categories, setCategories] = useState<string[]>([])
+
+  useEffect(() => {
+    if (resources.articles) {
+      const cats = resources.articles?.map(article => article.category)
+      setCategories(Array.from(new Set(cats)))
+    }
+  }, [resources])
 
   return (
     <StyledFooter {...props}>
@@ -32,12 +44,7 @@ export const Footer: Component<FooterProps> = props => {
       <Instagram />
       <StyledFooterWidgets>
         <StyledFooterSummary>
-          <StyledFooterLogo
-            src="/images/interface/logo.png"
-            alt="Brennan Walsh"
-            height="48"
-            width="436"
-          />
+          <StyledFooterLogo {...navLogo} height="48" width="436" />
           <p>
             I&apos;m a web, mobile, and software applications developer, and
             entrepreneur. Welcome to my peronsal portfolio, and blog.
@@ -68,13 +75,10 @@ export const Footer: Component<FooterProps> = props => {
           <StyledFooterNavList>
             <StyledFooterListHeader>Categories</StyledFooterListHeader>
             <ul>
-              {resources.categories &&
-                resources.categories.map(cat => (
-                  <li key={cat as unknown as string}>
-                    <Anchor
-                      href={`/category/${Slugify(cat as unknown as string)}`}>
-                      {cat}
-                    </Anchor>
+              {categories &&
+                categories.map(cat => (
+                  <li key={cat}>
+                    <Anchor href={`/category/${Slugify(cat)}`}>{cat}</Anchor>
                   </li>
                 ))}
             </ul>

@@ -1,18 +1,18 @@
-import {styled} from '@/styles'
+import { styled } from '@/styles'
 
 export const StyledGrid = styled('div', {
   mb: '$6',
 
   '& > div': {
     '@tablet': {
-      columnCount: '2',
+      columnCount: '2'
     },
     '@desktop': {
-      columnCount: '3',
+      columnCount: '3'
     },
 
     '& div': {
-      breakInside: 'avoid',
-    },
-  },
+      breakInside: 'avoid'
+    }
+  }
 })

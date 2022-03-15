@@ -1,22 +1,22 @@
-import {Image} from '@/components'
-import {styled} from '@/styles'
+import { Image } from '@/components'
+import { styled } from '@/styles'
 
 export const StyledPageTitleImage = styled(Image, {
   mb: '$6',
   display: 'block',
   boxShadow: '$md',
+
   '@untilTablet': {
-    stretch: ''
+    stretch: true
   },
+
   '@tablet': {
-    borderRadius: '$circle'
+    borderRadius: '$round'
   }
 })
 
 export const StyledPageTitleHeading = styled('h1', {
   marginBottom: '$3',
-  fontSize: '$h1',
-  textTransform: 'uppercase',
   color: '$primary',
 
   '@tablet': {
@@ -25,23 +25,10 @@ export const StyledPageTitleHeading = styled('h1', {
 })
 
 export const StyledPageTitleContainer = styled('div', {
-  my: '$6',
-  px: '$6',
-  pb: '$6',
-  borderBottomWidth: '$sm',
-  borderBottomStyle: 'solid',
-  borderBottomColor: '$responsiveDivider',
-
-  '@tablet': {
-    borderBottom: 0
-  }
+  my: '$7',
+  px: '$6'
 })
 
 export const StyledPageTitleSummary = styled('p', {
-  paddingLeft: '$5',
-  color: '$grayText',
-
-  '@tablet': {
-    paddingLeft: 0
-  }
+  color: '$grayText'
 })

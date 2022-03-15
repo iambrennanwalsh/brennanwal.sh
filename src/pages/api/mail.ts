@@ -1,47 +1,44 @@
-import {NextApiRequest, NextApiResponse} from 'next'
-
-const mailjet = require('node-mailjet').connect(
-  process.env.MAILJET_API_KEY,
-  process.env.MAILJET_SECRET_KEY
-)
+import { NextApiRequest, NextApiResponse } from 'next'
+import { connect as MailjetConnect } from 'node-mailjet'
 
 const mail = (req: NextApiRequest, res: NextApiResponse): void => {
-  let status = 200
-  let body = ''
   if (req.method === 'POST') {
-    const {name, email, subject, message, timestamp} = JSON.parse(req.body)
-    const request = mailjet.post('send', {version: 'v3.1'}).request({
+    const Mailer = MailjetConnect(
+      process.env.MAILJET_API_KEY ?? '',
+      process.env.MAILJET_SECRET_KEY ?? ''
+    )
+    const { name, email, subject, message, timestamp } = JSON.parse(req.body)
+    const request = Mailer.post('send', { version: 'v3.1' }).request({
       Messages: [
         {
           From: {
             Email: 'mail@brennanwal.sh',
-            Name: 'Brennan Walsh',
+            Name: 'Brennan Walsh'
           },
           To: [
             {
               Email: 'mail@brennanwal.sh',
-              Name: 'Brennan Walsh',
-            },
+              Name: 'Brennan Walsh'
+            }
           ],
           Subject: `New message from ${name} (${email}) via brennanwal.sh contact form.`,
-          HTMLPart: template(name, email, subject, message, timestamp),
-        },
-      ],
+          HTMLPart: template(name, email, subject, message, timestamp)
+        }
+      ]
     })
     request
-      .then(result => {
-        status = 200
-        body = result.body
-      })
-      .catch(err => {
-        return {status: err.statusCode, body: err.body}
-      })
-
-    return res.status(status).json(body)
+      .then(result => res.status(200).json(result.body))
+      .catch(err => ({ status: err.statusCode, body: err.body }))
   }
 }
 
-const template = (name, email, subject, message, timestamp) => `
+const template = (
+  name: string,
+  email: string,
+  subject: string,
+  message: string,
+  timestamp: string
+) => `
 <!DOCTYPE html>
 <html lang="en">
 <head>

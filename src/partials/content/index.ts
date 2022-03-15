@@ -1,3 +1,2 @@
-export {Content} from './Content'
-export {StyledContent} from './Content.styles'
-export type {ContentProps} from './Content'
+export * from './Content'
+export * from './Content.styles'

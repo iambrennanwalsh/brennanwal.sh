@@ -7,17 +7,18 @@ export const navMenu = [
   {children: 'About', href: '/about'},
   {children: 'Portfolio', href: '/portfolio'},
   {children: 'Blog', href: '/blog'},
-  {children: 'Contact', href: '/contact'},
+  {children: 'Contact', href: '/contact'}
 ]
 
 export const navLogo = {
   src: '/images/interface/logo.png',
-  alt: 'brennanwal.sh logo',
+  alt: 'brennanwal.sh logo'
 }
 
 export type HeaderProps = Props<typeof StyledHeader>
+export type HeaderComponent = Component<HeaderProps>
 
-export const Header: Component<HeaderProps> = props => (
+export const Header: HeaderComponent = props => (
   <>
     <LoadBar />
     <StyledHeader {...props}>

@@ -1,7 +1,7 @@
-import {Component, Props} from '@/'
-import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
-import {StyledLoadBar} from './LoadBar.style'
+import { Component, Props } from '@/'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { StyledLoadBar, StyledLoader } from './LoadBar.style'
 
 export type LoadBarProps = Props<'div'>
 
@@ -12,12 +12,14 @@ export const LoadBar: Component<LoadBarProps> = function (props) {
 
   useEffect(() => {
     setLoad(false)
-    setTimeout(() => setLoad(true), 100)
+    setTimeout(() => setLoad(true), 500)
   }, [router.asPath])
 
   return (
-    <StyledLoadBar load={load} {...props}>
-      <div />
+    <StyledLoadBar data-component="loadbar" {...props}>
+      <StyledLoader load={load} />
     </StyledLoadBar>
   )
 }
+
+LoadBar.toString = () => '[data-component="loadbar"]'

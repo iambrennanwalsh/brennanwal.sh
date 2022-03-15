@@ -1,9 +1,15 @@
-import {ApiContextProvider, NotificationsContextProvider} from '@/contexts'
-import {Container} from '@/partials'
-import '@/styles/index.css'
-import type {NextPage} from 'next'
-import type {AppProps} from 'next/app'
-import type {ReactElement, ReactNode} from 'react'
+import {
+  ApiContextProvider,
+  ComponentContextProvider,
+  NotificationsContextProvider
+} from '@/contexts'
+import { Container } from '@/partials'
+import { globalStyles } from '@/styles'
+import type { NextPage } from 'next'
+import type { AppProps } from 'next/app'
+import type { ReactElement, ReactNode } from 'react'
+
+globalStyles()
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -22,7 +28,9 @@ export default function App({
   return (
     <ApiContextProvider>
       <NotificationsContextProvider>
-        <Container>{getLayout(<Component {...pageProps} />)}</Container>
+        <ComponentContextProvider>
+          <Container>{getLayout(<Component {...pageProps} />)}</Container>
+        </ComponentContextProvider>
       </NotificationsContextProvider>
     </ApiContextProvider>
   )

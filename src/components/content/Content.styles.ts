@@ -1,53 +1,59 @@
-import {StyledBox} from '@/components'
-import {styled} from '@/styles'
+import { StyledBox } from '@/components'
+import { Image } from '@/components/image'
+import { Seperator } from '@/components/seperator'
+import { styled } from '@/styles'
+
+export const StyledContentImage = styled(Image, {
+  width: '100%',
+  marginBottom: '$6',
+  borderRadius: '$round',
+  boxShadow: '$sm',
+
+  '@tablet': {
+    marginLeft: '$6',
+    float: 'right',
+    width: '30%',
+    maxWidth: '300px'
+  }
+})
+
+export const StyledContentHeading = styled('h3', {
+  color: '$primary',
+  marginBottom: '$5',
+  '@untilTablet': {
+    paddingBottom: '$3',
+    borderBottomWidth: '$sm',
+    borderBottomStyle: '$solid',
+    borderBottomColor: '$responsiveDivider'
+  }
+})
+
+export const StyledContentSeperator = styled(Seperator, {
+  '@untilTablet': {
+    display: 'none'
+  }
+})
 
 export const StyledContent = styled('div', {
-  padding: '$6 $6 $2',
+  padding: '$6 $6 $0',
 
-  [`${StyledBox} > &:last-child`]: {
-    paddingBottom: '$6',
+  [`${StyledBox} & pre~hr`]: {
+    display: 'none'
   },
 
-  '& > img': {
-    width: '100%',
-    marginBottom: '$6',
-    borderRadius: '$round',
-    boxShadow: '$sm',
-
-    '@tablet': {
-      marginLeft: '$6',
-      float: 'right',
-      width: '30%',
-      maxWidth: '300px',
-    },
+  [`${StyledBox} & p:not(:last-child)`]: {
+    mb: '$5'
   },
 
-  '& > h3': {
-    fontWeight: '400',
-    color: '$primary',
-    marginBottom: '$4',
-    '@untilTablet': {
-      paddingBottom: '$3',
-      borderBottomWidth: '$sm',
-      borderBottomStyle: '$solid',
-      borderBottomColor: '$responsiveDivider',
-    },
+  '@desktop': {
+    [`${StyledBox} & h3~p`]: {
+      pl: '$5'
+    }
   },
-
-  '& > p': {
-    marginBottom: '$6',
-  },
-
-  '@untilTablet': {
-    '& > hr': {
-      display: 'none',
-    },
-  },
-
   variants: {
     tab: {
       true: {
-        '& > img': {
+        [`& ${StyledContentImage}`]: {
           maxWidth: '50px',
           height: 'auto',
           marginLeft: '$8',
@@ -55,10 +61,10 @@ export const StyledContent = styled('div', {
           boxShadow: 0,
           float: 'right',
           '@tablet': {
-            maxWidth: '75px',
-          },
-        },
-      },
-    },
-  },
+            maxWidth: '75px'
+          }
+        }
+      }
+    }
+  }
 })

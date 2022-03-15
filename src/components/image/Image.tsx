@@ -23,7 +23,7 @@ export const Image: Component<ImageProps> = ({
 
   const Img: Component<ImageProps> = props => (
     <StyledImage
-      alt={props.alt}
+      alt={alt}
       {...(lightbox && {onClick: () => emitLightboxEvent()})}
       {...props}
     />
@@ -36,7 +36,11 @@ export const Image: Component<ImageProps> = ({
     </figure>
   )
 
-  return caption ? <CaptionedImage {...props} /> : <Img {...props} />
+  return caption ? (
+    <CaptionedImage {...props} />
+  ) : (
+    <Img {...props} data-component="image" />
+  )
 }
 
-Image.toString = () => '.image'
+Image.toString = () => '[data-component="image"]'

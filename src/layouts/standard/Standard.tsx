@@ -1,16 +1,28 @@
-import {Component, Props} from '@/'
-import {PageTitle} from '@/components'
-import type {BaseProps} from '@/layouts'
-import {Base} from '@/layouts'
-import {Main} from '@/partials'
+import { Component, Props } from '@/'
+import { PageTitle } from '@/components'
+import type { BaseProps } from '@/layouts'
+import { Base } from '@/layouts'
+import { Main } from '@/partials'
 
-export type StandardProps = Props<'div', BaseProps>
+interface StandardOwnProps extends BaseProps {
+  pageTitle: {
+    title: string
+    description: string
+    image?: string
+  }
+}
 
-export const Standard: Component<StandardProps> = ({seo, children}) => {
+export type StandardProps = Props<'div', StandardOwnProps>
+
+export const Standard: Component<StandardProps> = ({
+  seo,
+  pageTitle,
+  children
+}) => {
   return (
     <Base seo={seo}>
       <Main>
-        <PageTitle title={seo.title} description={seo.description} />
+        <PageTitle {...pageTitle} />
         {children}
       </Main>
     </Base>

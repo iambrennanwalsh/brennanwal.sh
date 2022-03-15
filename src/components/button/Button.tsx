@@ -7,6 +7,19 @@ export interface ButtonOwnProps {
 
 export type ButtonProps = Props<typeof StyledButton, ButtonOwnProps>
 
-export const Button: Component<ButtonProps> = ({children, ...props}) => {
-  return <StyledButton {...props}>{children}</StyledButton>
+export const Button: Component<ButtonProps> = ({
+  children,
+  handle,
+  ...props
+}) => {
+  return (
+    <StyledButton
+      data-component="button"
+      {...(handle && {onClick: handle})}
+      {...props}>
+      {children}
+    </StyledButton>
+  )
 }
+
+Button.toString = () => `[data-component="button"]`

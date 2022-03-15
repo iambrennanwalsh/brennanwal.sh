@@ -1,5 +1,5 @@
-import {Icon} from '@/components'
-import {styled} from '@/styles'
+import { Icon } from '@/components'
+import { styled } from '@/styles'
 
 export const StyledToastIcon = styled(Icon, {
   display: 'inline-block',
@@ -31,17 +31,17 @@ export const StyledToast = styled('div', {
   variants: {
     color: {
       info: {
-        bg: '$info'
+        backgroundColor: '$info'
       },
       warning: {
-        bg: '$warning',
+        backgroundColor: '$warning',
         color: '$blackText'
       },
       danger: {
-        bg: '$danger'
+        backgroundColor: '$danger'
       },
       success: {
-        bg: '$success'
+        backgroundColor: '$success'
       }
     }
   }

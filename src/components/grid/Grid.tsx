@@ -1,29 +1,30 @@
-import type {Component, Props, Resource} from '@/'
-import {Pagination} from '@/components'
-import {useRouter} from 'next/router'
-import type {ReactNode} from 'react'
-import {useEffect, useState} from 'react'
-import FlipMove from 'react-flip-move'
-import {StyledGrid} from '.'
+import type { Article, Project, Props } from '@/'
+import { Pagination } from '@/components'
+import { useRouter } from 'next/router'
+import { ReactNode, useEffect, useState } from 'react'
+import { StyledGrid } from '.'
 
-interface GridOwnProps {
-  data: Resource[]
-  template: (data: Resource) => ReactNode
+interface GridOwnProps<T extends Project | Article> {
+  data: T[]
+  template: (data: T) => ReactNode
   baseUrl: string
 }
 
-export type GridProps = Props<typeof StyledGrid, GridOwnProps>
+export type GridProps<T extends Project | Article> = Props<
+  typeof StyledGrid,
+  GridOwnProps<T>
+>
 
-export const Grid: Component<GridProps> = ({
+export function Grid<T extends Project | Article = Project>({
   data,
   template,
   baseUrl,
   ...props
-}) => {
+}: GridProps<T>) {
   const router = useRouter()
   const page = router.query.page
-  const [pageCount, setPageCount] = useState<number | undefined>()
-  const [slice, setSlice] = useState<Resource[]>([])
+  const [pageCount, setPageCount] = useState<number>()
+  const [slice, setSlice] = useState<T[]>([])
 
   useEffect(() => {
     const calculateSlice = () => {
@@ -48,14 +49,14 @@ export const Grid: Component<GridProps> = ({
   return (
     <>
       <StyledGrid {...props}>
-        <FlipMove maintainContainerHeight>
+        <div>
           {slice.length > 0 &&
             slice.map(post => (
-              <div key={post.href}>
+              <div key={post.title}>
                 <div>{template(post)}</div>
               </div>
             ))}
-        </FlipMove>
+        </div>
       </StyledGrid>
       {pageCount && pageCount > 1 && (
         <Pagination

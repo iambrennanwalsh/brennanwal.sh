@@ -1,8 +1,14 @@
 import type {Component, Props} from '@/'
 import type {AnchorProps, ImageProps} from '@/components'
-import {Anchor, Content, Group, Image} from '@/components'
+import {Anchor} from '@/components'
 import type {ReactNode} from 'react'
-import {StyledCard} from '.'
+import {
+  StyledCard,
+  StyledCardContent,
+  StyledCardGroup,
+  StyledCardHeading,
+  StyledCardImage
+} from '.'
 
 interface CardOwnProps {
   link?: AnchorProps
@@ -23,15 +29,19 @@ export const Card: Component<CardProps> = ({
 }) => {
   const cardBody = (
     <>
-      {image && <Image alt={image.alt} {...image} />}
-      <h3>{heading}</h3>
-      {children && <Content withSeperator={false}>{children}</Content>}
+      {image && <StyledCardImage {...image} />}
+      <StyledCardHeading>{heading}</StyledCardHeading>
+      {children && (
+        <StyledCardContent withSeperator={false}>{children}</StyledCardContent>
+      )}
     </>
   )
   return (
-    <StyledCard>
+    <StyledCard data-component="card" {...props}>
       {link ? <Anchor {...link}>{cardBody}</Anchor> : cardBody}
-      {meta && <Group>{meta}</Group>}
+      {meta && <StyledCardGroup>{meta}</StyledCardGroup>}
     </StyledCard>
   )
 }
+
+Card.toString = () => '[data-component="card"]'

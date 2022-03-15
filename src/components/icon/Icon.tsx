@@ -27,5 +27,7 @@ export const SocialIcons = [
 export type IconProps = Props<typeof StyledIcon>
 
 export const Icon: Component<IconProps> = props => {
-  return <StyledIcon {...props} />
+  return <StyledIcon data-component="icon" {...props} />
 }
+
+Icon.toString = () => `[data-component="icon"]`

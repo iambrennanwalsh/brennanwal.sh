@@ -5,10 +5,10 @@ import {StyledMain} from '.'
 export type MainProps = Props<typeof StyledMain>
 
 export const Main: Component<MainProps> = ({children, ...props}) => {
-	return (
-		<StyledMain {...props}>
-			<Content>{children}</Content>
-			<Sidebar />
-		</StyledMain>
-	)
+  return (
+    <StyledMain id="main" {...props}>
+      <Content>{children}</Content>
+      <Sidebar />
+    </StyledMain>
+  )
 }

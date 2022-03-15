@@ -10,11 +10,11 @@ export const useNotificationsContext =
       !notificationsState.setNotifications
     ) {
       throw new Error(
-        'NotificationsContext not found. Try wrapping a parent component with <NotificationsContextProvider>.'
+        'The notifications context is not initiated. Try wrapping a parent component with the <NotificationsContextProvider> component.'
       )
     }
     return {
       notifications: notificationsState.notifications,
-      setNotifications: notificationsState.setNotifications,
+      setNotifications: notificationsState.setNotifications
     }
   }

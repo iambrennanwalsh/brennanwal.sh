@@ -1,45 +1,39 @@
-import {Anchor, Box, Content, Icon, Slide} from '@/components'
-import {useApiContext} from '@/hooks'
-import {Landing} from '@/layouts'
-import {GetAllResources} from '@/utils/getAllResources'
-import {LayoutState} from '@/utils/layoutState'
-import {InferGetStaticPropsType} from 'next'
-import {ReactElement, useEffect} from 'react'
+import { Article } from '@/'
+import { Anchor, Box, Content, Icon, Slide } from '@/components'
+import { useApiContext } from '@/hooks'
+import { Landing } from '@/layouts'
+import { GetAllResources } from '@/utils/getAllResources'
+import { InferGetStaticPropsType } from 'next'
+import { ReactElement, useEffect } from 'react'
 
 const homeSeo = {
   title: 'Web Developer and Entrepreneur',
   description:
-    'Hi, Im Brennan. Im a web, mobile, and desktop applications developer, and entrepreneur. Welcome to my personal blog, portfolio, and home page.',
+    'Hi, Im Brennan. Im a web, mobile, and desktop applications developer, and entrepreneur. Welcome to my personal blog, portfolio, and home page.'
 }
 
 const Home = ({
-  layoutState,
+  articles
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-  const {featured, categories} = layoutState
-  const {resources, setResources} = useApiContext()
+  const { resources, setResources } = useApiContext()
 
   useEffect(() => {
-    const newResources = {}
-    if (!('featured' in resources)) newResources['featured'] = featured
-    if (!('categories' in resources)) newResources['categories'] = categories
-    if (Object.keys(newResources).length > 0)
-      setResources({...resources, ...newResources})
-  }, [categories, featured, resources, setResources])
+    if (!('articles' in resources))
+      setResources({ ...resources, articles: articles })
+  }, [articles, resources, setResources])
 
   return (
     <>
       <Box
         heading="A Little About Me"
-        link={{href: '/about', children: <Icon icon="right" />}}
-      >
+        link={{ href: '/about', children: <Icon icon="right" /> }}>
         <Content
           heading="Hi, I'm Brennan Walsh"
           image={{
             src: '/images/me/me2.jpg',
             alt: 'Brennan Walsh',
-            lightbox: true,
-          }}
-        >
+            lightbox: true
+          }}>
           <p>
             I’m a full stack applications developer and entrepreneur based out
             of Los Angeles. I currently freelance my skills via{' '}
@@ -69,16 +63,14 @@ const Home = ({
       </Box>
       <Box
         heading="What I'm Working On"
-        link={{href: '/portfolio', children: <Icon icon="right" />}}
-      >
+        link={{ href: '/portfolio', children: <Icon icon="right" /> }}>
         <Content
           heading="Freelance"
           image={{
             src: '/images/portfolio/brennan.jpg',
             alt: 'Brennan Walsh',
-            lightbox: true,
-          }}
-        >
+            lightbox: true
+          }}>
           <p>
             My latest project is my freelance work. I freelance my application
             development skills to anyone with a project they need help with. I
@@ -97,9 +89,8 @@ const Home = ({
           image={{
             src: '/images/portfolio/wagregistry.jpg',
             alt: 'WagRegistry',
-            lightbox: true,
-          }}
-        >
+            lightbox: true
+          }}>
           <p>
             WagRegistry is a project in the works. It&apos;s a web application
             that aims to simplify the process of registering service, therapy,
@@ -119,9 +110,8 @@ const Home = ({
         heading="Github Repository"
         link={{
           href: 'https://github.com/iambrennanwalsh/brennanwal.sh',
-          children: <Icon icon="right" />,
-        }}
-      >
+          children: <Icon icon="right" />
+        }}>
         <Content>
           <p>
             The backend of this app is powered by the{' '}
@@ -146,12 +136,11 @@ const Home = ({
 export default Home
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources('articles')
-  const layoutState = LayoutState(articles)
+  const articles = await GetAllResources<Article>('articles')
   return {
     props: {
-      layoutState,
-    },
+      articles
+    }
   }
 }
 

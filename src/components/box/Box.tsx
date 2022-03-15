@@ -1,7 +1,6 @@
-import {Component, Props} from '@/'
+import type {Component, Props} from '@/'
 import type {AnchorProps} from '@/components'
-import {Anchor} from '@/components'
-import {StyledBox} from '.'
+import {StyledBox, StyledBoxHeading, StyledBoxHeadingAnchor} from '.'
 
 interface BoxOwnProps {
   heading?: string
@@ -17,14 +16,16 @@ export const Box: Component<BoxProps> = ({
   ...props
 }) => {
   return (
-    <StyledBox {...props}>
+    <StyledBox data-component="box" {...props}>
       {heading && (
-        <h2>
+        <StyledBoxHeading>
           {heading}
-          {link && <Anchor {...link} />}
-        </h2>
+          {link && <StyledBoxHeadingAnchor {...link} />}
+        </StyledBoxHeading>
       )}
       {children}
     </StyledBox>
   )
 }
+
+Box.toString = () => '[data-component="box"]'

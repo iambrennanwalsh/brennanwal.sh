@@ -4,17 +4,16 @@ import {ThemeVariants} from '@/utils/themeVariants'
 export const StyledCloud = styled('div', {
   display: 'flex',
   flexWrap: 'wrap',
-  justifyContent: 'center',
-  padding: '$5 $6',
+  justifyContent: 'center'
 })
 
 export const StyledCloudNode = styled('span', {
   padding: '$1',
   '&:hover': {
-    color: '$primary',
+    color: '$primary'
   },
   variants: {
     size: ThemeVariants('fontSizes', 'fontSize'),
-    color: ThemeVariants('colors', 'color'),
-  },
+    color: ThemeVariants('colors', 'color')
+  }
 })

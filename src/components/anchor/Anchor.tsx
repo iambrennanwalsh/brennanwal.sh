@@ -1,11 +1,11 @@
-import type {Component, Props} from '@/'
-import type {LinkProps} from 'next/link'
+import type { Component, Props } from '@/'
+import type { LinkProps as NextJsLinkProps } from 'next/link'
 import Link from 'next/link'
-import {useRouter} from 'next/router'
-import {useEffect, useState} from 'react'
-import {StyledAnchor} from '.'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { StyledAnchor } from '.'
 
-interface AnchorOwnProps extends LinkProps {
+interface AnchorOwnProps extends NextJsLinkProps {
   href: string
   shallow?: boolean
 }
@@ -13,7 +13,6 @@ interface AnchorOwnProps extends LinkProps {
 export type AnchorProps = Props<typeof StyledAnchor, AnchorOwnProps>
 
 export const Anchor: Component<AnchorProps> = ({
-  activeStyle,
   children,
   href,
   ...props
@@ -25,24 +24,25 @@ export const Anchor: Component<AnchorProps> = ({
     else return 'internal'
   })
 
-  const [isActive, setIsActive] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState(false)
 
   useEffect(() => {
-    setIsActive(type == 'internal' && router.asPath === href)
+    setIsActive(router.asPath === href)
   }, [router, href, type])
 
   const internalLink = (
-    <Link
-      passHref
-      href={href}
-      {...(isActive && activeStyle && {activeStyle: activeStyle})}
-      {...props}>
-      <StyledAnchor>{children}</StyledAnchor>
+    <Link passHref href={href}>
+      <StyledAnchor
+        data-component="anchor"
+        {...(isActive && { 'data-active': true })}
+        {...props}>
+        {children}
+      </StyledAnchor>
     </Link>
   )
 
   const externalLink = (
-    <StyledAnchor href={href} {...props}>
+    <StyledAnchor data-component="anchor" href={href} {...props}>
       {children}
     </StyledAnchor>
   )
@@ -50,4 +50,4 @@ export const Anchor: Component<AnchorProps> = ({
   return type == 'internal' ? internalLink : externalLink
 }
 
-Anchor.toString = () => '.anchor'
+Anchor.toString = () => '[data-component="anchor"]'
