@@ -11,6 +11,7 @@ module.exports = {
         fs: 'empty'
       }
     }
+    return config
   },
   eslint: {
     dirs: ['src']
