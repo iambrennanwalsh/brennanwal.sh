@@ -1,3 +1,4 @@
+const path = require('path')
 /**
  * @type {import('next').NextConfig}
  */
@@ -8,6 +9,10 @@ module.exports = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback.fs = false
+    }
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@/': path.resolve(__dirname, 'src/')
     }
     return config
   },
