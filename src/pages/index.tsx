@@ -2,9 +2,9 @@ import type { Article } from '@/'
 import { Anchor, Box, Content, Icon, Seo, Slide } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Landing } from '@/layouts'
+import { getAllResources } from '@/utils/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import { ReactElement, useEffect } from 'react'
-import { getAllResources } from '../utils/getAllResources/GetAllResources'
 
 const homeSeo = {
   title: 'Web Developer and Entrepreneur',

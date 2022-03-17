@@ -2,12 +2,12 @@ import type { Article } from '@/'
 import { Card, Grid, PageTitle, Seo } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
+import { getAllResources } from '@/utils/getAllResources'
+import { getSlug } from '@/utils/getSlug'
 import { InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
-import { getAllResources } from '../utils/getAllResources/GetAllResources'
-import { getSlug } from '../utils/getSlug/GetSlug'
 
 const blogSeo = {
   title: 'Blog',

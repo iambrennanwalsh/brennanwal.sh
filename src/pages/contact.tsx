@@ -3,10 +3,10 @@ import { Box, Content, PageTitle, Seo } from '@/components'
 import { ContactForm } from '@/forms'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
+import { getAllResources } from '@/utils/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import { ReactElement, useEffect } from 'react'
-import { getAllResources } from '../utils/getAllResources/GetAllResources'
 
 const contactSeo = {
   title: 'Contact Me',
