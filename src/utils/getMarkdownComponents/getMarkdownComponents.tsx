@@ -5,7 +5,7 @@ import { MDXProvider } from '@mdx-js/react'
  *
  * @returns MDXProvider components.
  */
-export function getMarkdownComponents() {
+export const getMarkdownComponents = () => {
   return {
     component: MDXProvider,
     props: {

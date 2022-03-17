@@ -1,8 +1,8 @@
 import type { Resource } from '@/'
+import { getSlug } from '@/utils'
 import { readFileSync } from 'fs'
 import matter from 'gray-matter'
 import { extname, join, resolve } from 'path'
-import { getSlug } from '../getSlug'
 
 /**
  * Get a resource by filename and resource type.

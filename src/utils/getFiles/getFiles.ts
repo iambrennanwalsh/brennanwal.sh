@@ -8,7 +8,10 @@ import { resolve } from 'path'
  * @param root - The root data directory.
  * @returns An array of filenames.
  */
-export function getFiles(resource: string, root: string = './data'): string[] {
+export const getFiles = (
+  resource: string,
+  root: string = './data'
+): string[] => {
   const dir = resolve(root, resource)
   return readdirSync(dir)
 }

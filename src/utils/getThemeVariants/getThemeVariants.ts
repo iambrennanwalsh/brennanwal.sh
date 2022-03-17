@@ -26,10 +26,13 @@ import type { CSSProperties } from '@stitches/react'
  * }
  * ```
  */
-export function getThemeVariants<
+export const getThemeVariants = <
   T extends keyof typeof theme,
   C extends keyof CSSProperties
->(scale: T, property: C): Record<keyof typeof theme[T], Css> {
+>(
+  scale: T,
+  property: C
+): Record<keyof typeof theme[T], Css> => {
   const variants: Record<string, Record<string, string>> = {}
   if (!(scale in theme)) {
     throw new Error(
