@@ -1,1 +1,1 @@
-export * from './GetFiles'
+export { getFiles } from './GetFiles'

@@ -1,1 +1,1 @@
-export * from './GetSlug'
+export { getSlug } from './GetSlug'
