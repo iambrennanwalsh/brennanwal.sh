@@ -1,5 +1,5 @@
-import {styled} from '@/styles'
-import {ThemeVariants} from '@/utils/themeVariants'
+import { styled } from '@/styles'
+import { getThemeVariants } from '@/utils/getThemeVariants'
 
 export const StyledCloud = styled('div', {
   display: 'flex',
@@ -13,7 +13,7 @@ export const StyledCloudNode = styled('span', {
     color: '$primary'
   },
   variants: {
-    size: ThemeVariants('fontSizes', 'fontSize'),
-    color: ThemeVariants('colors', 'color')
+    size: getThemeVariants('fontSizes', 'fontSize'),
+    color: getThemeVariants('colors', 'color')
   }
 })

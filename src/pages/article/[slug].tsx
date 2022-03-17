@@ -1,9 +1,10 @@
 import type { Article as ArticleType } from '@/'
+import { PageTitle, Seo } from '@/components'
 import { useApiContext, useComponentContext } from '@/hooks'
 import { Standard } from '@/layouts'
 import { styled } from '@/styles'
-import { GetAllResources } from '@/utils/getAllResources'
-import { ComponentsProvider, MarkdownProvider } from '@/utils/mdxProvider'
+import { getAllResources } from '@/utils/getAllResources/getAllResources'
+import { getMarkdownComponents } from '@/utils/getMarkdownComponents/getMarkdownComponents'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import renderToString from 'next-mdx-remote/render-to-string'
 import { useRouter } from 'next/router'
@@ -56,25 +57,22 @@ const Article = ({
     }
   }, [])
 
-  useEffect(() => {
-    const newData = {
-      ...(data as object),
-      pageTitle: {
-        image: article?.image,
-        title: article?.title,
-        description: article?.summary
-      },
-      seo: {
-        image: article?.image,
-        title: article?.title,
-        description: article?.summary
-      }
-    }
-    setData(newData)
-  }, [article, data, router.query.page, setData])
-
   return (
     <>
+      <PageTitle
+        {...{
+          image: article?.image,
+          title: article?.title!,
+          description: article?.summary!
+        }}
+      />
+      <Seo
+        {...{
+          image: article?.image,
+          title: article?.title!,
+          description: article?.summary!
+        }}
+      />
       <div dangerouslySetInnerHTML={{ __html: content }} />
       <CommentHeading>
         <span>-</span> Comments <span>-</span>
@@ -87,7 +85,7 @@ const Article = ({
 export default Article
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await GetAllResources<ArticleType>('articles')
+  const articles = await getAllResources<ArticleType>('articles')
   const paths = articles.map(article => {
     return {
       params: {
@@ -105,11 +103,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async (context: {
   params?: { slug: string }
 }) => {
-  const articles = await GetAllResources<ArticleType>('articles')
+  const articles = await getAllResources<ArticleType>('articles')
   const article = articles.find(article => article.slug == context.params?.slug)
   const { renderedOutput } = await renderToString(article?.content ?? '', {
-    components: ComponentsProvider,
-    provider: MarkdownProvider
+    provider: getMarkdownComponents()
   })
   return {
     props: {
@@ -121,9 +118,5 @@ export const getStaticProps = async (context: {
 }
 
 Article.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard pageTitle={articleSeo} seo={articleSeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

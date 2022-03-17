@@ -1,9 +1,9 @@
-import type {Component, Props} from '@/'
-import {Anchor, Instagram} from '@/components'
-import {useApiContext} from '@/hooks'
-import {navLogo} from '@/partials/header'
-import {Slugify} from '@/utils/slugify'
-import {useEffect, useState} from 'react'
+import type { Component, Props } from '@/'
+import { Anchor, Instagram } from '@/components'
+import { useApiContext } from '@/hooks'
+import { navLogo } from '@/partials/header'
+import { getSlug } from '@/utils/getSlug'
+import { useEffect, useState } from 'react'
 import {
   StyledFooter,
   StyledFooterCloud,
@@ -22,7 +22,7 @@ export type FooterProps = Props<typeof StyledFooter>
 export type FooterComponent = Component<FooterProps>
 
 export const Footer: FooterComponent = props => {
-  const {resources} = useApiContext()
+  const { resources } = useApiContext()
 
   const [categories, setCategories] = useState<string[]>([])
 
@@ -78,7 +78,7 @@ export const Footer: FooterComponent = props => {
               {categories &&
                 categories.map(cat => (
                   <li key={cat}>
-                    <Anchor href={`/category/${Slugify(cat)}`}>{cat}</Anchor>
+                    <Anchor href={`/category/${getSlug(cat)}`}>{cat}</Anchor>
                   </li>
                 ))}
             </ul>

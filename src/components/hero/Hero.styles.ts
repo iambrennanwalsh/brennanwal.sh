@@ -1,5 +1,5 @@
-import {Content} from '@/components'
-import {keyframes, styled} from '@/styles'
+import { Content } from '@/components'
+import { keyframes, styled } from '@/styles'
 
 const HomeEffectAnimation = keyframes({
   '0%': {
@@ -46,13 +46,14 @@ export const StyledHero = styled('div', {
   variants: {
     effect: {
       home: {
+        backgroundImage:
+          'linear-gradient(to top, rgb(10, 10, 10), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0)), url("/images/slides/slider.jpg")',
         backgroundSize: 'cover',
-        background:
-          'linear-gradient(to top, rgb(10, 10, 10), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0)), url("/images/slides/slider.jpg") no-repeat center right',
+        backgroundPosition: 'center right',
+        backgroundRepeat: 'no-repeat',
         '@tablet': {
-          background:
-            'linear-gradient(to right, rgb(10, 10, 10), rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0)), url("/images/slides/slider.jpg") no-repeat center right',
-          backgroundSize: 'cover'
+          backgroundImage:
+            'linear-gradient(to right, rgb(10, 10, 10), rgba(10, 10, 10, 0.8), rgba(10, 10, 10, 0)), url("/images/slides/slider.jpg")'
         },
 
         [`& ${StyledHeroEffect}`]: {

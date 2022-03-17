@@ -1,14 +1,22 @@
-import { Resource } from '@/'
-import { GetResource } from '@/utils/getResource'
-import { GetSlugs } from '@/utils/getSlugs'
+import type { Resource } from '@/'
+import { getFiles } from '@/utils/getFiles/getFiles'
+import { getResource } from '@/utils/getResource/getResource'
 
-export const GetAllResources = async <T extends Resource>(resource: string) => {
-  const filenames = GetSlugs(resource)
-  return Promise.all(
-    filenames.map(file => GetResource<T>(file, resource))
-  ).then(posts =>
-    posts.sort((a, b) =>
-      new Date(a.timestamp) < new Date(b.timestamp) ? 1 : -1
-    )
+/**
+ * Get all resources of a type.
+ *
+ * @param resource A resource type.
+ * @returns All resources of a type.
+ */
+export const getAllResources = async <T extends Resource>(
+  resource: string
+): Promise<T[]> => {
+  const files = getFiles(resource)
+
+  return Promise.all(files.map(file => getResource<T>(file, resource))).then(
+    posts =>
+      posts.sort((a, b) =>
+        new Date(a.timestamp) < new Date(b.timestamp) ? 1 : -1
+      )
   )
 }

@@ -1,8 +1,8 @@
 import { Article } from '@/'
-import { Anchor, Box, Content, Slide, Tabs } from '@/components'
+import { Anchor, Box, Content, PageTitle, Seo, Slide, Tabs } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
+import { getAllResources } from '@/utils/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import { ReactElement, useEffect } from 'react'
 
@@ -15,25 +15,24 @@ const aboutSeo = {
 const languagesTab = (
   <>
     <Content
-      heading="PHP"
-      image={{ src: '/images/skills/php.png', alt: 'PHP' }}>
+      heading="TypeScript"
+      image={{ src: '/images/skills/typescript.png', alt: 'TypeScript' }}>
       <p>
-        PHP: Hypertext Preprocessor is a general-purpose programming language.
-        PHP is primarily used for web development because it pairs well with
-        html, works server side, and is easy to learn.
+        TypeScript is a strongly typed syntactical superset of ECMAScript 2015.
+        Developed at MicroSoft, It adds optional static typing to the language.
       </p>
     </Content>
 
     <Content
-      heading="JavaScript"
+      heading="PHP"
       image={{
-        src: '/images/skills/js.png',
-        alt: 'JavaScript'
+        src: '/images/skills/php.png',
+        alt: 'PHP'
       }}>
       <p>
-        JavaScript is a high-level, interpreted programming language. It&apos;s
-        typically used client side to provide dynamic web browser interactivity,
-        but can also be used on the server side as well.
+        PHP: Hypertext Preprocessor is a general-purpose scripting language. PHP
+        is primarily used for web development because it pairs well with html,
+        works server side, and is easy to learn.
       </p>
     </Content>
 
@@ -41,10 +40,10 @@ const languagesTab = (
       heading="Swift"
       image={{ src: '/images/skills/swift.png', alt: 'Swift' }}>
       <p>
-        Swift is a modern general-purpose, and compiled programming language
-        developed by Apple. Swift is designed to work with Apple&apos;s Cocoa
-        and Cocoa Touch frameworks and the large body of existing Objective-C
-        code written for Apple products.
+        Swift is a modern compiled programming language developed at Apple.
+        Swift is designed to interoperate with Apple&apos;s Cocoa and Cocoa
+        Touch frameworks as well as Apple&pos;s extensive body of Objective-C
+        code.
       </p>
     </Content>
 
@@ -55,9 +54,23 @@ const languagesTab = (
         alt: 'GoLang'
       }}>
       <p>
-        GoLang is a modern statically-typed compiled language that is being
-        developed by Google. The langauges defining features are its small size
-        and support for concurrent programming.
+        GoLang is a modern compiled programming language that is being developed
+        at Google. The langauges defining features are its small size and
+        support for concurrent programming.
+      </p>
+    </Content>
+
+    <Content
+      heading="Rust"
+      image={{
+        src: '/images/skills/rust.png',
+        alt: 'Rust'
+      }}>
+      <p>
+        Rust is a modern compiled programming language originally developed at
+        Mozilla. Designed for performance and safety, especially safe
+        concurrency, the language is frequently compared to languages like C and
+        C++.
       </p>
     </Content>
   </>
@@ -78,31 +91,20 @@ const frameworksTab = (
       </p>
     </Content>
     <Content
-      image={{
-        src: '/images/skills/laravel.png',
-        alt: 'Laravel'
-      }}
-      heading="Laravel">
-      <p>
-        Laravel is the most popular PHP web application framework. It is
-        described as a web application framework with expressive, elegant syntax
-      </p>
-    </Content>
-    <Content
-      image={{ src: '/images/skills/vue.png', alt: 'Vue' }}
-      heading="Vue.js">
-      <p>
-        Vue.js is an open-source JavaScript framework for building user
-        interfaces and single-page applications.
-      </p>
-    </Content>
-    <Content
       image={{ src: '/images/skills/react.png', alt: 'React' }}
       heading="React">
       <p>
         React is a JavaScript library for building user interfaces. It is
         maintained by Facebook and a community of individual developers and
         companies.
+      </p>
+    </Content>
+    <Content
+      image={{ src: '/images/skills/swiftui.png', alt: 'SwiftUi' }}
+      heading="SwiftUi">
+      <p>
+        Introduced in 2019 SwiftUI is Apple&pos;s brand new framework for
+        building user interfaces for iOS, tvOS, macOS, and watchOS.
       </p>
     </Content>
   </>
@@ -128,14 +130,14 @@ const toolsTab = (
     </Content>
     <Content
       image={{
-        src: '/images/skills/postcss.png',
-        alt: 'PostCSS'
+        src: '/images/skills/kubernetes.png',
+        alt: 'kubernetes'
       }}
-      heading="PostCSS">
+      heading="Kubernetes">
       <p>
-        PostCSS transforms CSS via JavaScript. Hundreds of plugins offer
-        features such as auto-prefixing, future CSS syntax, modules, linting and
-        more.
+        Developed at Google, Kubernetes is an open-source container
+        orchestration system used for automating software deployment, scaling,
+        and management.
       </p>
     </Content>
   </>
@@ -159,6 +161,8 @@ const About = ({
 
   return (
     <>
+      <PageTitle {...aboutSeo} />
+      <Seo {...aboutSeo} />
       <Box heading="Who am I?">
         <Content
           image={{
@@ -257,7 +261,7 @@ const About = ({
 export default About
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources<Article>('articles')
+  const articles = await getAllResources<Article>('articles')
   return {
     props: {
       articles
@@ -266,9 +270,5 @@ export const getStaticProps = async () => {
 }
 
 About.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard pageTitle={aboutSeo} seo={aboutSeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

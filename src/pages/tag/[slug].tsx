@@ -1,9 +1,9 @@
 import type { Article } from '@/'
-import { Card, Grid } from '@/components'
-import { useApiContext, useComponentContext } from '@/hooks'
+import { Card, Grid, PageTitle, Seo } from '@/components'
+import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
-import { Slugify } from '@/utils/slugify'
+import { getAllResources } from '@/utils/getAllResources/getAllResources'
+import { getSlug } from '@/utils/getSlug'
 import type { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
@@ -20,7 +20,11 @@ const Tag = ({
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   const router = useRouter()
   const { resources, setResources } = useApiContext()
-  const { data, setData } = useComponentContext()
+  const [pageTitle, setPageTitle] = useState({
+    ...tagSeo,
+    description: 'Loading articles...'
+  })
+  const [seo, setSeo] = useState(tagSeo)
 
   const totalPosts = articles.length
 
@@ -49,24 +53,22 @@ const Tag = ({
             showingFrom + 1
           }</i> through <i className='has-color-primary'>${showingTo}</i> of <i className='has-color-primary'>${totalPosts}</i> total articles.`
 
-    const newData = {
-      ...(data as object),
-      pageTitle: {
-        title,
-        description: summary
-      },
-      seo: {
-        title,
-        description: tagSeo.description
-      }
-    }
-    setData(newData)
-  }, [tag, router.query.page, totalPosts, data, setData])
+    setPageTitle({
+      ...pageTitle,
+      title,
+      description: summary
+    })
+    setSeo({
+      ...seo,
+      title,
+      description: summary
+    })
+  }, [tag, router.query.page, totalPosts, pageTitle, seo])
 
   const gridTemplate = (data: Article): JSX.Element => (
     <Card
       heading={data.title}
-      link={{ href: `/article/${Slugify(data.title)}` }}
+      link={{ href: `/article/${getSlug(data.title)}` }}
       image={{ src: data.image, alt: data.title }}>
       {data.summary}
     </Card>
@@ -74,6 +76,8 @@ const Tag = ({
 
   return (
     <>
+      <PageTitle {...pageTitle} />
+      <Seo {...seo} />
       {/*<Dropdown baseUrl="/category/" data={categories} label="Categories.." />*/}
       <Grid
         data={articles}
@@ -88,13 +92,13 @@ export default Tag
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const tags: string[] = []
-  await GetAllResources<Article>('articles').then(articles =>
+  await getAllResources<Article>('articles').then(articles =>
     articles.map(article => tags.push(...(article.tags as string[])))
   )
   const paths = Array.from(new Set(tags)).map(i => {
     return {
       params: {
-        slug: Slugify(i as string)
+        slug: getSlug(i as string)
       }
     }
   })
@@ -110,12 +114,12 @@ export const getStaticProps = async (context: {
   }
 }) => {
   const tags: string[] = []
-  const articles = await GetAllResources<Article>('articles')
+  const articles = await getAllResources<Article>('articles')
   articles.forEach(
     article => article.tags && tags.push(...(article.tags as string[]))
   )
   const currentTag = Array.from(new Set(tags)).find(
-    tag => Slugify(tag) == context.params?.slug
+    tag => getSlug(tag) == context.params?.slug
   )
 
   const taggedArticles = articles.filter(
@@ -131,11 +135,5 @@ export const getStaticProps = async (context: {
 }
 
 Tag.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard
-      pageTitle={{ ...tagSeo, description: 'Loading articles..' }}
-      seo={tagSeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

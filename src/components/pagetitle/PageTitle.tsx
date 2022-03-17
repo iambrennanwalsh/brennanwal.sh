@@ -1,6 +1,5 @@
 import { Component, Props } from '@/'
-import { useComponentContext } from '@/hooks'
-import React, { useEffect } from 'react'
+import React from 'react'
 import {
   StyledPageTitleContainer,
   StyledPageTitleHeading,
@@ -30,33 +29,14 @@ export const PageTitle: Component<PageTitleProps> = ({
   image,
   ...props
 }) => {
-  const { data, setData } = useComponentContext() as {
-    data: PageTitleData
-    setData: React.Dispatch<React.SetStateAction<PageTitleData>>
-  }
-
-  useEffect(() => {
-    setData({
-      ...data,
-      pageTitle: { image: image, description: description, title: title }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, description, image])
-
   return (
     <div {...props}>
-      {data.pageTitle?.image && (
-        <StyledPageTitleImage
-          lightbox
-          alt={data.pageTitle?.title}
-          src={data.pageTitle?.image}
-        />
-      )}
+      {image && <StyledPageTitleImage lightbox alt={title} src={image} />}
       <StyledPageTitleContainer>
-        <StyledPageTitleHeading>{data.pageTitle?.title}</StyledPageTitleHeading>
+        <StyledPageTitleHeading>{title}</StyledPageTitleHeading>
         <StyledPageTitleSummary
           dangerouslySetInnerHTML={{
-            __html: data.pageTitle?.description
+            __html: description
           }}
         />
       </StyledPageTitleContainer>

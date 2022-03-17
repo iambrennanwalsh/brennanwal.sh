@@ -1,5 +1,5 @@
 import { styled } from '@/styles'
-import { ThemeVariants } from '@/utils/themeVariants'
+import { getThemeVariants } from '@/utils/getThemeVariants'
 
 export const StyledButton = styled('button', {
   marginBottom: '$6',
@@ -27,8 +27,8 @@ export const StyledButton = styled('button', {
         height: '57px'
       }
     },
-    bg: ThemeVariants('colors', 'backgroundColor'),
-    color: ThemeVariants('colors', 'color'),
+    bg: getThemeVariants('colors', 'backgroundColor'),
+    color: getThemeVariants('colors', 'color'),
     freelancerButton: {
       true: {
         backgroundImage:

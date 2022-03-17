@@ -1,8 +1,8 @@
 import { Article, Project } from '@/'
-import { Button, Card, Grid, Group } from '@/components'
+import { Button, Card, Grid, Group, PageTitle, Seo } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
+import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
@@ -31,13 +31,15 @@ function Portfolio({
   const GridTemplate = (data: Project): JSX.Element => (
     <Card
       heading={data.title}
-      link={{ href: data.external }}
+      link={{ href: data.href }}
       image={{ src: data.image, alt: data.title }}
     />
   )
 
   return (
     <>
+      <PageTitle {...portfolioSeo} />
+      <Seo {...portfolioSeo} />
       <Group>
         {categories.map(cat => (
           <Button
@@ -62,8 +64,8 @@ function Portfolio({
 export default Portfolio
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources<Article>('articles')
-  const projects = await GetAllResources<Project>('projects')
+  const articles = await getAllResources<Article>('articles')
+  const projects = await getAllResources<Project>('projects')
 
   return {
     props: {
@@ -74,9 +76,5 @@ export const getStaticProps = async () => {
 }
 
 Portfolio.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard pageTitle={portfolioSeo} seo={portfolioSeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

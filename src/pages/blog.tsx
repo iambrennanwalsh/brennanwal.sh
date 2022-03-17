@@ -1,9 +1,9 @@
 import { Article } from '@/'
-import { Card, Grid } from '@/components'
-import { useApiContext, useComponentContext } from '@/hooks'
+import { Card, Grid, PageTitle, Seo } from '@/components'
+import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
-import { Slugify } from '@/utils/slugify'
+import { getAllResources } from '@/utils/getAllResources'
+import { getSlug } from '@/utils/getSlug'
 import { InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
@@ -20,11 +20,15 @@ const Blog = ({
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   const router = useRouter()
   const { resources, setResources } = useApiContext()
-  const { data, setData } = useComponentContext()
 
   const totalPosts = articles.length
 
   const [categories, setCategories] = useState<string[]>([])
+  const [pageTitle, setPageTitle] = useState({
+    ...blogSeo,
+    description: 'Loading articles...'
+  })
+  const [seo, setSeo] = useState(blogSeo)
 
   useEffect(() => {
     const cats = resources.articles?.map(article => article.category)
@@ -34,7 +38,8 @@ const Blog = ({
   useEffect(() => {
     if (!('articles' in resources))
       setResources({ ...resources, articles: articles })
-  }, [articles, resources, setResources])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles, setResources])
 
   useEffect(() => {
     const page = Number((router.query.page as string) ?? 1)
@@ -49,26 +54,23 @@ const Blog = ({
             showingFrom + 1
           }</i> through <i className='has-color-primary'>${showingTo}</i> of <i className='has-color-primary'>${totalPosts}</i> total articles.`
 
-    const newData = {
-      ...(data as object),
-      pageTitle: {
-        title,
-        description: summary
-      },
-      seo: {
-        title,
-        description: blogSeo.description
-      }
-    }
-    setData(newData)
-
+    setPageTitle({
+      ...pageTitle,
+      title,
+      description: summary
+    })
+    setSeo({
+      ...seo,
+      title,
+      description: summary
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.page])
 
   const gridTemplate = (data: Article): JSX.Element => (
     <Card
       heading={data.title}
-      link={{ href: `/article/${Slugify(data.title)}` }}
+      link={{ href: `/article/${getSlug(data.title)}` }}
       image={{ src: data.image, alt: data.title }}>
       {data.summary}
     </Card>
@@ -76,6 +78,8 @@ const Blog = ({
 
   return (
     <>
+      <PageTitle {...pageTitle} />
+      <Seo {...seo} />
       {/*<Dropdown baseUrl="/category/" data={categories} label="Categories.." />*/}
       <Grid
         data={articles}
@@ -89,7 +93,7 @@ const Blog = ({
 export default Blog
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources<Article>('articles')
+  const articles = await getAllResources<Article>('articles')
   return {
     props: {
       articles
@@ -98,11 +102,5 @@ export const getStaticProps = async () => {
 }
 
 Blog.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard
-      pageTitle={{ ...blogSeo, description: 'Loading articles...' }}
-      seo={blogSeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

@@ -1,8 +1,8 @@
 import { Article } from '@/'
-import { Anchor, Box, Content, Icon, Slide } from '@/components'
+import { Anchor, Box, Content, Icon, Seo, Slide } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Landing } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
+import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import { ReactElement, useEffect } from 'react'
 
@@ -24,6 +24,7 @@ const Home = ({
 
   return (
     <>
+      <Seo {...homeSeo} />
       <Box
         heading="A Little About Me"
         link={{ href: '/about', children: <Icon icon="right" /> }}>
@@ -136,7 +137,7 @@ const Home = ({
 export default Home
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources<Article>('articles')
+  const articles = await getAllResources<Article>('articles')
   return {
     props: {
       articles
@@ -145,9 +146,5 @@ export const getStaticProps = async () => {
 }
 
 Home.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Landing seo={homeSeo} page="home">
-      {page}
-    </Landing>
-  )
+  return <Landing page="home">{page}</Landing>
 }

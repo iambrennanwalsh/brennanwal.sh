@@ -17,6 +17,7 @@ export const StyledToast = styled('div', {
   textAlign: 'left',
   borderRadius: '$round',
   px: '$6',
+  lineHeight: '$sm',
   display: 'flex',
   alignItems: 'center',
   cursor: 'pointer',

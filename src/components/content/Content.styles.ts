@@ -19,18 +19,21 @@ export const StyledContentImage = styled(Image, {
 
 export const StyledContentHeading = styled('h3', {
   color: '$primary',
-  marginBottom: '$5',
-  '@untilTablet': {
-    paddingBottom: '$3',
-    borderBottomWidth: '$sm',
-    borderBottomStyle: '$solid',
-    borderBottomColor: '$responsiveDivider'
+  borderBottomWidth: '$sm',
+  borderBottomStyle: '$solid',
+  borderBottomColor: '$responsiveDivider',
+  paddingBottom: '$3',
+  marginBottom: '$4',
+  '@tablet': {
+    paddingBottom: '0',
+    borderBottom: 'none'
   }
 })
 
 export const StyledContentSeperator = styled(Seperator, {
-  '@untilTablet': {
-    display: 'none'
+  display: 'none',
+  '@tablet': {
+    display: 'block'
   }
 })
 
@@ -47,7 +50,7 @@ export const StyledContent = styled('div', {
 
   '@desktop': {
     [`${StyledBox} & h3~p`]: {
-      pl: '$5'
+      pl: '$4'
     }
   },
   variants: {

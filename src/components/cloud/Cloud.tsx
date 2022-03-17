@@ -1,7 +1,7 @@
 import type { Component, Props } from '@/'
 import { Anchor } from '@/components'
 import { useApiContext } from '@/hooks'
-import { Slugify } from '@/utils/slugify/Slugify'
+import { getSlug } from '@/utils/getSlug'
 import { useEffect, useState } from 'react'
 import { StyledCloud, StyledCloudNode } from '.'
 
@@ -41,7 +41,7 @@ export const Cloud: Component<CloudProps> = props => {
   return (
     <StyledCloud {...props}>
       {cloud.map(([name, size]) => (
-        <Anchor key={name} href={`/tag/${Slugify(name)}`}>
+        <Anchor key={name} href={`/tag/${getSlug(name)}`}>
           <StyledCloudNode
             css={{ fontSize: `${size}rem` }}
             color={size > 1.25 ? 'secondary' : 'light'}>

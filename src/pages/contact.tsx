@@ -1,9 +1,9 @@
 import { Article } from '@/'
-import { Box, Content } from '@/components'
+import { Box, Content, PageTitle, Seo } from '@/components'
 import { ContactForm } from '@/forms'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
+import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import { ReactElement, useEffect } from 'react'
@@ -32,6 +32,8 @@ const Contact = ({
 
   return (
     <>
+      <PageTitle {...contactSeo} />
+      <Seo {...contactSeo} />
       <Map />
       <Box heading="Lets Get In Touch">
         <Content>
@@ -50,7 +52,7 @@ const Contact = ({
 export default Contact
 
 export const getStaticProps = async () => {
-  const articles = await GetAllResources<Article>('articles')
+  const articles = await getAllResources<Article>('articles')
   return {
     props: {
       articles
@@ -59,9 +61,5 @@ export const getStaticProps = async () => {
 }
 
 Contact.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard seo={contactSeo} pageTitle={contactSeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

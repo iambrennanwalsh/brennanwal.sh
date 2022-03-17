@@ -1,9 +1,9 @@
 import type { Article } from '@/'
-import { Card, Grid } from '@/components'
-import { useApiContext, useComponentContext } from '@/hooks'
+import { Card, Grid, PageTitle, Seo } from '@/components'
+import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { GetAllResources } from '@/utils/getAllResources'
-import { Slugify } from '@/utils/slugify'
+import { getAllResources } from '@/utils/getAllResources/getAllResources'
+import { getSlug } from '@/utils/getSlug'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
@@ -19,7 +19,12 @@ const Category = ({
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   const router = useRouter()
   const { resources, setResources } = useApiContext()
-  const { data, setData } = useComponentContext()
+
+  const [pageTitle, setPageTitle] = useState({
+    ...categorySeo,
+    description: 'Loading articles...'
+  })
+  const [seo, setSeo] = useState(categorySeo)
 
   const totalPosts = articles.length
 
@@ -51,24 +56,22 @@ const Category = ({
             showingFrom + 1
           }</i> through <i className='has-color-primary'>${showingTo}</i> of <i className='has-color-primary'>${totalPosts}</i> total articles.`
 
-    const newData = {
-      ...(data as object),
-      pageTitle: {
-        title,
-        description: summary
-      },
-      seo: {
-        title,
-        description: categorySeo.description
-      }
-    }
-    setData(newData)
-  }, [category, data, router.query.page, setData, totalPosts])
+    setPageTitle({
+      ...pageTitle,
+      title,
+      description: summary
+    })
+    setSeo({
+      ...seo,
+      title,
+      description: summary
+    })
+  }, [category, pageTitle, router.query.page, seo, totalPosts])
 
   const gridTemplate = (data: Article): JSX.Element => (
     <Card
       heading={data.title}
-      link={{ href: `/article/${Slugify(data.title)}` }}
+      link={{ href: `/article/${getSlug(data.title)}` }}
       image={{ src: data.image, alt: data.title }}>
       {data.summary}
     </Card>
@@ -76,6 +79,8 @@ const Category = ({
 
   return (
     <>
+      <PageTitle {...pageTitle} />
+      <Seo {...seo} />
       {/*<Dropdown baseUrl="/category/" data={categories} label="Categories.." />*/}
       <Grid
         data={articles}
@@ -90,13 +95,13 @@ const Category = ({
 export default Category
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categories = await GetAllResources<Article>('articles').then(articles =>
+  const categories = await getAllResources<Article>('articles').then(articles =>
     articles.map(article => article.category)
   )
   const paths = Array.from(new Set(categories)).map(i => {
     return {
       params: {
-        slug: Slugify(i as string)
+        slug: getSlug(i as string)
       }
     }
   })
@@ -111,9 +116,9 @@ export const getStaticProps = async (context: {
     slug: string
   }
 }) => {
-  const articles = await GetAllResources<Article>('articles')
+  const articles = await getAllResources<Article>('articles')
   const categoryArticles = articles.filter(
-    article => Slugify(article.category) == context.params?.slug
+    article => getSlug(article.category) == context.params?.slug
   )
   return {
     props: {
@@ -124,11 +129,5 @@ export const getStaticProps = async (context: {
 }
 
 Category.getLayout = function getLayout(page: ReactElement) {
-  return (
-    <Standard
-      pageTitle={{ ...categorySeo, description: 'Loading articles..' }}
-      seo={categorySeo}>
-      {page}
-    </Standard>
-  )
+  return <Standard>{page}</Standard>
 }

@@ -3,11 +3,7 @@ import { theme } from '@/styles'
 import type { CSSProperties } from '@stitches/react'
 
 /**
- * ThemeVariants
- * Generate variants dynamically. Returns a variant for each token in your theme scale set to a css property..
- *
- * @typeParam T - A key of the type of your theme.
- * @typeParam C - A key of the list of css properties. {@link https://github.com/modulz/stitches/blob/canary/packages/react/types/index.d.ts#L8}
+ * Generate variants dynamically. Returns a variant for each token in your theme scale set to a css property.
  *
  * @param scale - A scale from your theme.
  * @param property - A css property you'd like to apply the value of each token
@@ -30,13 +26,10 @@ import type { CSSProperties } from '@stitches/react'
  * }
  * ```
  */
-export const ThemeVariants = <
+export function getThemeVariants<
   T extends keyof typeof theme,
   C extends keyof CSSProperties
->(
-  scale: T,
-  property: C
-): Record<keyof typeof theme[T], Css> => {
+>(scale: T, property: C): Record<keyof typeof theme[T], Css> {
   const variants: Record<string, Record<string, string>> = {}
   if (!(scale in theme)) {
     throw new Error(

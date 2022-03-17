@@ -165,5 +165,56 @@ export const globalStyles = globalCss({
     listStylePosition: 'inside',
     listStyleType: 'none',
     marginLeft: 0
+  },
+
+  '[data-component="code"]': {
+    position: 'relative',
+    fontSize: '$sm',
+    lineHeight: '$sm'
+  },
+
+  '[data-component="code"] > span': {
+    position: 'absolute',
+    zIndex: '1',
+    color: '#ffffff',
+    right: '0',
+    top: '0',
+    width: '50px',
+    height: '25px',
+    borderBottomRightRadius: '3px',
+    borderBottomLeftRadius: '3px',
+    borderBottom: '0',
+    fontSize: '14px',
+    boxShadow: 'unset',
+    background: '$primary',
+    textAlign: 'center',
+    lineHeight: '24px'
+  },
+
+  '[data-component="code"] > pre': {
+    textAlign: 'left',
+    p: '0.5em',
+    overflow: 'scroll',
+    width: 'calc(100% + 3rem)',
+    ml: '-1.5rem',
+    boxShadow: '0px 0px 7px 7px rgba(0, 0, 0, 0.3) inset',
+    maxWidth: 'unset'
+  },
+
+  '[data-component="code"] .token-line': {
+    display: 'table-row'
+  },
+
+  '[data-component="code"] .token-line > span:first-child': {
+    display: 'table-cell',
+    textAlign: 'right',
+    pr: '1em',
+    userSelect: 'none',
+    opacity: '0.5',
+    paddingLeft: '0.5rem'
+  },
+
+  '[data-component="code"] .token-line span': {
+    display: 'table-cell'
   }
 })

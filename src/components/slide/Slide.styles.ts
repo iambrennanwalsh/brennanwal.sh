@@ -1,17 +1,17 @@
-import {styled} from '@/styles'
+import { styled } from '@/styles'
 
 export const StyledSlideQuote = styled('p', {
   color: '$whiteText',
   maxWidth: '600px',
-  marginBottom: '$6',
+  marginBottom: '$6'
 })
 
 export const StyledSlideSource = styled('p', {
-  backgroundImage: 'linear-gradient(-45deg, $primary, $secondary)',
+  backgroundImage: 'linear-gradient(to left, $primary, $secondary)',
   color: '$blackText',
   display: 'inline',
   padding: '$1 $3',
-  boxShadow: '$sm',
+  boxShadow: '$sm'
 })
 
 export const StyledSlide = styled('div', {
@@ -27,11 +27,11 @@ export const StyledSlide = styled('div', {
 
   '@tablet': {
     borderRadius: '4px',
-    marginBottom: '1.25rem',
+    marginBottom: '1.25rem'
   },
 
   '@untilTablet': {
-    stretch: true,
+    stretch: true
   },
 
   variants: {
@@ -39,19 +39,19 @@ export const StyledSlide = styled('div', {
       steveJobs: {
         background: 'url("/images/slides/hiking.jpg")',
         backgroundPositionX: '10%',
-        backgroundPositionY: '100%',
+        backgroundPositionY: '100%'
       },
       losAngeles: {
         background: 'url("/images/slides/la.jpg")',
         backgroundPositionX: '50%',
         backgroundPositionY: '50%',
         [`& ${StyledSlideSource}`]: {
-          color: '$whiteText',
-        },
-      },
-    },
+          color: '$whiteText'
+        }
+      }
+    }
   },
   defaultVariants: {
-    type: 'steveJobs',
-  },
+    type: 'steveJobs'
+  }
 })

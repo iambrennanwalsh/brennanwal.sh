@@ -1,7 +1,6 @@
-import {Component, Props} from '@/'
-import {Anchor, Group, Hero, Icon} from '@/components'
-import {Base} from '@/layouts'
-import {Main} from '@/partials'
+import { Component, Props } from '@/'
+import { Anchor, Group, Hero, Icon } from '@/components'
+import { Main } from '@/partials'
 import {
   StyledLandingHeroBoldText,
   StyledLandingHeroCaption,
@@ -13,15 +12,15 @@ interface LandingOwnProps {
   page: string
 }
 
-export type LandingProps = Props<typeof Base, LandingOwnProps>
+export type LandingProps = Props<'div', LandingOwnProps>
 
-export const Landing: Component<LandingProps> = ({page, seo, children}) => {
+export const Landing: Component<LandingProps> = ({ page, children }) => {
   const PageHero = Heros[page]
   return (
-    <Base seo={seo}>
+    <>
       <PageHero />
       <Main>{children}</Main>
-    </Base>
+    </>
   )
 }
 
@@ -31,7 +30,7 @@ const HomeHero: Component<LandingHeroProps> = () => (
   <Hero effect="home">
     <StyledLandingHeroHeader>I am Brennan Walsh.</StyledLandingHeroHeader>
     <StyledLandingHeroCaption>
-      Web, Mobile, and Software Applications Developer.
+      <span>Web, Mobile, and Software Applications Developer.</span>
     </StyledLandingHeroCaption>
     <StyledLandingHeroMeta>
       <StyledLandingHeroBoldText>@iambrennanwalsh</StyledLandingHeroBoldText>

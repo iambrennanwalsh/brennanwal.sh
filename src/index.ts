@@ -28,22 +28,22 @@ export type Component<P> = (props: P) => JSX.Element
 // Resource Types
 
 export interface Resource {
-  title: string
-  summary: string
   image: string
-  timestamp: string
   category: string
-  slug: string
+  summary: string
+  timestamp: string
+  title: string
 }
 
 export interface Article extends Resource {
   content: string
   featured?: boolean
+  slug: string
   tags?: string[]
 }
 
 export interface Project extends Resource {
-  external: string
+  href: string
 }
 
 export interface Notification {
