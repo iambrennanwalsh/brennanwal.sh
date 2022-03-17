@@ -8,15 +8,11 @@ import { getResource } from '@/utils/getResource/getResource'
  * @param resource A resource type.
  * @returns All resources of a type.
  */
-export const getAllResources = async <T extends Resource>(
-  resource: string
-): Promise<T[]> => {
+export const getAllResources = <T extends Resource>(resource: string): T[] => {
   const files = getFiles(resource)
 
-  return Promise.all(files.map(file => getResource<T>(file, resource))).then(
-    posts =>
-      posts.sort((a, b) =>
-        new Date(a.timestamp) < new Date(b.timestamp) ? 1 : -1
-      )
+  const resources = files.map(file => getResource<T>(file, resource))
+  return resources.sort((a, b) =>
+    new Date(a.timestamp) < new Date(b.timestamp) ? 1 : -1
   )
 }

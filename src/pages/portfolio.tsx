@@ -1,11 +1,11 @@
-import { Article, Project } from '@/'
+import type { Article, Project } from '@/'
 import { Button, Card, Grid, Group, PageTitle, Seo } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
+import { getAllResources } from '../utils/getAllResources/getAllResources'
 
 const portfolioSeo = {
   title: 'Portfolio',
@@ -64,8 +64,8 @@ function Portfolio({
 export default Portfolio
 
 export const getStaticProps = async () => {
-  const articles = await getAllResources<Article>('articles')
-  const projects = await getAllResources<Project>('projects')
+  const articles = getAllResources<Article>('articles')
+  const projects = getAllResources<Project>('projects')
 
   return {
     props: {

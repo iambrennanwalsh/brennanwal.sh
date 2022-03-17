@@ -2,12 +2,12 @@ import type { Article } from '@/'
 import { Card, Grid, PageTitle, Seo } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { getSlug } from '@/utils/getSlug'
 import type { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
+import { getAllResources } from './../../utils/getAllResources/getAllResources'
 
 const tagSeo = {
   title: `Tag`,
@@ -92,9 +92,8 @@ export default Tag
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const tags: string[] = []
-  await getAllResources<Article>('articles').then(articles =>
-    articles.map(article => tags.push(...(article.tags as string[])))
-  )
+  const resources = getAllResources<Article>('articles')
+  resources.forEach(article => tags.push(...(article.tags as string[])))
   const paths = Array.from(new Set(tags)).map(i => {
     return {
       params: {
@@ -114,7 +113,7 @@ export const getStaticProps = async (context: {
   }
 }) => {
   const tags: string[] = []
-  const articles = await getAllResources<Article>('articles')
+  const articles = getAllResources<Article>('articles')
   articles.forEach(
     article => article.tags && tags.push(...(article.tags as string[]))
   )

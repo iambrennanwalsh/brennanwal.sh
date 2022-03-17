@@ -1,13 +1,13 @@
-import { Article } from '@/'
+import type { Article } from '@/'
 import { Card, Grid, PageTitle, Seo } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources'
-import { getSlug } from '@/utils/getSlug'
 import { InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
+import { getAllResources } from './../utils/getAllResources/getAllResources'
+import { getSlug } from './../utils/getSlug/getSlug'
 
 const blogSeo = {
   title: 'Blog',
@@ -93,7 +93,7 @@ const Blog = ({
 export default Blog
 
 export const getStaticProps = async () => {
-  const articles = await getAllResources<Article>('articles')
+  const articles = getAllResources<Article>('articles')
   return {
     props: {
       articles

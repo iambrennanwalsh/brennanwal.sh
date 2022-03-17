@@ -2,11 +2,11 @@ import type { Article } from '@/'
 import { Card, Grid, PageTitle, Seo } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources/getAllResources'
-import { getSlug } from '@/utils/getSlug'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
+import { getAllResources } from './../../utils/getAllResources/getAllResources'
+import { getSlug } from './../../utils/getSlug/getSlug'
 
 const categorySeo = {
   title: `Category`,
@@ -95,9 +95,8 @@ const Category = ({
 export default Category
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const categories = await getAllResources<Article>('articles').then(articles =>
-    articles.map(article => article.category)
-  )
+  const resources = getAllResources<Article>('articles')
+  const categories = resources.map(article => article.category)
   const paths = Array.from(new Set(categories)).map(i => {
     return {
       params: {
@@ -116,7 +115,7 @@ export const getStaticProps = async (context: {
     slug: string
   }
 }) => {
-  const articles = await getAllResources<Article>('articles')
+  const articles = getAllResources<Article>('articles')
   const categoryArticles = articles.filter(
     article => getSlug(article.category) == context.params?.slug
   )

@@ -1,12 +1,12 @@
-import { Article } from '@/'
+import type { Article } from '@/'
 import { Box, Content, PageTitle, Seo } from '@/components'
 import { ContactForm } from '@/forms'
 import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import { ReactElement, useEffect } from 'react'
+import { getAllResources } from '../utils/getAllResources/getAllResources'
 
 const contactSeo = {
   title: 'Contact Me',
@@ -52,7 +52,7 @@ const Contact = ({
 export default Contact
 
 export const getStaticProps = async () => {
-  const articles = await getAllResources<Article>('articles')
+  const articles = getAllResources<Article>('articles')
   return {
     props: {
       articles

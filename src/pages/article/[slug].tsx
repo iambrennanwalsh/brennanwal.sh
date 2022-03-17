@@ -3,12 +3,12 @@ import { PageTitle, Seo } from '@/components'
 import { useApiContext, useComponentContext } from '@/hooks'
 import { Standard } from '@/layouts'
 import { styled } from '@/styles'
-import { getAllResources } from '@/utils/getAllResources/getAllResources'
-import { getMarkdownComponents } from '@/utils/getMarkdownComponents/getMarkdownComponents'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import renderToString from 'next-mdx-remote/render-to-string'
 import { useRouter } from 'next/router'
 import { ReactElement, useCallback, useEffect } from 'react'
+import { getAllResources } from './../../utils/getAllResources/getAllResources'
+import { getMarkdownComponents } from './../../utils/getMarkdownComponents/getMarkdownComponents'
 
 const articleSeo = {
   title: `Article`,
@@ -85,7 +85,7 @@ const Article = ({
 export default Article
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const articles = await getAllResources<ArticleType>('articles')
+  const articles = getAllResources<ArticleType>('articles')
   const paths = articles.map(article => {
     return {
       params: {
@@ -103,7 +103,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps = async (context: {
   params?: { slug: string }
 }) => {
-  const articles = await getAllResources<ArticleType>('articles')
+  const articles = getAllResources<ArticleType>('articles')
   const article = articles.find(article => article.slug == context.params?.slug)
   const { renderedOutput } = await renderToString(article?.content ?? '', {
     provider: getMarkdownComponents()

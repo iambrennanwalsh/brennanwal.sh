@@ -1,10 +1,10 @@
-import { Article } from '@/'
+import type { Article } from '@/'
 import { Anchor, Box, Content, Icon, Seo, Slide } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Landing } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources/getAllResources'
 import { InferGetStaticPropsType } from 'next'
 import { ReactElement, useEffect } from 'react'
+import { getAllResources } from '../utils/getAllResources/getAllResources'
 
 const homeSeo = {
   title: 'Web Developer and Entrepreneur',
@@ -137,7 +137,7 @@ const Home = ({
 export default Home
 
 export const getStaticProps = async () => {
-  const articles = await getAllResources<Article>('articles')
+  const articles = getAllResources<Article>('articles')
   return {
     props: {
       articles
