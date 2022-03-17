@@ -2,7 +2,7 @@ import type { Article } from '@/'
 import { Anchor, Box, Content, Icon, Seo, Slide } from '@/components'
 import { useApiContext } from '@/hooks'
 import { Landing } from '@/layouts'
-import { getAllResources } from '@/utils/getAllResources'
+import { getAllResources } from '@/utils/getAllResources/GetAllResources'
 import { InferGetStaticPropsType } from 'next'
 import { ReactElement, useEffect } from 'react'
 

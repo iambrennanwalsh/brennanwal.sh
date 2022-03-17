@@ -4,7 +4,7 @@
  * @param str A string to convert.
  * @returns A web safe slug.
  */
-export function getSlug(str: string): string {
+export const getSlug = (str: string): string => {
   return str
     .toString()
     .toLowerCase()

@@ -2,7 +2,6 @@ import type { Component, Props } from '@/'
 import { Anchor, Instagram } from '@/components'
 import { useApiContext } from '@/hooks'
 import { navLogo } from '@/partials/header'
-import { getSlug } from '@/utils/getSlug'
 import { useEffect, useState } from 'react'
 import {
   StyledFooter,
@@ -17,6 +16,7 @@ import {
   StyledGradientStrip,
   StyledIgIcon
 } from '.'
+import { getSlug } from './../../utils/getSlug/GetSlug'
 
 export type FooterProps = Props<typeof StyledFooter>
 export type FooterComponent = Component<FooterProps>
