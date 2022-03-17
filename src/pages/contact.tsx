@@ -6,7 +6,7 @@ import { Standard } from '@/layouts'
 import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
 import { ReactElement, useEffect } from 'react'
-import { getAllResources } from '../utils/getAllResources/getAllResources'
+import { getAllResources } from '../utils/getAllResources/GetAllResources'
 
 const contactSeo = {
   title: 'Contact Me',

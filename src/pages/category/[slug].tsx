@@ -5,8 +5,8 @@ import { Standard } from '@/layouts'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
-import { getAllResources } from './../../utils/getAllResources/getAllResources'
-import { getSlug } from './../../utils/getSlug/getSlug'
+import { getAllResources } from '../../utils/getAllResources/GetAllResources'
+import { getSlug } from '../../utils/getSlug/GetSlug'
 
 const categorySeo = {
   title: `Category`,

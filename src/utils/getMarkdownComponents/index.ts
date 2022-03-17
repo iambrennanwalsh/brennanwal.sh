@@ -1,1 +1,1 @@
-export * from './getMarkdownComponents'
+export * from './GetMarkdownComponents'

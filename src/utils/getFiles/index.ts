@@ -1,1 +1,1 @@
-export * from './getFiles'
+export * from './GetFiles'

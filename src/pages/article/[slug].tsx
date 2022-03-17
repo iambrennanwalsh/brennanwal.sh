@@ -7,8 +7,8 @@ import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import renderToString from 'next-mdx-remote/render-to-string'
 import { useRouter } from 'next/router'
 import { ReactElement, useCallback, useEffect } from 'react'
-import { getAllResources } from './../../utils/getAllResources/getAllResources'
-import { getMarkdownComponents } from './../../utils/getMarkdownComponents/getMarkdownComponents'
+import { getAllResources } from '../../utils/getAllResources/GetAllResources'
+import { getMarkdownComponents } from '../../utils/getMarkdownComponents/GetMarkdownComponents'
 
 const articleSeo = {
   title: `Article`,

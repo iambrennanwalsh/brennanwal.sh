@@ -5,7 +5,7 @@ import { Standard } from '@/layouts'
 import { InferGetStaticPropsType } from 'next'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
-import { getAllResources } from '../utils/getAllResources/getAllResources'
+import { getAllResources } from '../utils/getAllResources/GetAllResources'
 
 const portfolioSeo = {
   title: 'Portfolio',

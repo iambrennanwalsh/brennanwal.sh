@@ -7,7 +7,7 @@ import type { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
 import { useEffect, useState } from 'react'
-import { getAllResources } from './../../utils/getAllResources/getAllResources'
+import { getAllResources } from '../../utils/getAllResources/GetAllResources'
 
 const tagSeo = {
   title: `Tag`,

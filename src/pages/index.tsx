@@ -4,7 +4,7 @@ import { useApiContext } from '@/hooks'
 import { Landing } from '@/layouts'
 import { InferGetStaticPropsType } from 'next'
 import { ReactElement, useEffect } from 'react'
-import { getAllResources } from '../utils/getAllResources/getAllResources'
+import { getAllResources } from '../utils/getAllResources/GetAllResources'
 
 const homeSeo = {
   title: 'Web Developer and Entrepreneur',

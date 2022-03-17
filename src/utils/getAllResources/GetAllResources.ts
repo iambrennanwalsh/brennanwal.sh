@@ -1,6 +1,6 @@
 import type { Resource } from '@/'
-import { getFiles } from '@/utils/getFiles/getFiles'
-import { getResource } from '@/utils/getResource/getResource'
+import { getFiles } from '@/utils/getFiles/GetFiles'
+import { getResource } from '@/utils/getResource/GetResource'
 
 /**
  * Get all resources of a type.

@@ -1,1 +1,1 @@
-export * from './getAllResources'
+export * from './GetAllResources'

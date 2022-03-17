@@ -1,1 +1,1 @@
-export * from './getSlug'
+export * from './GetSlug'

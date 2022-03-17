@@ -1,1 +1,1 @@
-export * from './getThemeVariants'
+export * from './GetThemeVariants'
