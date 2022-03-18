@@ -66,7 +66,8 @@ const Category = ({
       title,
       description: summary
     })
-  }, [category, pageTitle, router.query.page, seo, totalPosts])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [category, router.query.page, totalPosts])
 
   const gridTemplate = (data: Article): JSX.Element => (
     <Card

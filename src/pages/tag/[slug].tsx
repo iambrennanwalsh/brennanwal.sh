@@ -63,7 +63,8 @@ const Tag = ({
       title,
       description: summary
     })
-  }, [tag, router.query.page, totalPosts, pageTitle, seo])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tag, router.query.page, totalPosts])
 
   const gridTemplate = (data: Article): JSX.Element => (
     <Card
