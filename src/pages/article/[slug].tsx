@@ -40,7 +40,8 @@ const Article = ({
   useEffect(() => {
     if (!('articles' in resources))
       setResources({ ...resources, articles: articles })
-  }, [articles, resources, setResources])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles])
 
   const comments = useCallback(node => {
     if (node) {

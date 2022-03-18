@@ -38,7 +38,7 @@ const Blog = ({
     if (!('articles' in resources))
       setResources({ ...resources, articles: articles })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articles, setResources])
+  }, [articles])
 
   useEffect(() => {
     const page = Number((router.query.page as string) ?? 1)

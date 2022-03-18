@@ -37,7 +37,8 @@ const Category = ({
   useEffect(() => {
     if (!('articles' in resources))
       setResources({ ...resources, articles: articles })
-  }, [articles, resources, setResources])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [articles])
 
   useEffect(() => {
     const page = Number((router.query.page as string) ?? 1)
