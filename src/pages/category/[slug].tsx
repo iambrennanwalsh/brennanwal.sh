@@ -18,7 +18,7 @@ const Category = ({
   const router = useRouter()
 
   const [articles, setArticles] = useState(
-    resources.articles.filter(article => getSlug(article.category) == category)
+    resources.articles.filter(article => article.category == category)
   )
 
   const [pageTitle, setPageTitle] = useState({
