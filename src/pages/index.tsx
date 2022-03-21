@@ -1,10 +1,9 @@
 import type { Article } from '@/'
 import { Anchor, Box, Content, Icon, Seo, Slide } from '@/components'
-import { useApiContext } from '@/hooks'
 import { Landing } from '@/layouts'
 import { getAllResources } from '@/utils'
 import { InferGetStaticPropsType } from 'next'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 
 const homeSeo = {
   title: 'Web Developer and Entrepreneur',
@@ -13,15 +12,8 @@ const homeSeo = {
 }
 
 const Home = ({
-  articles
+  resources
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-  const { resources, setResources } = useApiContext()
-
-  useEffect(() => {
-    if (!('articles' in resources))
-      setResources({ ...resources, articles: articles })
-  }, [articles, resources, setResources])
-
   return (
     <>
       <Seo {...homeSeo} />
@@ -140,7 +132,9 @@ export const getStaticProps = async () => {
   const articles = getAllResources<Article>('articles')
   return {
     props: {
-      articles
+      resources: {
+        articles
+      }
     }
   }
 }

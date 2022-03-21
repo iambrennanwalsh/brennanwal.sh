@@ -1,10 +1,9 @@
 import type { Article } from '@/'
 import { Anchor, Box, Content, PageTitle, Seo, Slide, Tabs } from '@/components'
-import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
 import { getAllResources } from '@/utils'
 import { InferGetStaticPropsType } from 'next'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 
 const aboutSeo = {
   title: 'About Me',
@@ -150,15 +149,8 @@ const tabs = [
 ]
 
 const About = ({
-  articles
+  resources
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-  const { resources, setResources } = useApiContext()
-
-  useEffect(() => {
-    if (!('articles' in resources))
-      setResources({ ...resources, articles: articles })
-  }, [articles, resources, setResources])
-
   return (
     <>
       <PageTitle {...aboutSeo} />
@@ -264,7 +256,9 @@ export const getStaticProps = async () => {
   const articles = getAllResources<Article>('articles')
   return {
     props: {
-      articles
+      resources: {
+        articles
+      }
     }
   }
 }

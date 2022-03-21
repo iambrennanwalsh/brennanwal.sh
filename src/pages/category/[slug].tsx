@@ -1,6 +1,5 @@
 import type { Article } from '@/'
 import { Card, Grid, PageTitle, Seo } from '@/components'
-import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
 import { getAllResources, getSlug } from '@/utils'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
@@ -13,11 +12,14 @@ const categorySeo = {
 }
 
 const Category = ({
-  articles,
+  resources,
   category
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   const router = useRouter()
-  const { resources, setResources } = useApiContext()
+
+  const [articles, setArticles] = useState(
+    resources.articles.filter(article => getSlug(article.category) == category)
+  )
 
   const [pageTitle, setPageTitle] = useState({
     ...categorySeo,
@@ -25,36 +27,23 @@ const Category = ({
   })
   const [seo, setSeo] = useState(categorySeo)
 
-  const totalPosts = articles.length
-
-  const [categories, setCategories] = useState<string[]>([])
-
-  useEffect(() => {
-    const cats = resources.articles?.map(article => article.category)
-    setCategories(Array.from(new Set(cats)))
-  }, [resources])
-
-  useEffect(() => {
-    if (!('articles' in resources))
-      setResources({ ...resources, articles: articles })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articles])
-
   useEffect(() => {
     const page = Number((router.query.page as string) ?? 1)
     const showingFrom = page == 1 ? 0 : (page - 1) * 9
-    const showingTo = page * 9 > totalPosts ? totalPosts : page * 9
+    const showingTo = page * 9 > articles.length ? articles.length : page * 9
 
     const title =
       page > 1
         ? `Category: ${category} • Page ${page}`
         : `Category: ${category}`
     const summary =
-      totalPosts == 0
+      articles.length == 0
         ? 'Nothing in here.'
         : `Showing articles <i className='has-color-primary'>${
             showingFrom + 1
-          }</i> through <i className='has-color-primary'>${showingTo}</i> of <i className='has-color-primary'>${totalPosts}</i> total articles.`
+          }</i> through <i className='has-color-primary'>${showingTo}</i> of <i className='has-color-primary'>${
+            articles.length
+          }</i> total articles.`
 
     setPageTitle({
       ...pageTitle,
@@ -66,8 +55,15 @@ const Category = ({
       title,
       description: summary
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, router.query.page, totalPosts])
+  }, [category, router.query.page])
+
+  useEffect(() => {
+    setArticles(
+      resources.articles.filter(
+        article => getSlug(article.category) == category
+      )
+    )
+  }, [category])
 
   const gridTemplate = (data: Article): JSX.Element => (
     <Card
@@ -117,13 +113,15 @@ export const getStaticProps = async (context: {
   }
 }) => {
   const articles = getAllResources<Article>('articles')
-  const categoryArticles = articles.filter(
+  const category = articles.find(
     article => getSlug(article.category) == context.params?.slug
-  )
+  )!.category
   return {
     props: {
-      articles: categoryArticles,
-      category: categoryArticles[0].category
+      resources: {
+        articles: articles
+      },
+      category: category
     }
   }
 }

@@ -1,18 +1,11 @@
 import type { Article as ArticleType } from '@/'
 import { PageTitle, Seo } from '@/components'
-import { useApiContext, useComponentContext } from '@/hooks'
 import { Standard } from '@/layouts'
 import { styled } from '@/styles'
 import { getAllResources, getMarkdownComponents } from '@/utils'
 import { GetStaticPaths, InferGetStaticPropsType } from 'next'
 import renderToString from 'next-mdx-remote/render-to-string'
-import { useRouter } from 'next/router'
-import { ReactElement, useCallback, useEffect } from 'react'
-
-const articleSeo = {
-  title: `Article`,
-  description: 'The personal blog of applications developer Brennan Walsh.'
-}
+import { ReactElement, useCallback } from 'react'
 
 const CommentHeading = styled('h2', {
   textAlign: 'center',
@@ -29,20 +22,10 @@ const CommentHeading = styled('h2', {
 })
 
 const Article = ({
-  articles,
+  resources,
   article,
   content
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-  const router = useRouter()
-  const { resources, setResources } = useApiContext()
-  const { data, setData } = useComponentContext()
-
-  useEffect(() => {
-    if (!('articles' in resources))
-      setResources({ ...resources, articles: articles })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [articles])
-
   const comments = useCallback(node => {
     if (node) {
       const script = document.createElement('script')
@@ -60,18 +43,14 @@ const Article = ({
   return (
     <>
       <PageTitle
-        {...{
-          image: article?.image,
-          title: article?.title!,
-          description: article?.summary!
-        }}
+        image={article.image}
+        title={article.title}
+        description={article.summary}
       />
       <Seo
-        {...{
-          image: article?.image,
-          title: article?.title!,
-          description: article?.summary!
-        }}
+        image={article.image}
+        title={article.title}
+        description={article.summary}
       />
       <div dangerouslySetInnerHTML={{ __html: content }} />
       <CommentHeading>
@@ -110,8 +89,10 @@ export const getStaticProps = async (context: {
   })
   return {
     props: {
-      articles: articles,
-      article: article,
+      resources: {
+        articles: articles
+      },
+      article: article!,
       content: renderedOutput
     }
   }

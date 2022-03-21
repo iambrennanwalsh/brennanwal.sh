@@ -3,7 +3,6 @@ import { Anchor, Instagram } from '@/components'
 import { useApiContext } from '@/hooks'
 import { navLogo } from '@/partials/header'
 import { getSlug } from '@/utils'
-import { useEffect, useState } from 'react'
 import {
   StyledFooter,
   StyledFooterCloud,
@@ -23,15 +22,6 @@ export type FooterComponent = Component<FooterProps>
 
 export const Footer: FooterComponent = props => {
   const { resources } = useApiContext()
-
-  const [categories, setCategories] = useState<string[]>([])
-
-  useEffect(() => {
-    if (resources.articles) {
-      const cats = resources.articles?.map(article => article.category)
-      setCategories(Array.from(new Set(cats)))
-    }
-  }, [resources])
 
   return (
     <StyledFooter {...props}>
@@ -75,8 +65,10 @@ export const Footer: FooterComponent = props => {
           <StyledFooterNavList>
             <StyledFooterListHeader>Categories</StyledFooterListHeader>
             <ul>
-              {categories &&
-                categories.map(cat => (
+              {resources.articles &&
+                Array.from(
+                  new Set(resources.articles.map(article => article.category))
+                ).map(cat => (
                   <li key={cat}>
                     <Anchor href={`/category/${getSlug(cat)}`}>{cat}</Anchor>
                   </li>

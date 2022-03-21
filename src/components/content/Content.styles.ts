@@ -44,6 +44,18 @@ export const StyledContent = styled('div', {
     display: 'none'
   },
 
+  '& q': {
+    display: 'block',
+    width: 'calc(100% + 3rem)',
+    ml: '-1.35rem',
+    py: '$5',
+    px: '$7',
+    fontSize: '$sm',
+    color: '$whiteText',
+    background: '$secondary',
+    mb: '$5'
+  },
+
   [`${StyledBox} & p:not(:last-child)`]: {
     mb: '$5'
   },

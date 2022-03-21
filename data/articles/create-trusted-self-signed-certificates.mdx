@@ -1,0 +1,211 @@
+---
+title: Create Trusted Self Signed Certificates
+summary: By properly creating a self signed certificate, we can get rid of the nagging browser errors for good.
+image: /images/fixture/fixture_3.jpg
+featured: true
+category: Security
+tags:
+  - Security
+  - Dev Ops
+timestamp: '2022-03-19'
+---
+
+<Box heading="Create the `.certs/` Directory.">
+
+<Content>
+
+To get started we'll need a directory to store all of our certificates and private keys.
+
+I have chosen a `~/.certs/` directory, but it can be whatever and wherever you want.
+
+</Content>
+<Content>
+
+You can do this from the command line with the following.
+
+```bash
+# Create the ~/.certs directory.
+
+$ mkdir ~/.certs
+```
+
+</Content>
+</Box>
+
+<Box heading="Generate and Trust the Root Private Key, and Certificate.">
+
+<Content>
+Now we’ll generate the root private key, and certifcate. Then you'll instruct your OS to trust this certificate.
+
+</Content>
+
+<Content heading="Trust is Key">
+
+The secret to producing trusted self signed certificates, is configuring the operating system to to trust the certificate that signed it. As long as the signing certificate is trusted, any certificates it signs will also be trusted.
+
+</Content>
+<Content heading="Generate the Root Private Key">
+
+First we'll need a private key. 2048 bits is perfect. Change the `-out` directory as needed.
+
+```bash
+# Generate a private key.
+
+$ openssl genrsa \
+  -out ~/.certs/root.key \
+  2048
+```
+
+</Content>
+
+<Content heading="Generate the Root Certificate">
+
+Next, we'll generate a self signed certificate that will serve as our development certificate authority.
+
+Again change the `-out` directory as needed.
+
+```bash
+# Generate a self signed certificate that will serve as the Certificate Authority.
+
+$ openssl req \
+  -x509 -new -nodes \
+  -key ~/.certs/root.key \
+  -sha256 \
+  -days 1825 \
+  -out ~/.certs/root.pem \
+  -subj "/CN=Local CA"
+```
+
+</Content>
+
+<Content heading="Configure Mac OS to trust the Certificate">
+
+Now that we have our self signed certificate, lets tell Mac OS that it should be trusted.
+
+```bash
+# Tell Mac OS to add the certificate to it's keychain.
+
+$ sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" ~/.certs/root.pem
+```
+
+</Content>
+</Box>
+
+<Box heading="Generate Self Signed Development Certificates">
+
+<Content>
+
+Great! Now, we’re ready to generate the self signed certificates for your development sites.
+
+I like to place everything in a `~/.certs/` directory, however you may prefer to place the certificates with their associated projects. It's up to you.
+
+</Content>
+
+<Content heading="Generate Private Key for Development Domain">
+
+First we'll create a new directory within `~/.certs/` for a hypothetical project called `test.local`. And then we create the private key.
+
+You can do this is one step with the following.
+
+```bash
+# Creates a new directory, and a private key within it.
+
+$ mkdir ~/.certs/test.local \
+  && openssl genrsa -out ~/.certs/test.local/test.local.key 2048
+```
+
+</Content>
+
+<Content heading="Generate a Code Signing Request">
+
+You can think of a **Code Signing Request** as an order form that you send the root certificate. The root certificate recieves the code signing request and fulfills the order.
+
+Note the `CN=test.local` part of the following command. CN stands for **Common Name** and its the url that you use to access your site. If it's localhost, be sure to add the port number.
+
+```bash
+# Create a Code Signing Request.
+
+$ openssl req -new \
+  -key ~/.certs/test.local/test.local.key \
+  -out ~/.certs/test.local/test.local.csr \
+  -subj "/CN=test.local"
+```
+
+</Content>
+<Content heading="Generate Extension File">
+
+A relatively recent requirement for SSL certificates is that they provide a **Subject Alternative Name**. Without one, Chrome will load the website, however it will display with the familiar red lock, and give an untrusted site warning.
+
+No worries we can add the Subject Alternative Name to our Code Signing Request with an extension file.
+
+```bash
+# Create an extension file.
+
+$ echo "\nDNS.1 = test.local" >> ~/.certs/test.local/.extfile
+```
+
+</Content>
+<Content heading="Generate the self signed certificate">
+
+Finally we can generate our trusted self signed certificate by sending our code signing request to the root certificate.
+
+```bash
+# Generate a trusted self signed certificate by sending a CSR to the trusted certificate.
+
+$ openssl x509 -req \
+  -in ~/.certs/test.local/test.local.csr \
+  -CA ~/.certs/root.pem \
+  -CAkey ~/.certs/root.key \
+  -CAcreateserial \
+  -out ~/.certs/test.local/test.local.crt \
+  -days 365 \
+  -sha256 \
+  -extfile ~/.certs/test.local.extfile
+```
+
+</Content>
+</Box>
+
+<Box heading="Verify the Certificate is Trusted">
+
+<Content>
+
+To prove that the certificate is trusted, here's one last command.
+
+```bash
+# Verify the certificate is trusted.
+
+$ openssl x509 -noout -text -in ~/.certs/test.local/test.local.crt
+```
+
+</Content>
+</Box>
+
+<Box heading="Command Reference">
+
+<Content>
+
+Heres a quick reference on all the commands I provided above.
+
+```bash
+# Generate a private key.
+$ openssl genrsa -out example.org.key 2048*
+
+# Generate an untrusted self signed certificate.
+$ openssl req -x509 -new -nodes -key $PATH_TO_PRIVATE_KEY -sha256 -days 1825 -out $PATH_TO_SAVE_CERT -subj "/CN=Local CA"
+
+# Tell Mac OS to trust a certificate to sign certificates.
+$ sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" $PATH_TO_CERT
+
+# Generate a Code Signing Request
+$ openssl req -new -key $PATH_TO_PRIVATE_KEY -out $PATH_TO_SAVE_CSR -subj "/CN=$SITE_DOMAIN_NAME"
+
+# Create a Code Signing Request extension to add a Subject Alternative Name.
+$ echo "\nDNS.1 = $DOMAIN_NAME" >> $PATH_TO_SAVE_EXT_FILE
+
+# Generate a Certificate from a Code Signing Request
+$ openssl x509 -req -in $PATH_TO_CSR -CA $PATH_TO_ROOT_CERTIFICATE -CAkey $PATH_TO_ROOT_PRIVATE_KEY -CAcreateserial -out $PATH_TO_CREATE_CERTIFICATE -days 365 -sha256 -extfile $PATH_TO_EXTENSION_FILE
+```
+
+</Content>
+</Box>

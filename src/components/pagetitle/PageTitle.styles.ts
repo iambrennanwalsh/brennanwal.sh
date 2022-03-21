@@ -26,7 +26,9 @@ export const StyledPageTitleHeading = styled('h1', {
 
 export const StyledPageTitleContainer = styled('div', {
   my: '$7',
-  px: '$6'
+  '@tablet': {
+    px: '$6'
+  }
 })
 
 export const StyledPageTitleSummary = styled('p', {

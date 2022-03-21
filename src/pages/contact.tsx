@@ -1,12 +1,11 @@
 import type { Article } from '@/'
 import { Box, Content, PageTitle, Seo } from '@/components'
 import { ContactForm } from '@/forms'
-import { useApiContext } from '@/hooks'
 import { Standard } from '@/layouts'
 import { getAllResources } from '@/utils'
 import { InferGetStaticPropsType } from 'next'
 import dynamic from 'next/dynamic'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 
 const contactSeo = {
   title: 'Contact Me',
@@ -14,15 +13,8 @@ const contactSeo = {
 }
 
 const Contact = ({
-  articles
+  resources
 }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
-  const { resources, setResources } = useApiContext()
-
-  useEffect(() => {
-    if (!('articles' in resources))
-      setResources({ ...resources, articles: articles })
-  }, [articles, resources, setResources])
-
   const Map = dynamic<{}>(
     () => import('../components/map/Map').then(component => component.Map),
     {
@@ -55,7 +47,9 @@ export const getStaticProps = async () => {
   const articles = getAllResources<Article>('articles')
   return {
     props: {
-      articles
+      resources: {
+        articles
+      }
     }
   }
 }

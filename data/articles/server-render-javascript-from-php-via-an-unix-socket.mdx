@@ -1,0 +1,400 @@
+---
+title: Server Render JavaScript from PHP via an Unix Socket
+summary: Calling JavaScript code from PHP is suprisingly simple. You can render a react app server side, or call upon one of NPM's many libraries.
+image: /images/articles/server-render-javascript-from-php-via-an-unix-socket.png
+featured: true
+category: Php
+tags:
+  - SSR
+  - Unix Sockets
+timestamp: '2022-03-20'
+---
+
+<Box heading="Calling JavaScript from PHP is simple.">
+
+<Content>
+
+There are many use cases for running JavaScript code from PHP. You can server side render a React app, or call upon one of NPM's many libraries. And I'm going to show how simple it is to do!
+
+</Content>
+
+<Content heading="Requirements">
+
+<p>
+  1. PHP <br />
+  2. Node.js
+</p>
+
+You don't need anything out of the ordinary just PHP, and Node.js. Yup 0 external dependencies.
+
+</Content>
+</Box>
+
+<Box heading="Sockets">
+
+<Content heading="What are Sockets?">
+
+**Sockets** are inter-process communication mechanisms that allows bidirectional data exchange.
+
+What? Let me break that down.
+
+Lets say we're working on a document in Microsoft Word. You really want to create an integration between Microsoft Word and Node.js, so that you can format a documents content with different predefined JavaScript functions. In lower level terms, what you want is a way for two running processes (Microsoft Word, and Node.js) on the same machine to communicate.
+
+You want to be able to send the content from Microsoft Word, into Node.js. And then once Node.js has completed it's work, to send it back to Microsoft Word.
+
+Kinda sounds like you need an "inter-process communication mechanism that allows bidirectional data exchange". Thats a Socket. Sockets allow communication between two different processes running on the same or different machines.
+
+More particularly, sockets are simply file descriptors, however that is beyond the scope of this article.
+
+</Content>
+
+<Content heading="What is an Unix Socket?">
+
+We are going to use a particular type of socket known as an **Unix Domain Socket** (aka Unix Socket).
+
+An Unix Socket is an inter-process communication mechanism that allows bidirectional data exchange **between processes running on the same machine**.
+
+There are also IP sockets. IP sockets enable communication **between processes on the same or different machines via TCP**. The benefit of an Unix Socket, is that they avoid the overhead of a TCP/IP connection.
+
+Anthony Headings provides a great analogy in his article [What are Unix Sockets and how do they work?](https://www.cloudsavvyit.com/1263/what-are-unix-sockets-and-how-do-they-work/).
+
+<q>
+  Sockets are a direct connection between two processes. Imagine if you wanted
+  to call your friend down the road; you could place a call have it routed up
+  through your telephone company and back down to their house, or you could run
+  a wire directly to their house and cut out the middleman. The latter is
+  obviously impractical in real life, but in the world of Unix it’s very common
+  to establish these direct connections between programs.
+</q>
+
+We communicate with a socket through it's socket file. This file is created automatically by opening a socket.
+
+Like I said, a socket is really just a file descriptor. The only point of the socket file is to maintain a reference to this file descriptor, and to control access to the socket through filesystem permissions.
+
+Okay, enough theory.
+
+</Content>
+
+<Content heading="Sockets are Interesting!">
+
+If you'd like to explore this topic further, here's a few great reads.
+
+[Understanding Sockets](https://www.digitalocean.com/community/tutorials/understanding-sockets)  
+[What are Unix Sockets and how do they work?](https://www.cloudsavvyit.com/1263/what-are-unix-sockets-and-how-do-they-work/)  
+[What is the difference between Unix Sockets and TCP/IP Sockets](https://serverfault.com/questions/124517/what-is-the-difference-between-unix-sockets-and-tcp-ip-sockets)
+
+</Content>
+
+</Box>
+
+<Box heading="Open and Listen on an Unix Socket via Node.js">
+
+<Content>
+
+Before jumping in, let me explain how this all works. We need communicate with a Node.js process from a PHP process.
+
+First, we'll need to start up a Node.js server that opens and listens on an Unix Socket.
+
+Then, we'll connect to this socket from within PHP.
+
+</Content>
+
+<Content heading="Create the Node.js Server.">
+
+So, we need a Node.js server that opens an unix socket and listens for data on it.
+
+Typically when we create a server in Node.js, such as an Express server, we'll have it listen on a port. Well, that port is really just an IP socket. So it's the same idea, we're just using a different kind of socket.
+
+We'll create this file as an executable. Save the following to a file called 'node' in a directory `bin`. No file extension needed, because this is an executable file. Notice the shebang on the 1st line `!#/usr/bin/env node`.
+
+```js
+#!/usr/bin/env node
+
+const net = require('net')
+const fs = require('fs')
+const path = require('path')
+
+// Where to output the socket file.
+const socketPath = path.resolve(root, 'var/node.sock')
+
+// If a socket is already open, we'll replace it.
+if (fs.existsSync(socketPath)) fs.unlinkSync(socketPath)
+
+// We create a server that accepts a socket to listen on. When the socket receives some javascript, the server will run it through `eval()`.
+const server = net.createServer(socket => {
+  socket.setEncoding('utf8')
+
+  // We push each chunk of data, into the chunks array.
+  // After pushing each chunk we also check if the last character is '\0'.
+  // '\0' is a special token, we use to signal that there will be no more content after this. No more chunks.
+  // This means, we can eval the data (js) we recieved confident that we aren't missing anything.
+  const chunks = []
+  socket.on('data', chunk => {
+    chunks.push(chunk)
+    const lastChar = chunk[chunk.length - 1]
+    if (lastChar === '\0') {
+      // Okay we found the '\0' token. So we join all the chunks together into one string.
+      // We eval() the combined chunks.
+      // Then we send the result back to the unix socket via the write() function.
+      const data = chunks.join('').slice(0, -1)
+      const result = eval(data)
+      socket.write(result)
+      console.log('Request processed')
+      socket.end()
+    }
+  })
+})
+
+// We open the unix socket, just like any other Node.js server. Via the listen() function.
+// Unlike an express server, we don't pass a port. Rather we pass the path to the socket we decided on above.
+server.listen(socketPath, () => {
+  // The socket is now open.
+  // The server we created is listening on it.
+  console.log(`Server is listening at: ${socketPath}`)
+})
+
+process.on('SIGINT', () => {
+  server.close()
+  process.exit()
+})
+```
+
+</Content>
+
+<Content heading="Make it executable.">
+
+This is an executable file. But, by default it's not executable until we set it's permissions. No problem, simply run the following.
+
+```bash
+# Sets the file permissions to be executable.
+
+chmod +x ./bin/node
+```
+
+</Content>
+</Box>
+
+<Box heading="Connect to a Socket from PHP">
+
+<Content>
+  
+Okay, great. See I told you this was simple.
+
+Before we connect to the socket from PHP, we'll need to start up the Node.js server we just created.
+
+Because it's an executable file, the command is super simple.
+
+```bash
+# Start the node.js server.
+
+./bin/node
+```
+
+</Content>
+
+<Content heading="Sending JavaScript to an Unix Socket from PHP">
+
+There are so many cool things we can do here. I'm going to demonstrate how to server render a webpack bundle. And as a bonus I'll also demonstrate how to inject in some server side data such as the current route.
+
+```php
+<?php
+
+namespace Acme;
+
+use RuntimeException;
+use Symfony\Component\Serializer\SerializerInterface;
+
+use function fclose;
+use function stream_get_contents;
+use function stream_socket_client;
+use function stream_socket_sendto;
+
+class NodeRenderer {
+
+  /**
+  * Some server side data you'd like to inject.
+  */
+  private object $serverContext;
+
+  /**
+  * A serializer for converting the server context to json.
+  */
+  private SerializerInterface $serializer;
+
+  /**
+  * Path or url to an open socket.
+  */
+  private string $socketPath;
+
+  /**
+  * Path to your JavaScript bundle.
+  */
+  private string $bundlePath;
+
+  public function __construct(
+    SerializerInterface $serializer,
+    string $socketPath,
+    string $bundlePath,
+    object $serverContext
+  ) {
+    $this->serializer = $serializer;
+    $this->socketPath = $socketPath;
+    $this->bundlePath = $bundlePath;
+    $this->serverContext = $serverContext;
+  }
+
+  public function render(): string {
+
+    // First we'll serialize the server side data that we're injecting into our JavaScript.
+    $context = $this->serializer->serialize($this->serverContext, 'json');
+
+    // This is the javascript you'd like eval'd.
+    // It can be anything.
+    // In this case we're going to pass our webpack bundle to Node.js to server render.
+    // We can pass important data like the current route via the server context we pass in.
+    // The possibilities are endless.
+    $javascript  = <<<JS
+      (function() {
+        const Bundle = require($this->bundlePath);
+        return Bundle($context);
+      })();
+    JS;
+
+    // Next we connect to the open socket.
+    $socket = stream_socket_client($this->socketPath, $errno, $errstr);
+    if (!$socket) {
+      throw new RuntimeException($this->socketPath . " does not reference an opened socket. Did you forget to start the Node.js server that opens the socket?");
+    }
+
+    // Here we pass the JavaScript to the socket.
+    // Note the special token "\0". This is used by Node.js, to know theres no more js to wait on.
+    stream_socket_sendto($socket, $javascript . "\0");
+
+    // Annnnd.. we get the result back from le socket.
+    $contents = stream_get_contents($socket);
+    if ($contents === false) {
+      throw new RuntimeException("Server blew up or something. Idk. Ask dev ops. It's their fault.");
+    }
+
+    fclose($sock);
+
+    // And we return the contents to the caller.
+    return $contents;
+  }
+}
+```
+
+</Content>
+
+</Box>
+
+<Box heading="Configuring your Webpack Bundle">
+
+<Content heading="Seperate Server and Client bundles.">
+
+If you're going to attempt to server render a webpack bundle, you'll want to create seperate server and client side bundles.
+
+Here's a sample webpack configuration for a React app, written in TypeScript.
+
+It will output the client side bundle to `public/build`, and the server side bundle to `var/node`.
+
+As a bonus, install `run-node-webpack-plugin` to automatically start up your Node.js server, when bundling. [It has tons of customization options](https://www.npmjs.com/package/run-node-webpack-plugin).
+
+Here I've configured the plugin to start the server only when running webpack in watch mode, and to restart the server upon re-bundle.
+
+Another important detail is the server side bundles `output` configuration. If you noticed in the PHP script above, we required the server webpack bundle, and then called it as if it were a function. In order for this to be possible, the bundle must be output as a UMD bundle.
+
+```js
+const path = require('path')
+const RunNodeWebpackPlugin = require('run-node-webpack-plugin')
+const isEnvProduction = process.env.NODE_ENV === 'production'
+
+module.exports = [
+  {
+    target: 'web',
+    mode: isEnvProduction ? 'production' : 'development',
+    devtool: isEnvProduction ? 'none' : 'inline-source-map',
+    entry: {
+      client: './src/Client.tsx'
+    },
+    output: {
+      filename: 'client.[chunkhash].js',
+      path: path.resolve('public/build'),
+      clean: true
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(ts|js)x?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                ['@babel/preset-react', { runtime: 'automatic' }],
+                '@babel/preset-typescript'
+              ]
+            }
+          }
+        }
+      ]
+    },
+    optimization: {
+      minimize: isEnvProduction
+    },
+    plugins: [],
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
+    }
+  },
+  {
+    target: 'node',
+    mode: isEnvProduction ? 'production' : 'development',
+    entry: {
+      server: './src/Server.tsx'
+    },
+    output: {
+      filename: 'bundle.js',
+      path: path.resolve('var/node'),
+      library: {
+        name: 'Server',
+        type: 'umd',
+        export: 'default'
+      }
+    },
+    module: {
+      rules: [
+        {
+          test: /\.(ts|js)x?$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-env',
+                ['@babel/preset-react', { runtime: 'automatic' }],
+                '@babel/preset-typescript'
+              ]
+            }
+          }
+        }
+      ]
+    },
+    plugins: [
+      new RunNodeWebpackPlugin({
+        scriptToRun: './bin/node',
+        runOnlyOnChanges: false,
+        runOnlyInWatchMode: true
+      })
+    ],
+    resolve: {
+      extensions: ['.tsx', '.ts', '.js', '.jsx', '.json']
+    }
+  }
+]
+```
+
+</Content>
+
+</Box>

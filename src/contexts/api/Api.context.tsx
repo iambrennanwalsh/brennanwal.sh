@@ -1,6 +1,6 @@
-import type {Article, Component, Project, Props} from '@/'
-import type {Dispatch, SetStateAction} from 'react'
-import {createContext, useState} from 'react'
+import type { Article, Component, Project, Props } from '@/'
+import type { Dispatch, SetStateAction } from 'react'
+import { createContext, useState } from 'react'
 
 export type ApiResources = {
   projects?: Project[]
@@ -14,11 +14,17 @@ export interface ApiContextType {
 
 export const ApiContext = createContext<ApiContextType | undefined>(undefined)
 
-export type ApiContextProviderProps = Props<'div'>
+interface ApiContextProviderOwnProps {
+  value: ApiResources
+}
+export type ApiContextProviderProps = Props<'div', ApiContextProviderOwnProps>
 export type ApiContextProviderComponent = Component<ApiContextProviderProps>
 
-export const ApiContextProvider: ApiContextProviderComponent = ({children}) => {
-  const [resources, setResources] = useState({})
+export const ApiContextProvider: ApiContextProviderComponent = ({
+  value = {},
+  children
+}) => {
+  const [resources, setResources] = useState(value)
 
   return (
     <ApiContext.Provider

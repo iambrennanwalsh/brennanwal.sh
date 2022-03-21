@@ -7,7 +7,7 @@ import { Container } from '@/partials'
 import { globalStyles } from '@/styles'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import type { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, useEffect, useState } from 'react'
 
 globalStyles()
 
@@ -24,9 +24,16 @@ export default function App({
   pageProps
 }: AppPropsWithLayout): JSX.Element {
   const getLayout = Component.getLayout || (page => page)
+  const [resources, setResources] = useState(
+    pageProps.resources ? pageProps.resources : {}
+  )
+
+  useEffect(() => {
+    setResources(pageProps.resources)
+  }, [pageProps])
 
   return (
-    <ApiContextProvider>
+    <ApiContextProvider value={resources}>
       <NotificationsContextProvider>
         <ComponentContextProvider>
           <Container>{getLayout(<Component {...pageProps} />)}</Container>

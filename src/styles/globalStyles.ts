@@ -161,8 +161,11 @@ export const globalStyles = globalCss({
     fontFamily: '$code'
   },
 
+  'ol, ul': {
+    listStylePosition: 'inside'
+  },
+
   ul: {
-    listStylePosition: 'inside',
     listStyleType: 'none',
     marginLeft: 0
   },
