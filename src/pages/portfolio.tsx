@@ -17,7 +17,7 @@ function Portfolio({
   const [categories] = useState(
     Array.from(new Set(resources.projects.map(proj => proj.category)))
   )
-  const [category, setCategory] = useState('Freelance')
+  const [category, setCategory] = useState('Projects')
 
   const GridTemplate = (data: Project): JSX.Element => (
     <Card
